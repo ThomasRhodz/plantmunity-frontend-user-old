@@ -3,9 +3,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import {AccountCircle, LockRounded} from '@mui/icons-material';
-import { InputAdornment } from '@mui/material';
-
 
 export default function index() {
   return (
@@ -15,7 +12,7 @@ export default function index() {
           <img
             src='https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'
             alt='Plant'
-            style={{ width:'100%', height: '100%', objectFit: 'cover'}}
+            style={{ width:'100%', height: '700px', objectFit: 'cover'}}
           />
         </Grid>
         <Grid container item xs={12} sm={6} alignItems='center' direction="column" justify='space-between' style={{padding: 10}}>
