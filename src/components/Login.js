@@ -8,6 +8,7 @@ import '../css/style.css';
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Logo from '../images/PlantmunityLogo.png';
 
 const useStyles = makeStyles((theme) =>
   ({
@@ -79,7 +80,7 @@ const Login = ({goToSignUp, goToTimeline}) => {
                                 <div>
                                     <div style={{width: '300px', marginRight: 'auto', marginLeft: 'auto'}}>
                                         <img
-                                            src='https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/207912649_3025017804402687_6625310251926066918_n.png?_nc_cat=110&ccb=1-5&_nc_sid=ae9488&_nc_eui2=AeEfsmMCyWqQP5RqlU-rPEeSmMpJYnJXYMuYyklicldgyzoOl5D1_SssUFWV0JmEOBnauKuiCPIIYIY8DMbZ6zbH&_nc_ohc=TR56u-JEp0EAX_kpJD_&_nc_ht=scontent.fmnl8-1.fna&oh=03_AVLYmxzF4YkkyFqL59ScbX-x2Pjwzf2um-M-rbOjfTcTNA&oe=61FF2C0B'
+                                            src={Logo}
                                             width={300}
                                             alt='logo'
                                         />

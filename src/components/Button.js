@@ -2,11 +2,11 @@ import React from 'react'
 import propType from 'prop-types'
 import Btn from '@mui/material/Button';
 
-const Button = ({color, text, variants, textColor, textSize, btnSize, btnWidth, clickHandler}) => {
+const Button = ({color, text, variants, textColor, textSize, btnSize, btnWidth, clickHandler, onChangeHandler, endingIcon, startingIcon, btnComponent}) => {
 
     return (
         <div>
-          <Btn onClick={clickHandler} style={{backgroundColor: color, width: btnWidth, color: textColor, fontSize: textSize, textTransform: 'none' }} size={btnSize} variant={variants}>{text}</Btn>  
+          <Btn startIcon={startingIcon} onChange={onChangeHandler} endIcon={endingIcon} onClick={clickHandler} component={btnComponent} style={{backgroundColor: color, width: btnWidth, color: textColor, fontSize: textSize, textTransform: 'none', fontFamily: 'apple-system' }} size={btnSize} variant={variants}>{text}</Btn>  
         </div>
     )
 }

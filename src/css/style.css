@@ -1,6 +1,7 @@
 body{
     background-color: white;
     margin: 0px;
+    /* overflow: hidden; */
 }
 
 ::-webkit-scrollbar{
@@ -15,3 +16,4 @@ body{
     background-image: linear-gradient(#1cd147, #2dbd77);
     border-radius: 25px;
 }
+

@@ -7,17 +7,20 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
-import SearchIcon from '@mui/icons-material/Search';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
-import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+import Logo from '../images/PlantmunityLogo.png';
+
+import {navigate} from 'gatsby';
+
 
  //Icons
+ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
+ import SearchIcon from '@mui/icons-material/Search';
+ import Avatar from '@mui/material/Avatar';
  import ExploreIcon from '@mui/icons-material/Explore';
  import StorefrontIcon from '@mui/icons-material/Storefront';
  import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -27,9 +30,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 //MUI Styling
 import '../css/pageStyles.css';
 import { makeStyles } from "@material-ui/core/styles";
-import { width } from '@mui/system';
-//import { useTheme } from '@mui/material/styles';
-//import useMediaQuery from '@mui/material/useMediaQuery';
+
 
 //styling
 const useStyles = makeStyles((theme) => ({
@@ -92,9 +93,9 @@ const Search = styled('div')(({ theme }) => ({
       transition: theme.transitions.create('width'),
       width: '100%',
       [theme.breakpoints.up('sm')]: {
-        width: '12ch',
+        width: '15ch',
         '&:focus': {
-          width: '18ch',
+          width: '21ch',
         },
       },
     },
@@ -102,41 +103,81 @@ const Search = styled('div')(({ theme }) => ({
 
 
 //Actual Components
- const NavBar = () => {
+ const NavBar = ({iconID}) => {
 
     //Variables
     const classes = useStyles();
 
-    const pages = [
+    const menu = [
         {
             id: 1,
-            icon: HomeRoundedIcon,
-            title: 'Home'
+            location: '/profile',
+            name: 'Profile'
 
         },
 
         {
             id: 2,
-            icon: 'ExploreIcon',
-            title: 'Discover'
+            location: '/settings',
+            name: 'Account'
 
-        }
+        },
+
+        {
+            id: 3,
+            location: '/',
+            name: 'Logout'
+
+        },
+
     ];
-    const settings = ['Profile', 'Account', 'Logout'];
 
+    const page = [
+        {
+            id: 1,
+            location: '/timeline',
+            name: 'Home',
+            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
+        },
+
+        {
+            id: 2,
+            location: '/discover',
+            name: 'Discoveer',
+            icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+
+        },
+
+        {
+            id: 3,
+            location: '/marketplace',
+            name: 'Marketplace',
+            icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+
+        },
+
+        {
+            id: 4,
+            location: '/messages',
+            name: 'Messages',
+            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+
+        },
+
+        {
+            id: 5,
+            location: '/notifications',
+            name: 'Notifications ',
+            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+
+        },
+
+    ];
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
     };
 
     const handleCloseUserMenu = () => {
@@ -144,7 +185,7 @@ const Search = styled('div')(({ theme }) => ({
     };
 
      return (
-        <AppBar position="static" style={{backgroundColor: 'white', color: 'black'}}>
+        <AppBar position="fixed" style={{backgroundColor: 'white', color: 'black'}}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters >
 
@@ -154,7 +195,7 @@ const Search = styled('div')(({ theme }) => ({
                                 <div>
                                     <div style={{width: '120px', marginRight: 'auto', marginLeft: 'auto'}}>
                                         <img
-                                            src='https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/207912649_3025017804402687_6625310251926066918_n.png?_nc_cat=110&ccb=1-5&_nc_sid=ae9488&_nc_eui2=AeEfsmMCyWqQP5RqlU-rPEeSmMpJYnJXYMuYyklicldgyzoOl5D1_SssUFWV0JmEOBnauKuiCPIIYIY8DMbZ6zbH&_nc_ohc=TR56u-JEp0EAX_kpJD_&_nc_ht=scontent.fmnl8-1.fna&oh=03_AVLYmxzF4YkkyFqL59ScbX-x2Pjwzf2um-M-rbOjfTcTNA&oe=61FF2C0B'
+                                            src= {Logo}
                                             width={120}
                                             alt='logo'
                                         />
@@ -184,7 +225,7 @@ const Search = styled('div')(({ theme }) => ({
                         <div>
                             <div style={{width: '130px', marginRight: 'auto', marginLeft: 'auto'}}>
                                 <img
-                                    src='https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/207912649_3025017804402687_6625310251926066918_n.png?_nc_cat=110&ccb=1-5&_nc_sid=ae9488&_nc_eui2=AeEfsmMCyWqQP5RqlU-rPEeSmMpJYnJXYMuYyklicldgyzoOl5D1_SssUFWV0JmEOBnauKuiCPIIYIY8DMbZ6zbH&_nc_ohc=TR56u-JEp0EAX_kpJD_&_nc_ht=scontent.fmnl8-1.fna&oh=03_AVLYmxzF4YkkyFqL59ScbX-x2Pjwzf2um-M-rbOjfTcTNA&oe=61FF2C0B'
+                                    src={Logo}
                                     width={130}
                                     alt='logo'
                                 />
@@ -204,35 +245,17 @@ const Search = styled('div')(({ theme }) => ({
                     </Search>
                     {/* For nav option or pages */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'flex' } }}>
-                        <Tooltip title="Home">
-                            <IconButton color="inherit" aria-label="open drawer" size='large' >
-                                <HomeRoundedIcon fontSize='large' style={{color: '#D5AB82'}}/>
-                            </IconButton>
-                        </Tooltip>
-                        <div style={{width:20}} />
-                        <Tooltip title="Discover">
-                            <IconButton color="inherit" aria-label="open drawer" size='large'>
-                                <ExploreIcon fontSize='large' />
-                            </IconButton>
-                        </Tooltip>
-                        <div style={{width:20}} />
-                        <Tooltip title="Marketplace">
-                            <IconButton color="inherit" aria-label="open drawer" size='large'>
-                                <StorefrontIcon fontSize='large' />
-                            </IconButton>
-                        </Tooltip>
-                        <div style={{width:20}} />
-                        <Tooltip title="Messages">
-                            <IconButton color="inherit" aria-label="open drawer" size='large'>
-                                <EmailRoundedIcon  fontSize='large' />
-                            </IconButton>
-                        </Tooltip>
-                        <div style={{width:20}} />
-                        <Tooltip title="Notification">
-                            <IconButton color="inherit" aria-label="open drawer" size='large'>
-                                <NotificationsIcon  fontSize='large' />
-                            </IconButton>
-                        </Tooltip>
+
+                        {page.map(({id, location, name, icon}) => (
+                            <React.Fragment key={id} >
+                                <Tooltip title={name} role='link' onClick={()=>{navigate(location)}}>
+                                    <IconButton color="inherit" aria-label="open drawer" size='large' >
+                                        {icon}
+                                    </IconButton>
+                                </Tooltip>
+                                <div style={{width:20}} />
+                            </React.Fragment>
+                        ))}
                     </Box>
 
                     
@@ -241,7 +264,7 @@ const Search = styled('div')(({ theme }) => ({
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex', md: 'none' }}} />
 
                     {/* For Icon Button for mobile devices */}   
-                    <IconButton color="inherit" aria-label="open drawer" size='large' sx={{display: { xs: 'flex', sm: 'none', md: 'none' } }} >
+                    <IconButton color="inherit" aria-label="open drawer" size='large' sx={iconID===2?{ display: 'none'}:{display: { xs: 'flex', sm: 'none', md: 'none' } }} >
                         <SearchRoundedIcon fontSize='large' style={{ color: '#6da58a'}}/>
                     </IconButton>
 
@@ -250,14 +273,14 @@ const Search = styled('div')(({ theme }) => ({
                        <Grid item sx={{flexGrow: 1}} />
                        <Grid item className={classes.searchIcon} >
                             {/* For Icon Button for mobile devices */}   
-                            <IconButton color="inherit" aria-label="open drawer" size='large'>
+                            <IconButton color="inherit" aria-label="open drawer" size='large'> 
                                 <SearchRoundedIcon fontSize='large' style={{ color: '#6da58a'}}/>
                             </IconButton>
                         </Grid> 
                        <Grid item>
                             <Tooltip title="Open settings">
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="https://scontent.fcrk4-1.fna.fbcdn.net/v/t39.30808-6/271135828_2963978013854662_5952441335434695660_n.jpg?_nc_cat=101&ccb=1-5&_nc_sid=09cbfe&_nc_eui2=AeEYKAFQcpYr4FgGfC17IChAXZAfI2OPF-BdkB8jY48X4P3CDHocuKoJ40Z-gGXg8b_celYHQb6iF5YYXiLKoD_R&_nc_ohc=CNJr4T9QjzgAX_epx4s&tn=1EZ9Z5HQcW3uJjd0&_nc_ht=scontent.fcrk4-1.fna&oh=00_AT8duqeNdjTPt62AjMQ5SgbYvHsMrrbEJjhTzJMvpqXT6g&oe=61EC26CD" />
+                                    <Avatar alt="Remy Sharp" src="https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd" />
                                 </IconButton>
                             </Tooltip>
                        </Grid>
@@ -280,9 +303,9 @@ const Search = styled('div')(({ theme }) => ({
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                            {menu.map(({id, location, name}) => (
+                                <MenuItem key={id} role='link' onClick={()=>{navigate(location)}}>
+                                    <Typography textAlign="center">{name}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>

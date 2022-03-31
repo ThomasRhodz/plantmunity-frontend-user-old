@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import LogIn from '../components/Login';
 import SignUp from '../components/SignUp';
 import NavBar from '../components/NavBar';
-
+import {navigate} from 'gatsby';
 
 const Landing = () => {
     const [counter, setCount] = useState(1);
@@ -16,7 +16,7 @@ const Landing = () => {
     }
 
     const toTimeline = () => {
-        setCount(3);
+        navigate('/timeline')
     }
 
     if (counter===1){
