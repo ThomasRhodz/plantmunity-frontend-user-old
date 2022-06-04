@@ -2,7 +2,7 @@ import  React, {useState} from 'react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import Button from './Button';
+import Button from '../basic/Button';
 import Divider from "@material-ui/core/Divider";
 import Typography from "@material-ui/core/Typography";
 
@@ -12,7 +12,7 @@ import LinkIcon from '@mui/icons-material/Link';
 
 import { makeStyles } from "@material-ui/core/styles";
 import { styled } from '@mui/material/styles';
-import IdentifiedCard from './IdentifiedCard';
+import IdentifiedCard from '../card/IdentifiedCard';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) =>
     },
 
     image: {
-        height: '150px',
+        height: '135px',
         '&:hover':{
             opacity:0.5
         },
@@ -66,13 +66,13 @@ const Identify = () => {
     }
   return (
       <React.Fragment>
-        <Grid container direction={matches2?'column':'row'} alignItems='center' justify='center' sx={{overflowY:{xs:'scroll',sm:'hidden'}, height:{xs:360, sm:400, md:560}}}>
+        <Grid container direction={matches2?'column':'row'} alignItems='center' justify='center' sx={{overflowY: {xs: 'hidden', sm: 'hidden', md: 'scroll'}, height:{xs:'100%', sm:400, md:560}}}>
             <Grid item sx={{width:{xs:340, sm: 420, md:580}, height: {xs:420, sm: 400, md:550}}}>
                 <Grid container direction='column' alignItems='center' justify='center' style={{padding:10}}>
                     <Grid item sx={{display:{xs:'none', sm:'flex',md:'flex'}, width:{xs:300, sm: 390, md:530}, height:{xs:70, sm: 50, md:100}}}>
                         <Typography
                             variant={matches?'h6':'h5'}
-                            style={matches?{fontFamily:'Roboto', fontSize:'15px',marginTop: '-10px'}:{fontFamily:'Roboto', marginTop: '-10px'}}
+                            style={matches?{fontFamily:'apple-system', fontSize:'15px',marginTop: '-10px'}:{fontFamily:'apple-system', marginTop: '-10px'}}
                             gutterBottom
                         >
                             Identify, explore and learn from your observations of wild plants by uploading an image or using an online image link.   
@@ -81,7 +81,7 @@ const Identify = () => {
                     <Grid item sx={{display:{xs:'flex', sm:'none',md:'none'}, width:{xs:300, sm: 390, md:530}, height:{xs:70, sm: 50, md:100}}}>
                         <Typography
                             variant='h6'
-                            style={matches?{fontFamily:'Roboto', fontSize:'13px'}:{fontFamily:'Roboto', marginTop: '-10px'}}
+                            style={matches?{fontFamily:'apple-system', fontSize:'13px'}:{fontFamily:'apple-system', marginTop: '-10px'}}
                             gutterBottom
                         >
                             Identify, explore and learn from your observations of wild plants by uploading an image or using an online image link.   
@@ -123,7 +123,7 @@ const Identify = () => {
                                     <Grid item >
                                         <Typography
                                             variant={matches? 'caption' :"subtitle1"}
-                                            style={{fontFamily:'Roboto', marginTop: '-10px', color: 'white'}}
+                                            style={{fontFamily:'apple-system', marginTop: '-10px', color: 'white'}}
                                             gutterBottom
                                         >
                                             only image file can be selected or supported.  
@@ -146,7 +146,7 @@ const Identify = () => {
 
             <Box sx={{width:{xs:0, sm:0, md:20}, height:{xs:5, sm:5, md:0}}} />
 
-            <Grid item style={{backgroundColor: '#efeff4', padding: 10, paddingTop:17}} sx={{width:{xs:330, sm:390, md:580}, height:{xs:300, sm: 400, md:550}}}>
+            <Grid item style={{backgroundColor: '#efeff4', padding: 10, paddingTop:17}} sx={{width:{xs:330, sm:390, md:580}, height:{xs:'100%', sm: 400, md:550}}}>
                 <Grid container direction='column' alignItems='Left'>
                     <Grid item>
                         <Typography
@@ -159,7 +159,7 @@ const Identify = () => {
                     <Divider/>
                     </Grid>
                     <div style={{height:10}} />
-                    <Grid item style={{overflowY: 'scroll'}}sx={{height: {xs:300, sm: 340, md:490}}}>
+                    <Grid item sx={{overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'}, height: {xs:'100%', sm: 340, md:490}}}>
                         {resultList}
                     </Grid>
                 </Grid>

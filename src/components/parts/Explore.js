@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 
+//Array of data for post sample
 const itemData = [
     {
       img: 'https://images.unsplash.com/photo-1549388604-817d15aa0110',
@@ -56,10 +57,10 @@ const itemData = [
   
 const  Explore = () => {
   return (
-    <Box sx={{ width: {xs:350, sm:800, md:1200}, height: {xs:365, sm:400, md:550}, overflowY: 'scroll' }}>
+    <Box sx={{ width: {xs:350, sm:800, md:1200}, height: {xs:'100%', sm:400, md:550}, overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'} }}>
       <ImageList variant="masonry" cols={3} gap={8}>
         {itemData.map((item) => (
-          <ImageListItem key={item.img}>
+          <ImageListItem key={item.img}> {/* feeding the sample data to imagelist by mapping the array into ImageListItem */}
             <img
               src={`${item.img}?w=388&fit=crop&auto=format`}
               srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}

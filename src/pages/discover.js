@@ -1,7 +1,7 @@
 import React from 'react'
-import NavBar from '../components/NavBar';
-import Tab from '../components/DiscoverTab';
-import BottomAppBar from '../components/BottomAppBar';
+import NavBar from '../components/navigation/NavBar';
+import Tab from '../components/main/DiscoverTab';
+import BottomNavBar from '../components/navigation/BottomNavBar';
 
 const discover = () => {
 
@@ -9,7 +9,7 @@ const discover = () => {
         <React.Fragment>
             <NavBar iconID={2}/>
             <Tab/>
-            <BottomAppBar iconID={2}/>
+            <BottomNavBar iconID={2}/>
         </React.Fragment>
     )
 }

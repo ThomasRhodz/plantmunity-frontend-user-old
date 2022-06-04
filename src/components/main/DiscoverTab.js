@@ -10,9 +10,9 @@ import ForumIcon from '@mui/icons-material/Forum';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
 import { withStyles } from "@material-ui/core/styles";
 
-import ImageList from './Explore';
-import ForumnList from './Forum';
-import Identify from './Identify';
+import ImageList from '../parts/Explore';
+import ForumnList from '../parts/Forum';
+import Identify from '../parts/Identify';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -33,23 +33,29 @@ const DiscoverTab = () => {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue)
+    // console.log(newValue)
   };
   return ( 
-    
-    <Grid container direction={matches? 'column':'row'} alignItems="center" sx={{ padding: 3, paddingLeft: 0, marginTop: {xs:10,sm:10,md:13}, marginLeft: 'auto', marginRight: 'auto', width:{xs:'375',sm:'840px',md:'1425px'} , height: {xs:'520px',sm:'535px',md:'600px'}, bgcolor: 'background.paper',  }}>
+    //Grid container: start of Parent components, children component's direction differ base on the size of the screen 
+    <Grid container direction={matches? 'column':'row'} alignItems="center" sx={{ padding: 3, paddingLeft: 0, marginTop: {xs:10,sm:10,md:13}, marginLeft: 'auto', marginRight: 'auto', width:{xs:'375',sm:'840px',md:'1425px'} , height: {xs:'100%',sm:'535px',md:'600px'}, bgcolor: 'background.paper',  }}>
+       {/* Grid Item (1st): holds the page title and selection tab */}
       <Grid item>
+
+        {/* Grid container: allows to have a vertical arrangement of title and tab*/}
         <Grid container direction='column' alignItems='center'>
+          {/*Title*/}
           <Grid item>
             
             <Typography
                 variant={matches?'h5':'h4'}
-                style={{fontFamily:'Roboto', marginTop: '-10px'}}
+                style={{fontFamily:'apple-system', marginTop: '-10px'}}
                 gutterBottom
             >
               Discover   
             </Typography>
           </Grid>
+
+          {/*Tabs, orientation depends on the screen size which is opposite to the direction of the parent component*/}
           <Grid item>
             <Tbs variant='fullWidth' TabIndicatorProps={{style: {background:'#6da58a'}}} orientation={matches? 'horizontal':'vertical'} value={value} onChange={handleChange} sx={{ height:{xm:55, sm:55, md:525}, borderRight: {xs:0, sm:0, md:1}, borderBottom:{xs:1, sm:1, md:0}, width: {xs:375, sm:840, md:170}}} style={{borderColor: '#dddfdc', marginTop:'-20px'}}>
               <StyledTab 
@@ -72,9 +78,13 @@ const DiscoverTab = () => {
               />
             </Tbs>
           </Grid>
-        </Grid>
-      </Grid>
+        </Grid>{/*End of Grid container of title and tab*/}
+      </Grid>{/*End of Grid item (1st)*/}
+
+      {/*Serve as the gap or space between the tab and the interface that will be displayed*/}
       <Box sx={{width:{xs:0, sm:0, md:20}, height:{xs:20, sm:20, md:0}}} /> 
+
+      {/*The following Grid items calls different components that will be displayed according to the tab thats has been clicked or selected*/}
       <Grid item sx={value===0?{display:'flex'} : {display:'none'}}>
         <ImageList /> 
       </Grid>
@@ -84,7 +94,7 @@ const DiscoverTab = () => {
       <Grid item sx={value===2?{display:'flex'} : {display:'none'}}>
         <Identify /> 
       </Grid>
-    </Grid>
+    </Grid>//end of Grid containte (Parent)
   )
 }
 

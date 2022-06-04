@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Grid from '@mui/material/Grid';
@@ -8,19 +8,18 @@ import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-//import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 import FormControl from '@mui/material/FormControl';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
+import DialogTitle from '@mui/material/DialogTitle';
+//import DialogContent from '@mui/material/DialogContent';
+// import useMediaQuery from '@mui/material/useMediaQuery';
+// import { useTheme } from '@mui/material/styles';
 
-import ForumnCard from './ForumCard';
-import Btn from './Button';
-import TextField from './TextField';
+import ForumnCard from '../card/ForumCard';
+import Btn from '../basic/Button';
+import TextField from '../basic/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-//import DialogContent from '@mui/material/DialogContent';
 import Select from '@mui/material/Select';
 
 
@@ -97,60 +96,67 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 const Forum = () => {
-  const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('xs'));
+  // const theme = useTheme();
+  // const matches = useMediaQuery(theme.breakpoints.down('xs'));
+
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  
   //function for opening and closing the dialog
   const handleClickOpen = () => {
     setOpen(true);
   };
-    
+  
+  //Function for closing the create forumn dialog
   const handleClose = () => {
     setOpen(false);
   };
 
+  //state for initializing the value of the privacy for the forum
   const [privacy, setPrivacy] = React.useState(1);
-  
+
+  //fucntion in changing the value of privacy selected privacy the forumn that the user want to create
   const handleChange = (event) => {
     setPrivacy(event.target.value);
   };
 
-
   return (
-    <Box sx={{width: {xs:350, sm:800, md:1200}, minHeight: 253,  height: {xs:350, sm:400, md:550}, paddingLeft:1}}>
+    //Box serve as the parent component just to hold a main component and the dialog
+    <Box sx={{width: {xs:350, sm:800, md:1200}, minHeight: 253,  height: {xs:'100%', sm:400, md:550}, paddingLeft:1}}>
+      
+      {/**Grid container: serve as the parent grid with vertical direction */}
       <Grid container direction='column'>
         <Grid item className={classes.searchBar}>
-            <Grid container direction='row' style={{paddingRight:15}}> 
-              <Grid item sx={{display:{xs:'none'}}}>
-                <Search style= {{float: 'right'}} >
-                    <SearchIconWrapper>
-                        <SearchIcon />
-                    </SearchIconWrapper>
-                    <StyledInputBase
-                      placeholder="Search a forum"
-                      inputProps={{ 'aria-label': 'search' }}
-                    />
-                </Search>
-              </Grid>
-              <Box sx={{ flexGrow: 1, display:{xs:'none'}}} />
-              <Grid item>
-                <Btn variant='contained'  color='#efeff4' text={"My forums"} textColor='#58a776'  btnWidth='150px' btnSize='large' btnComponent='span' startingIcon={<ForumOutlinedIcon size='large'/>} />
-              </Grid>
-              <div style={{width:10}} />
-              <Grid item>
-                <Btn variant='contained'  color='#efeff4' text={"Create a forum"} textColor='#58a776'  btnWidth='175px' btnSize='large' btnComponent='span' startingIcon={<AddOutlinedIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
-              </Grid>
+          <Grid container direction='row' style={{paddingRight:15}}> 
+            <Grid item sx={{display:{xs:'none', sm:'flex', md:'flex'}}}>
+              <Search style= {{float: 'right'}} >
+                  <SearchIconWrapper>
+                      <SearchIcon />
+                  </SearchIconWrapper>
+                  <StyledInputBase
+                    placeholder="Search a forum"
+                    inputProps={{ 'aria-label': 'search' }}
+                  />
+              </Search>
             </Grid>
+            <Box sx={{ flexGrow: 1, display:{xs:'none', sm:'flex', md:'flex'}}} />
+            <Grid item>
+              <Btn variant='contained'  color='#efeff4' text={"My forums"} textColor='#58a776'  btnWidth='140px' btnSize='large' btnComponent='span' startingIcon={<ForumOutlinedIcon size='large'/>} />
+            </Grid>
+            <div style={{width:10}} />
+            <Grid item>
+              <Btn variant='contained'  color='#efeff4' text={"Create a forum"} textColor='#58a776'  btnWidth='165px' btnSize='large' btnComponent='span' startingIcon={<AddOutlinedIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
+            </Grid>
+          </Grid>
         </Grid>
         <div style={{height:10}} />
         <Divider light variant='middle' />
         <div style={{height:10}} />
-        <Grid item sx={{overflowY: 'scroll', height: {xs:280, sm:350, md:500}}}>
+        <Grid item sx={{overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'}, backgroundColor: '#f6f7f6', width:{xs: '100%'}, height: {xs:'100%', sm:350, md:500}}}>
           <Masonry sx={{display:{xs:'none',sm:'flex', md:'flex'}}} columns={3} spacing={2}>
             {renderForum}
           </Masonry>
-          <Grid direction='column' sx={{display:{xs:'flex',sm:'none', md:'none'}}}>
+          <Grid container direction='column' sx={{display:{xs:'flex',sm:'none', md:'none'}}}>
             {renderForum}
           </Grid>
         </Grid>

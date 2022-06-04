@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
-import Logo from '../images/PlantmunityLogo.png';
+import Logo from '../../images/PlantmunityLogo.png';
 
 import {navigate} from 'gatsby';
 
@@ -28,7 +28,7 @@ import {navigate} from 'gatsby';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 
 //MUI Styling
-import '../css/pageStyles.css';
+import '../../css/pageStyles.css';
 import { makeStyles } from "@material-ui/core/styles";
 
 
@@ -135,7 +135,7 @@ const Search = styled('div')(({ theme }) => ({
     const page = [
         {
             id: 1,
-            location: '/timeline',
+            location: '/home',
             name: 'Home',
             icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
 
@@ -144,7 +144,7 @@ const Search = styled('div')(({ theme }) => ({
         {
             id: 2,
             location: '/discover',
-            name: 'Discoveer',
+            name: 'Discover',
             icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
 
         },

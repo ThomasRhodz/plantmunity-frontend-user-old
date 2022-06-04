@@ -10,7 +10,6 @@ import { useTheme } from '@mui/material/styles';
 const IdentifiedCard = ({sciName, famName, comName, accuracy, imageLink}) => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
-  const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Card sx={{ display: 'flex', width: {xs:'300px', sm:'370px', md:'550px'} }}>
         <CardContent >

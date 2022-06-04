@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
-import Button from './Button';
+import Button from '../basic/Button';
 import IconButton from '@mui/material/IconButton';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
@@ -91,7 +91,7 @@ const CreatePost = () => {
                         {/* Account Avatar or user Icon*/}
                         <Grid item>
                             <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
-                                <Avatar size='small' alt='Tanjiro' src='https://ih1.redbubble.net/image.2144952579.0944/st,small,507x507-pad,600x600,f8f8f8.jpg'/>
+                                <Avatar size='small' alt='Tanjiro' src='https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd'/>
                             </IconButton>
                         </Grid>
                         <div style={{width:10}} />
@@ -101,10 +101,10 @@ const CreatePost = () => {
                             <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='512px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
                         </Grid>
                         <Grid item sx={{display: {xs:'none', sm:'flex', md:'none'}}}>
-                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='452px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
+                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='419px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
                         </Grid>
                         <Grid item sx={{display: {xs:'flex', sm:'none', md:'none'}}}>
-                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='285px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
+                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='265px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
                         </Grid>
                     </Grid>
                 </CardContent>

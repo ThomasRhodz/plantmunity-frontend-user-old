@@ -16,37 +16,28 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 
 
 //MUI Styling
-import '../css/pageStyles.css';
-//import { makeStyles } from "@material-ui/core/styles";
-
-
-//styling
-// const useStyles = makeStyles((theme) => ({
-
-// }));
+import '../../css/pageStyles.css';
 
 //Actual Components
  const BottomAppBar = ({iconID}) => {
 
     // //Variables
-    // const classes = useStyles();
+    // Array of navigating pages
     const page = [
         {
             id: 1,
-            location: '/timeline',
+            location: '/home',
             name: 'Home',
             icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
     
         },
-    
         {
             id: 2,
             location: '/discover',
-            name: 'Discoveer',
+            name: 'Discover',
             icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
     
         },
-    
         {
             id: 3,
             location: '/marketplace',
@@ -54,7 +45,6 @@ import '../css/pageStyles.css';
             icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
     
         },
-    
         {
             id: 4,
             location: '/messages',
@@ -62,7 +52,6 @@ import '../css/pageStyles.css';
             icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
     
         },
-    
         {
             id: 5,
             location: '/notifications',
@@ -70,7 +59,6 @@ import '../css/pageStyles.css';
             icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
     
         },
-    
     ];
 
      return (

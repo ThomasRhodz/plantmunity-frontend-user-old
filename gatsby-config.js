@@ -3,5 +3,8 @@ module.exports = {
     siteUrl: "https://www.yourdomain.tld",
     title: "PlantMunity",
   },
-  plugins: [],
+  plugins: [
+    'gatsby-plugin-top-layout',
+    'gatsby-plugin-react-helmet',
+  ],
 };
