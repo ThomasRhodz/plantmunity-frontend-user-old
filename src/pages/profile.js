@@ -1,7 +1,7 @@
 import React from 'react'
 import NavBar from '../components/navigation/NavBar';
 import BottomNavBar from '../components/navigation/BottomNavBar';
-import ProfileFeed from '../components/main/ProfileFeed';
+import ProfileFeed from '../components/body/ProfileFeed';
 import Grid from '@mui/material/Grid'
 
 

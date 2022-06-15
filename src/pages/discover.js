@@ -1,6 +1,6 @@
 import React from 'react'
 import NavBar from '../components/navigation/NavBar';
-import Tab from '../components/main/DiscoverTab';
+import Tab from '../components/body/DiscoverTab';
 import BottomNavBar from '../components/navigation/BottomNavBar';
 
 const discover = () => {

@@ -1,8 +1,8 @@
 import React from 'react';
-import propType from 'prop-types'
 import Button from '../basic/Button';
 import { useForm } from 'react-hook-form';
 import { useSelector} from 'react-redux';
+import { navigate } from 'gatsby';
 
 
 import TextField from '@mui/material/TextField';
@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) =>
 
 
 
-const Login = ({goToSignUp, goToTimeline}) => {
+const LoginForm = () => {
+
     const {user} = useSelector((state) => state.user)
     const {register, handleSubmit} = useForm({criteriaMode: "all"});
 
@@ -75,7 +76,7 @@ const Login = ({goToSignUp, goToTimeline}) => {
         console.log(user.password)
 
         if((data.userNameEmail===user.userName || data.userNameEmail===user.email) && data.password === user.password){
-            goToTimeline()
+           navigate('/home')
         }
         else{
             console.log('invalid input')
@@ -85,7 +86,7 @@ const Login = ({goToSignUp, goToTimeline}) => {
     const classes = useStyles();
     return (
         <Grid container direction='column' alignItems='center' className={classes.logInContainer}>
-            <Grid sx={{height:{xs:60, sm:60, md:100}}} />
+            <Grid sx={{height:{xs:60, sm:60, md:50}}} />
             <Grid item>
                 <Grid container direction='row' alignItems='center'>
 
@@ -156,7 +157,7 @@ const Login = ({goToSignUp, goToTimeline}) => {
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Button variant='text' btnSize='small' color='none' text='Signup now!'  textSize='13px' textColor='#58a776' clickHandler={() => goToSignUp()}/>
+                                        <Button variant='text' btnSize='small' color='none' text='Signup now!'  textSize='13px' textColor='#58a776' clickHandler={() => navigate('/signup')}/>
                                     </Grid>
                                 </Grid> 
                             </Grid>  
@@ -168,9 +169,4 @@ const Login = ({goToSignUp, goToTimeline}) => {
     ) 
 }
 
-Login.propType = {
-    toSignUp: propType.func,
-    goToTimeline: propType.func
-}
-
-export default Login
+export default LoginForm

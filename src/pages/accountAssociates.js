@@ -1,6 +1,6 @@
 import React from 'react'
 import NavBar from '../components/navigation/NavBar';
-import AssociateTab from '../components/main/AssociateTab';
+import AssociateTab from '../components/body/AssociateTab';
 import BottomNavBar from '../components/navigation/BottomNavBar';
 import Grid from '@mui/material/Grid';
 const accountAssociates = () => {

@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from "@hookform/error-message";
 import _ from "lodash/fp";
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/user'
+import { setUser } from '../../redux/user';
+import { navigate } from 'gatsby';
 
 import Button from '../basic/Button';
 import TextField from '@mui/material/TextField';
@@ -15,13 +16,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-// import Radio from '@mui/material/Radio';
-// import RadioGroup from '@mui/material/RadioGroup';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import FormControl from '@mui/material/FormControl';
-// import FormLabel from '@mui/material/FormLabel';
 
-//import propType from 'prop-types'
 import '../../css/style.css';
 import { makeStyles } from "@material-ui/core/styles";
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
@@ -66,7 +61,6 @@ const useStyles = makeStyles ((theme) => ({
 
     signUpImage: {
         borderRadius: '25px 0px 0px 25px',
-        // border: "1px solid #58a776",
         width:'400px',
         height: '490px',
         objectFit: 'cover',
@@ -81,7 +75,7 @@ const useStyles = makeStyles ((theme) => ({
     },
 }));
 
-const SignUp = ({goToLogin}) => {
+const SignUpForm = ({goToLogin}) => {
     // const {user} = useSelector((state) => state.user)
 
     const [open, setOpen] = React.useState(false);
@@ -91,7 +85,7 @@ const SignUp = ({goToLogin}) => {
     };
   
     const handleProceed = () => {
-        goToLogin()
+        navigate('/login')
     };
 
     const dispatch = useDispatch();
@@ -110,7 +104,7 @@ const SignUp = ({goToLogin}) => {
     }
     return (
         <Grid container direction='column' alignItems='center' className={classes.signUpContainer}>
-            <Grid sx={{height:{xs:30, sm:30, md:100}}} />
+            <Grid sx={{height:{xs:30, sm:30, md:50}}} />
             <Grid item>
                 <Grid container direction='row' alignItems='center'>
 
@@ -326,7 +320,7 @@ const SignUp = ({goToLogin}) => {
                                         </Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Button variant='text' btnSize='small' color='none' text='Login here'  textSize='13px' textColor='#58a776' clickHandler={goToLogin}/>
+                                        <Button variant='text' btnSize='small' color='none' text='Login here'  textSize='13px' textColor='#58a776' clickHandler={() => navigate('/login')}/>
                                     </Grid>
                                 </Grid> 
                             </Grid>  
@@ -375,4 +369,4 @@ const SignUp = ({goToLogin}) => {
     )
 }
 
-export default SignUp
+export default SignUpForm

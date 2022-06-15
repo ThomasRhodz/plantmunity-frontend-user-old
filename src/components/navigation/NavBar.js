@@ -125,7 +125,7 @@ const Search = styled('div')(({ theme }) => ({
 
         {
             id: 3,
-            location: '/',
+            location: '/login',
             name: 'Logout'
 
         },

@@ -4,7 +4,7 @@ import SignUp from '../parts/SignUp';
 import NavBar from '../navigation/NavBar';
 import {navigate} from 'gatsby';
 
-const Landing = () => {
+const UserLog = () => {
 
     //for initializing a variable as a state that can be use for changing interface
     const [counter, setCount] = useState(1);
@@ -47,4 +47,4 @@ const Landing = () => {
    
 }
 
-export default Landing;
+export default UserLog;
