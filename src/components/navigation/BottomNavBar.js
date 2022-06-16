@@ -28,41 +28,45 @@ import '../../css/pageStyles.css';
             id: 1,
             location: '/home',
             name: 'Home',
-            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
-    
+            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: 'white'}:{color: '#BFCBA5'}}/>
+
         },
+
         {
             id: 2,
             location: '/discover',
             name: 'Discover',
-            icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
-    
+            icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: 'white'}:{color: '#BFCBA5'}}/>
+
         },
+
         {
             id: 3,
             location: '/marketplace',
             name: 'Marketplace',
-            icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
-    
+            icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: 'white'}:{color: 'BFCBA5'}}/>
+
         },
+
         {
             id: 4,
             location: '/messages',
             name: 'Messages',
-            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
-    
+            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: 'white'}:{color: 'BFCBA5'}}/>
+
         },
+
         {
             id: 5,
             location: '/notifications',
             name: 'Notifications ',
-            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
-    
+            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: 'white'}:{color: 'BFCBA5'}}/>
+
         },
     ];
 
      return (
-        <AppBar position="fixed" style={{backgroundColor: 'white', color: '#6da58a', }} sx={{ top: 'auto', bottom: 0, display: { xs: 'flex', sm: 'flex', md: 'none' } }}>
+        <AppBar position="fixed" style={{backgroundColor: '#5C6D63', color: '#6da58a', }} sx={{ top: 'auto', bottom: 0, display: { xs: 'flex', sm: 'flex', md: 'none' } }}>
             <Toolbar>
                 <Box sx={{ flexGrow: 1 }} />
                     {page.map(({id, location, name, icon}) => (

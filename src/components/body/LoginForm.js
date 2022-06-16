@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) =>
         width: '400px',
         height: '490px', 
         [theme.breakpoints.down('md')]: {
-            width: '350px',
+            width: '330px',
         },
 
         [theme.breakpoints.down('sm')]: {
@@ -102,7 +102,7 @@ const LoginForm = () => {
                             <Grid item>
                                 <img
                                     src={Logo}
-                                    width={300}
+                                    width={280}
                                     alt='logo'
                                 />
                             </Grid>

@@ -12,7 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Grid from '@mui/material/Grid';
 import InputBase from '@mui/material/InputBase';
 import { styled } from '@mui/material/styles';
-import Logo from '../../images/PlantmunityLogo.png';
+import Logo from '../../images/PlantmunityLogo2.png';
 
 import {navigate} from 'gatsby';
 
@@ -137,7 +137,7 @@ const Search = styled('div')(({ theme }) => ({
             id: 1,
             location: '/home',
             name: 'Home',
-            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: 'white'}:{color: '#BFCBA5'}}/>
 
         },
 
@@ -145,7 +145,7 @@ const Search = styled('div')(({ theme }) => ({
             id: 2,
             location: '/discover',
             name: 'Discover',
-            icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+            icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: 'white'}:{color: '#BFCBA5'}}/>
 
         },
 
@@ -153,7 +153,7 @@ const Search = styled('div')(({ theme }) => ({
             id: 3,
             location: '/marketplace',
             name: 'Marketplace',
-            icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+            icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
         },
 
@@ -161,7 +161,7 @@ const Search = styled('div')(({ theme }) => ({
             id: 4,
             location: '/messages',
             name: 'Messages',
-            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
         },
 
@@ -169,7 +169,7 @@ const Search = styled('div')(({ theme }) => ({
             id: 5,
             location: '/notifications',
             name: 'Notifications ',
-            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: '#D5AB82'}:{color: '#6da58a'}}/>
+            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
         },
 
@@ -185,7 +185,7 @@ const Search = styled('div')(({ theme }) => ({
     };
 
      return (
-        <AppBar position="fixed" style={{backgroundColor: 'white', color: 'black'}}>
+        <AppBar position="fixed" style={{backgroundColor: '#5C6D63', color: 'black'}}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters >
 

@@ -39,7 +39,7 @@ const useStyles = makeStyles ((theme) => ({
         height: '490px',
         overflowY: 'scroll', 
         [theme.breakpoints.down('md')]: {
-            width: '350px',
+            width: '330px',
         },
 
         [theme.breakpoints.down('sm')]: {
@@ -120,7 +120,7 @@ const SignUpForm = ({goToLogin}) => {
                             <Grid item>
                                 <img
                                     src={Logo}
-                                    width={300}
+                                    width={280}
                                     alt='logo'
                                 />
                             </Grid>

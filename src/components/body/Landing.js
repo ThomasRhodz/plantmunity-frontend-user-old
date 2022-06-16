@@ -5,9 +5,13 @@ import Typography from "@material-ui/core/Typography";
 import Background from '../../images/Background.png'
 import LandingImage from '../../images/LandingImage.png'
 import FeatureCard from '../card/FeatureCard';
-import photo from '../../images/icons/photo.png'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const Landing = () => {
+    const theme = useTheme();
+    const belowMedium = useMediaQuery(theme.breakpoints.down('md'));
+    
     const styles = {
         paperContainer: {
             backgroundImage: `url(${Background})`,
@@ -53,36 +57,38 @@ const Landing = () => {
     });
 
     return (
-        <Grid container direction='column' alignItems='center' sx={{width:'100%', backgroundColor:'red'}}>
+        <Grid container direction='column' alignItems='center' sx={{width:'100%', height: '100%', backgroundColor:'red'}}>
             
             {/**Landing Intro */}
             <Grid item sx={{width:'100%'}}>
-                <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: 575, paddingLeft:5, paddingRight: 5}}>
-                    <Grid  container direction='row' alignItems='center' sx={{width:'100%', height: 500}}>
-                        <Grid item sx={{flexGrow:1, height: 450, padding: 5}}>
-                            <Grid container direction='column'>
+                <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {sm: 1000, md:'100%'}, paddingLeft:5, paddingRight: 5, paddingBottom: 5}}>
+                    <Grid  container direction={belowMedium? 'column' : 'row'} alignItems='center' sx={{width:'100%', height: '100%'}} >
+                        <Grid item sx={{flexGrow:{sm:0, md:1}, height: {sm:500, md:480}, padding: 5, width: {sm:'100%',md: 700}}}>
+                            <Grid container direction='column' alignItems={belowMedium? 'center': ''} sx={{ width:'100%'  }}>
                                 <Grid item>
                                     <Typography
                                     variant='h6'
+                                    align={belowMedium? 'center': 'justify'}
                                     style={{fontFamily:'"Segoe UI"', color:'white'}}
                                     gutterBottom
                                     >
                                         Social-Ecommerce    
                                     </Typography>
                                 </Grid>
-                                <Grid item sx={{width: 500}}>
+                                <Grid item sx={{width: {sm:500, md:500}}}>
                                     <Typography
                                     variant='h2'
+                                    align={belowMedium? 'center': ''}
                                     style={{fontFamily:'"Segoe UI"', fontWeight: 'bold', color:'white'}}
                                     gutterBottom
                                     >
                                     { "BUY, SELL & SHARE PLANTLY CONTENTS "}   
                                     </Typography>
                                 </Grid>
-                                <Grid item sx={{width:600}}>
+                                <Grid item sx={{width:{sm:500, md:600}}}>
                                     <Typography
                                         variant='h6'
-                                        align='justify'
+                                        align={belowMedium? 'center': 'justify'}
                                         style={{fontFamily:'-apple-system', color:'#63543a'}}
                                         gutterBottom
                                     >
@@ -90,19 +96,34 @@ const Landing = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid sx={{height:10}}/>
-                                <Grid item sx={{width:600}}>
-                                    <Button
-                                        onClick={()=>{navigate('/signup')}}
-                                        variant="contained"
-                                        sx={{ width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: 20, fontWeight: 'bold' }}
-                                    >
-                                        Sign Up
-                                    </Button>
+                                <Grid item sx={{width:{sx:400, md:600}}}>
+                                    <Grid container direction='row' spacing={3}>
+                                        <Grid item>
+                                            <Button
+                                                onClick={()=>{navigate('/signup')}}
+                                                variant="contained"
+                                                sx={{ width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: 20, fontWeight: 'bold' }}
+                                            >
+                                                Sign Up
+                                            </Button>
+                                        </Grid>
+                                        <Grid item sx={{ display:{sm: 'flex', md:'none'} }}>
+                                            <Button
+                                                onClick={()=>{navigate('/login')}}
+                                                variant="contained"
+                                                sx={{ width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: 20, fontWeight: 'bold' }}
+                                            >
+                                                Login
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+
+                                    
                                 </Grid>
                             </Grid>
-
                         </Grid>
-                        <Grid item sx={{flexGrow:1, height: 450}}>
+                       
+                        <Grid item sx={{flexGrow:{sx:0, sm:0, md:1}, height: 450}}>
                             <Grid container direction='column' alignItems='center'>
                                 <img src={LandingImage} width={500} height={500} alt='Intro' />
                             </Grid>
@@ -112,7 +133,7 @@ const Landing = () => {
             </Grid> {/** End of Landing Intro */}
 
             {/**Services and Features */}
-            <Grid item sx={{width: '100%', height:550, backgroundColor: 'white', paddingTop:5}}>
+            <Grid item sx={{width: '100%', height:{sm:'100%', md:"100%"}, backgroundColor: 'white', paddingTop:5, paddingBottom:5}}>
                 <Grid container direction='column' alignItems='center' sx={{width: '100%'}}>
                     <Grid item>
                         <Typography
@@ -144,7 +165,7 @@ const Landing = () => {
                     </Grid>
                     <Grid sx={{height:40}}/>
                     <Grid item>
-                       <Grid container direction='row' spacing={5}>
+                       <Grid container direction={belowMedium ? 'column': 'row'} spacing={5} alignItems='center'>
                             {renderFeatures}
                        </Grid>
                     </Grid>
