@@ -57,11 +57,11 @@ const Landing = () => {
     });
 
     return (
-        <Grid container direction='column' alignItems='center' sx={{width:'100%', height: '100%', backgroundColor:'red'}}>
+        <Grid container direction='column' alignItems='center' sx={{width:'100%', height: '100%'}}>
             
             {/**Landing Intro */}
             <Grid item sx={{width:'100%'}}>
-                <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {sm: 1000, md:'100%'}, paddingLeft:5, paddingRight: 5, paddingBottom: 5}}>
+                <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {sm: 1000, md:'100%'}, paddingLeft:5, paddingRight: 5, paddingBottom: 5, paddingTop:{sm:0, md:5}}}>
                     <Grid  container direction={belowMedium? 'column' : 'row'} alignItems='center' sx={{width:'100%', height: '100%'}} >
                         <Grid item sx={{flexGrow:{sm:0, md:1}, height: {sm:500, md:480}, padding: 5, width: {sm:'100%',md: 700}}}>
                             <Grid container direction='column' alignItems={belowMedium? 'center': ''} sx={{ width:'100%'  }}>
@@ -129,6 +129,7 @@ const Landing = () => {
                             </Grid>
                         </Grid>
                     </Grid>
+                    <Grid sx={{height:50}}/>
                 </Paper>
             </Grid> {/** End of Landing Intro */}
 
