@@ -14,21 +14,21 @@ export const userSlice = createSlice({
         setUser: (state, action) => {
             state.user = action.payload
         },
-        setFirstName: (state, action) => {
-            state.firstName = action.payload
-        },
-        setLastName: (state, lName) => {
-            state.lastName = lName.payload
-        },
-        setUserName: (state, uName) => {
-            state.userName = uName.payload
-        },
-        setPassword: (state, password) => {
-            state.password = password.payload
-        },
-        setEmail: (state, email) => {
-            state.email = email.payload
-        },
+        // setFirstName: (state, action) => {
+        //     state.firstName = action.payload
+        // },
+        // setLastName: (state, lName) => {
+        //     state.lastName = lName.payload
+        // },
+        // setUserName: (state, uName) => {
+        //     state.userName = uName.payload
+        // },
+        // setPassword: (state, password) => {
+        //     state.password = password.payload
+        // },
+        // setEmail: (state, email) => {
+        //     state.email = email.payload
+        // },
     }
 });
 

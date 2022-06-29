@@ -13,7 +13,7 @@ import PostCard from '../card/PostCard';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { useUsersQuery, useUserQuery } from '../../services/userApi'
+
 
 const useStyles = makeStyles((theme) =>
   ({
@@ -96,8 +96,6 @@ const ProfileFeed = () => {
     setValue(newValue);
     // console.log(newValue)
   };
-
-  const { data, error, isLoading, isFetching, isSuccess, } = useUsersQuery();
 
   return (
     <React.Fragment>
@@ -200,18 +198,7 @@ const ProfileFeed = () => {
 
           <Grid item sx={value===1?{display:'flex', backgroundColor: '#f6f7f6', width:'100%'} : {display:'none'}}>
             <Grid container direction='column' alignItems={'center'}>
-              {isLoading && "Loading..."}
-              {isFetching && "please wait, fetching the data..."}
-              {error && "Sorry, Something went wrong..."}
-              {isSuccess &&
-                data &&
-                data.data.map((user) => (
-                  <Grid item key={user.id}> 
-                    <Typography variant={matches?'h6':'h4'} fontFamily='apple-system' >
-                     { user.email}
-                    </Typography>
-                    <span><UserDetail id={user.id}/></span>
-                  </Grid>))}
+              
             </Grid>
           </Grid>
           
@@ -220,11 +207,5 @@ const ProfileFeed = () => {
     </React.Fragment>
   )
   
-}
-export const UserDetail = ({id}) => {
-  const {data} = useUserQuery(id);
-  return (
-    <pre> {JSON.stringify(data, undefined, 2)} </pre>
-  )
 }
 export default ProfileFeed

@@ -5,6 +5,7 @@ import _ from "lodash/fp";
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/user';
 import { navigate } from 'gatsby';
+import { useAddUserMutation } from '../../services/userApi'
 
 import Button from '../basic/Button';
 import TextField from '@mui/material/TextField';
@@ -78,6 +79,8 @@ const useStyles = makeStyles ((theme) => ({
 const SignUpForm = ({goToLogin}) => {
     // const {user} = useSelector((state) => state.user)
 
+    const [addUser] = useAddUserMutation();
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -100,6 +103,18 @@ const SignUpForm = ({goToLogin}) => {
             password: data.password,
             email:data.email
         }));
+
+        const user = {
+            'first_name': data.firstName,
+            'last_name': data.lastName,
+            'username': data.userName,
+            'email': data.email,
+            'password': data.password
+        };
+
+        addUser(user)
+        // console.log(user)
+        
         handleClickOpen()
     }
     return (
@@ -338,6 +353,7 @@ const SignUpForm = ({goToLogin}) => {
                 
                 <DialogContent>
                     <Grid container direction='column' alignItems={'center'} sx={{width:'100%'}}>
+                        
                         <Grid item sx={{ height: 100}}>
                             <img
                                 src={Check}

@@ -20,9 +20,17 @@ import { makeStyles } from "@material-ui/core/styles";
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import YardIcon from '@mui/icons-material/Yard';
 
+//For Form
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import post, { setPost } from '../../redux/post';
+import { useAddPostMutation } from '../../services/postApi'
+
 
 const Input = styled('input')({
-  display: 'none',
+    visibility: 'hidden'
+  
 });
 
 
@@ -34,20 +42,23 @@ const useStyles = makeStyles((theme) =>
         border: 'none',
         outline: 'none',
         height: '200px',
-        resize: 'none'
+        resize: 'none',
+        backgroundColor:'#f6f7f6'
     },
     uploadHolder:{
-        width: '600px',
-        height: '200px',
+        width:'100%',
+        height: '100%',
     },
     uploadButton:{
         border: "1px solid #58a776",
         width:'500px',
         height: '85px',
+        overflow: 'hidden'
     },
     image: {
         width:'500px',
-        height: '200px',
+        height: '300px',
+        objectFit:'cover',
         border: "1px solid #58a776",
     },
 }));
@@ -55,12 +66,28 @@ const useStyles = makeStyles((theme) =>
 //The actual component
 const CreatePost = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {post} = useSelector((state) => state.post)
+
+    const [addPost] = useAddPostMutation();
+
+    const {register, handleSubmit,  formState: { errors }} = useForm({criteriaMode: "all"});
+
+    const onSubmit = (data) => {
+
+        const postInstance = {
+            'post_caption': data.caption,
+            'image': post.post
+        };
+        addPost(postInstance)
+        console.log('success')
+    } 
 
     //Initialization for image
     const [imageUpload, setImageUpload] = useState('');
     //State for opening the dialog and image (after clicking upload button)
     const [open, setOpen] = React.useState(false);
-    const [image, setImage] = React.useState(false);
+    const [images, setImage] = React.useState(false);
 
     //function for opening and closing the dialog
     const handleClickOpen = () => {
@@ -77,6 +104,10 @@ const CreatePost = () => {
             reader.onload = function(e){
                 setImageUpload(e.target.result)
                 setImage(true)
+                console.log(e.target.result)
+                dispatch(setPost({
+                    post: e.target.result
+                }))
             }
             reader.readAsDataURL(e.target.files[0])
         }
@@ -111,54 +142,56 @@ const CreatePost = () => {
             </Card>
 
             {/* A dialog that opens for creating a post*/}
-            <Dialog open={open} onClose={handleClose}>
+            <Dialog open={open} onClose={handleClose} >
                 <DialogTitle>Create a post</DialogTitle>
 
-                <Grid container direction='column' alignItems='center' justify='center' style={{padding:20}}>
-                    {/* Text Area for writing a caption*/}
-                    <Grid item >
-                        <TextareaAutosize
-                            style={{ width: 500 }}
-                            maxRows={10}
-                            aria-label="maximum height"
-                            placeholder="What's your plantly story?"
-                            className={classes.postCaption}
-                            
-                        />
-                    </Grid>
-                    <div style={{height:10}} />
+                <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
+                    <Grid container direction='column' alignItems='center' justify='center' style={{padding:20, width:'100%'}}>
+                        {/* Text Area for writing a caption*/}
+                        <Grid item sx={{ padding:1, backgroundColor:'#f6f7f6', borderRadius:2 }}>
+                            <TextareaAutosize
+                                style={{ width: 485, padding:2 }}
+                                maxRows={10}
+                                aria-label="maximum height"
+                                placeholder="What's your plantly story?"
+                                className={classes.postCaption}
+                                {...register('caption', {required: 'Required'})}
+                                
+                            />
+                        </Grid>
+                        <div style={{height:10}} />
 
-                    {/* For Image preview*/}
-                    <Grid item display={image ? 'flex': 'none'}>
-                        <DialogContent>
-                            <Grid container className={classes.uploadHolder}> 
-                                <Grid item className={classes.imageHolder}>
-                                    <img src={imageUpload} alt='uploaded_image'  className={classes.image} />
-                                </Grid>
-                            </Grid>  
-                        </DialogContent>
-                    </Grid>
+                        {/* For Image preview*/}
+                        <Grid item display={images ? 'flex': 'none'} sx={{ width:'100%' }}>
+                            <DialogContent>
+                                <Grid container className={classes.uploadHolder}> 
+                                    <Grid item className={classes.imageHolder}>
+                                        <img src={imageUpload} alt='uploaded_image'  className={classes.image} />
+                                    </Grid>
+                                </Grid>  
+                            </DialogContent>
+                        </Grid>
 
-                    {/* For Uploading Image*/}
-                    <Grid item display={image ? 'flex': 'flex'} className={classes.uploadButton}>
-                        <DialogContent>
-                            <Stack alignItems="center" spacing={2}>
-                                <label htmlFor="contained-button-file">
-                                    <Input accept="image/*" id="contained-button-file" type="file" onChange={handleImageChange} />
-                                    
-                                    <Button variant='contained' onChangeHandler={() => handleImageChange()} color='#efeff4' text={"Choose an image to upload"} textColor='#58a776'  btnWidth='300px' btnSize='large' btnComponent='span' startingIcon={<AddAPhotoIcon size='large'/>} />
-                                </label>
-                            </Stack>
-                        </DialogContent>
+                        {/* For Uploading Image*/}
+                        <Grid item display={images ? 'flex': 'flex'} className={classes.uploadButton}>
+                            <DialogContent sx={{ overflow: 'hidden' }}>
+                                <Stack alignItems="center" spacing={2}>
+                                    <label htmlFor="contained-button-file">
+                                        <Button variant='contained' onChangeHandler={() => handleImageChange()} color='#efeff4' text={"Choose an image to upload"} textColor='#58a776'  btnWidth='300px' btnSize='large' btnComponent='span' startingIcon={<AddAPhotoIcon size='large'/>} autofocus />
+                                    </label>
+                                    <Input  {...register('picture', {required: 'Required'})} accept="image/*" multiple  id="contained-button-file" type="file" onChange={handleImageChange} />
+                                </Stack>
+                                {/* <input {...register('picture', {required: 'Required'})} accept="image/*" type="file" onChange={handleImageChange}/> */}
+                            </DialogContent>
+                        </Grid>
                     </Grid>
-                </Grid>
-                
-                
-                <DialogActions>
-                    <Button  text={'Discard'} clickHandler={()=>handleClose()} color='transparent'/>
-                    <Button  text={'Post'} clickHandler={()=>handleClose()} color='transparent'/>
-                </DialogActions>
-        </Dialog>
+                    
+                    <DialogActions>
+                        <Button  type='button' textColor='#58a776' text={'Discard'} clickHandler={()=>handleClose()} color='transparent'/>
+                        <Button variant='contained'  color='#58a776' text={"Post"} textColor='white'  btnWidth='140px' type='submit'/>
+                    </DialogActions>
+                </form>  
+            </Dialog>
         </React.Fragment>
     );
 };
