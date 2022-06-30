@@ -15,7 +15,9 @@ import { useTheme } from '@mui/material/styles';
 const About = () => {
   const theme = useTheme();
 
-  const belowMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const mvDeterminer = useMediaQuery(theme.breakpoints.down(1450));
+  const coreDeterminer = useMediaQuery(theme.breakpoints.down(1400));
+  const teamDeterminer = useMediaQuery(theme.breakpoints.down(1100));
 
   const coreValues = [
     {
@@ -168,9 +170,9 @@ const About = () => {
               <Divider variant='fullWidth' sx={{ height: 5 }} />
             </Grid>
 
-            <Grid item sx={belowMedium ? {width:'100%', paddingTop:3 } : { paddingTop:3 }}>
+            <Grid item sx={mvDeterminer ? {width:'100%', paddingTop:3 } : { paddingTop:3 }}>
               {/** Mission-Vision */}
-              <Grid container direction={belowMedium ? 'column' : 'row'} alignItems= {belowMedium ? 'center' : ''}>
+              <Grid container direction={mvDeterminer ? 'column' : 'row'} alignItems= {mvDeterminer ? 'center' : ''}>
                 <Grid item sx={{ paddingRight:{sm:0, md:5}, paddingLeft:{sm:0, md:5} }} >
                   <MissionStatement />
                 </Grid>
@@ -206,10 +208,13 @@ const About = () => {
                 </Typography>
             </Grid>
             <Grid item sx={{height:30}}/>
-            <Grid item sx={{width:'100%'}}>
-              <Grid container direction='row' alignItems='center' sx={{width:'100%'}}>
+            <Grid item >
+              <Grid container direction='row' alignItems='center' sx={coreDeterminer? {width:{xs:450, sm:450, md:800}}:{width:1500}}>
                 <Grid item sx={{width:'100%'}}>
-                  <Masonry sx={{width:'100%'}} columns={belowMedium?3:6} spacing={2}>
+                  <Masonry sx={{width:'100%', display:{xs:'none', sm:'none', md:'flex'}}} columns={coreDeterminer ? 3 :6} spacing={2} alignItems='center' >
+                    {renderCoreValues}
+                  </Masonry>
+                  <Masonry sx={{width:'100%', display:{xs:'flex', sm:'flex', md:'none'} }} columns={2} spacing={2} alignItems='center'>
                     {renderCoreValues}
                   </Masonry>
                 </Grid>
@@ -242,7 +247,7 @@ const About = () => {
             <Grid item sx={{height:40}}/>
             
             <Grid item>
-              <Grid container direction={belowMedium ? 'column' : 'row'} alignItems='center' spacing={10}>
+              <Grid container direction={teamDeterminer ? 'column' : 'row'} alignItems='center' spacing={10}>
                 {renderTeamMember}
               </Grid>
             </Grid>

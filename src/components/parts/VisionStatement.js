@@ -2,10 +2,14 @@ import React from 'react'
 import { Grid } from '@mui/material'
 import Typography from "@material-ui/core/Typography";
 import Icon from '../../images/icons/vision.png'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 const VisionStatement = () => {
+    const theme = useTheme();
+    const mvDeterminer = useMediaQuery(theme.breakpoints.down(1450));
   return (
-    <Grid container direction='column' alignItems='center' sx={{ width:500, height: '100%', backgroundColor: 'white' }} >
+    <Grid container direction='column' alignItems='center' sx={mvDeterminer ? { width:{xs:400, sm:500, md:600}, height: '100%', backgroundColor: 'white' } : { width:500, height: '100%', backgroundColor: 'white' }} >
         <Grid item sx={{ padding:3 }}>
             <img src={Icon} alt="Logo" width="110px" height="90px"/>
         </Grid>

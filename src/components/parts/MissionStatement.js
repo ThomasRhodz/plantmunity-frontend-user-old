@@ -5,7 +5,7 @@ import Icon from '../../images/icons/mission.png'
 
 const MissionStatement = () => {
   return (
-    <Grid container direction='column' alignItems='center' sx={{ width:600, height: '100%', backgroundColor: 'white' }} >
+    <Grid container direction='column' alignItems='center' sx={{ width:{xs:400, sm:500, md:600}, height: '100%', backgroundColor: 'white' }} >
         <Grid item sx={{ padding:3 }}>
             <img src={Icon} alt="Logo" width="110px" height="90px"/>
         </Grid>
