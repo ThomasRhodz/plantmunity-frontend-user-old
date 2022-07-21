@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const postApi = createApi ({
-    reducerPath:"postApi",
+export const forumApi = createApi ({
+    reducerPath:"forumApi",
     baseQuery: fetchBaseQuery({baseUrl:'http://127.0.0.1:8001/api/'}),
     endpoints: (builder) => ({
 
-        addPost: builder.mutation({
+        addForum: builder.mutation({
             query(body) {
                 return {
-                    url: 'post',
+                    url: 'forum',
                     method: 'POST',
                     body,
                 };
@@ -20,4 +20,4 @@ export const postApi = createApi ({
     })
 })
 
-export const {useAddPostMutation} = postApi;
+export const {useAddForumMutation} = forumApi;

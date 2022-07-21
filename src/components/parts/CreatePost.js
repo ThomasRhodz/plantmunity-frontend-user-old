@@ -24,7 +24,7 @@ import YardIcon from '@mui/icons-material/Yard';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import post, { setPost } from '../../redux/post';
+import { setPost } from '../../redux/post';
 import { useAddPostMutation } from '../../services/postApi'
 
 
@@ -165,7 +165,7 @@ const CreatePost = () => {
                         <Grid item display={images ? 'flex': 'none'} sx={{ width:'100%' }}>
                             <DialogContent>
                                 <Grid container className={classes.uploadHolder}> 
-                                    <Grid item className={classes.imageHolder}>
+                                    <Grid item >
                                         <img src={imageUpload} alt='uploaded_image'  className={classes.image} />
                                     </Grid>
                                 </Grid>  

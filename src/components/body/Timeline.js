@@ -83,7 +83,7 @@ const Timeline = () => {
                   </Grid>
               </Grid>
               {/** Grid item that the right side of the interface where ads and other possible components can be placed */}
-              <Grid item position='fixed' sx={{marginLeft:{sm:15,md:105}}}>
+              <Grid item position='fixed' sx={{marginLeft:{sm:15,md:125}, height:620, overflowY: 'auto' }}>
                   <SideAds />
               </Grid>
           </Grid>

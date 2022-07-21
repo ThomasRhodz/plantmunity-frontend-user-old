@@ -18,6 +18,7 @@ const About = () => {
   const mvDeterminer = useMediaQuery(theme.breakpoints.down(1450));
   const coreDeterminer = useMediaQuery(theme.breakpoints.down(1400));
   const teamDeterminer = useMediaQuery(theme.breakpoints.down(1100));
+  const extraSmall = useMediaQuery(theme.breakpoints.down(600));
 
   const coreValues = [
     {
@@ -90,7 +91,7 @@ const About = () => {
       github:'Yanna22',
       address:'Cabantian, Davao City',
       coverImage:'https://wallpaperaccess.com/full/812553.jpg',
-      userImage:'https://scontent.fmnl4-4.fna.fbcdn.net/v/t39.30808-6/277996966_182226144133860_6047815247127755952_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeFYVrud_zH2psKcoZ9A6gwW1ByBJgu-hbvUHIEmC76Fu0x0QIPFiG6ICndsW8OWWGgIPMBo8yQVj2V9gDQVZicH&_nc_ohc=3y7FrLvj1r0AX_yNFIg&_nc_ht=scontent.fmnl4-4.fna&oh=00_AT-jlQkJHiY6vlkPxznH_0q11cfAXTAZEWvhLX3R_11XAQ&oe=62C192DC',
+      userImage:'https://scontent-hkt1-2.xx.fbcdn.net/v/t39.30808-6/277996966_182226144133860_6047815247127755952_n.jpg?stp=dst-jpg_p480x480&_nc_cat=107&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeFYVrud_zH2psKcoZ9A6gwW1ByBJgu-hbvUHIEmC76Fu0x0QIPFiG6ICndsW8OWWGgIPMBo8yQVj2V9gDQVZicH&_nc_ohc=oKtWzTao0WQAX8w1DEv&_nc_ht=scontent-hkt1-2.xx&oh=00_AT_ow72Wfs7w1kYIxtQ9bUjMTeqFSy0d4XDPnstNsp0E4g&oe=62C7819C',
 
     },
   ];
@@ -113,12 +114,12 @@ const About = () => {
   };
   return (
     <Grid container direction='column' alignItems='center' sx={{ width: '100%'}}>
-        <Grid item sx={{ width: '100%', height: 250, backgroundColor:'white'}}>
-          <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {sm: 300, md: 250}, borderRadius: 0, padding:8}}>
-            <Grid container direction='column' alignItems='center' sx={{ width: '100'}}>
+        <Grid item sx={{ width: '100%',height: {xs: '100%', sm: 300, md: 250}, backgroundColor:'white'}}>
+          <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {xs: '100%', sm: 300, md: 250}, borderRadius: 0, padding:8}}>
+            <Grid container direction='column' alignItems='center' sx={{ width: '100%'}}>
               <Grid item >
                 <Typography
-                  variant='h6'
+                  variant={extraSmall ? 'subtitle1' : 'h6'}
                   style={{fontFamily:'"Segoe UI"', color:'white', letterSpacing:8}}
                   gutterBottom
                 >
@@ -127,7 +128,8 @@ const About = () => {
               </Grid>
               <Grid item sx={{ marginTop:'-20px' }}>
                 <Typography
-                  variant='h1'
+                  variant={extraSmall ? 'h3' : 'h1'}
+                  align='center'
                   style={{fontFamily:'"Segoe UI"', fontWeight: 'bold', color:'white'}}
                   gutterBottom
                 >
@@ -146,7 +148,7 @@ const About = () => {
             
             <Grid item>
               <Typography
-                variant='h4'
+                variant={extraSmall ? 'h5' : 'h4'}
                 style={{fontFamily:'"Segoe UI"', color:'#2b332e', fontWeight: 'bold', letterSpacing:5}}
                 gutterBottom
               >
@@ -156,7 +158,7 @@ const About = () => {
             <Grid sx={{height:10}}/>
             <Grid item sx={{ paddingBottom:3 }}>
               <Typography
-                variant='h6'
+                variant={extraSmall ? 'body1' : 'h6'}
                 align='center'
                 style={{fontFamily:'-apple-systems', color:'#2b332e'}}
                 gutterBottom
@@ -167,7 +169,7 @@ const About = () => {
             </Grid>
 
             <Grid item sx={{width:'100%'}}>
-              <Divider variant='fullWidth' sx={{ height: 5 }} />
+              <Divider variant='fullWidth' style={{ height: 2 }} />
             </Grid>
 
             <Grid item sx={mvDeterminer ? {width:'100%', paddingTop:3 } : { paddingTop:3 }}>
@@ -191,16 +193,16 @@ const About = () => {
           <Grid container direction='column' alignItems='center' sx={{ width:'100%' }}>
             <Grid item>
               <Typography
-                  variant='h6'
+                  variant={extraSmall ? 'subtitle1' : 'h6'}
                   style={{fontFamily:'"Segoe UI"', color:'white', letterSpacing:4}}
                   gutterBottom
                 >
-                    OUR COMPANY'S  
+                    OUR GROUP'S  
                 </Typography>
             </Grid>
-            <Grid item sx={{ marginTop: '-20px' }}>
+            <Grid item sx={{ marginTop: {xs:'-15px', sm:'-20px', md:'-20px'} }}>
               <Typography
-                  variant='h2'
+                  variant={extraSmall ? 'h3' : 'h2'}
                   style={{fontFamily:'"Segoe UI"', fontWeight: 'bold', color:'white'}}
                   gutterBottom
                 >
@@ -209,12 +211,12 @@ const About = () => {
             </Grid>
             <Grid item sx={{height:30}}/>
             <Grid item >
-              <Grid container direction='row' alignItems='center' sx={coreDeterminer? {width:{xs:450, sm:450, md:800}}:{width:1500}}>
+              <Grid container direction='row' alignItems='center' sx={coreDeterminer? {width:{xs:360, sm:450, md:800}}:{width:1500}}>
                 <Grid item sx={{width:'100%'}}>
-                  <Masonry sx={{width:'100%', display:{xs:'none', sm:'none', md:'flex'}}} columns={coreDeterminer ? 3 :6} spacing={2} alignItems='center' >
+                  <Masonry sx={{width:'100%', display:{xs:'none', sm:'none', md:'flex'}}} columns={coreDeterminer ? 3 :6} spacing={2} >
                     {renderCoreValues}
                   </Masonry>
-                  <Masonry sx={{width:'100%', display:{xs:'flex', sm:'flex', md:'none'} }} columns={2} spacing={2} alignItems='center'>
+                  <Masonry sx={{width:'100%', display:{xs:'flex', sm:'flex', md:'none'} }} columns={2} spacing={2}>
                     {renderCoreValues}
                   </Masonry>
                 </Grid>
@@ -227,16 +229,17 @@ const About = () => {
           <Grid container direction='column' alignItems='center' sx={{ width:'100%' }}>
             <Grid item>
                 <Typography
-                    variant='h6'
+                    variant={extraSmall ? 'subtitle1' : 'h6'}
                     style={{fontFamily:'"Segoe UI"', color:'#2b332e', letterSpacing:4}}
                     gutterBottom
                   >
                       MEET OUR 
                   </Typography>
               </Grid>
-              <Grid item sx={{ marginTop: '-20px' }}>
+              <Grid item sx={{ marginTop: {xs:'-15px', sm:'-20px', md:'-20px'} }}>
                 <Typography
-                    variant='h2'
+                    align='center'
+                    variant={extraSmall ? 'h4' : 'h2'}
                     style={{fontFamily:'"Segoe UI"', fontWeight: 'bold', color:'#2b332e'}}
                     gutterBottom
                   >

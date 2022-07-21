@@ -11,6 +11,7 @@ import { useTheme } from '@mui/material/styles';
 const Landing = () => {
     const theme = useTheme();
     const belowMedium = useMediaQuery(theme.breakpoints.down('md'));
+    const extraSmall = useMediaQuery(theme.breakpoints.down(600));
     
     const styles = {
         paperContainer: {
@@ -61,9 +62,9 @@ const Landing = () => {
             
             {/**Landing Intro */}
             <Grid item sx={{width:'100%'}}>
-                <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {sm: 1000, md:'100%'}, paddingLeft:5, paddingRight: 5, paddingBottom: 5, paddingTop:{sm:0, md:5}}}>
+                <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {sm: 1000, md:'100%'}, paddingLeft:{xs: 2, sm:5, md:5}, paddingRight: {xs: 2, sm:5, md:5}, paddingBottom: {xs: 2, sm:5, md:5}, paddingTop:{xs: 0, sm:0, md:5}}}>
                     <Grid  container direction={belowMedium? 'column' : 'row'} alignItems='center' sx={{width:'100%', height: '100%'}} >
-                        <Grid item sx={{flexGrow:{sm:0, md:1}, height: {sm:500, md:480}, padding: 5, width: {sm:'100%',md: 700}}}>
+                        <Grid item sx={{flexGrow:{sm:0, md:1}, height: {sm:500, md:480}, padding: {xs:1, sm: 5, md:5}, paddingTop: {xs:5, sm: 5, md:5}, width: {sm:'100%',md: 700}}}>
                             <Grid container direction='column' alignItems={belowMedium? 'center': ''} sx={{ width:'100%'  }}>
                                 <Grid item>
                                     <Typography
@@ -77,8 +78,8 @@ const Landing = () => {
                                 </Grid>
                                 <Grid item sx={{width: {sm:500, md:500}}}>
                                     <Typography
-                                    variant='h2'
-                                    align={belowMedium? 'center': ''}
+                                    variant={extraSmall ? 'h3' : 'h2'}
+                                    align={belowMedium? 'center': 'left'}
                                     style={{fontFamily:'"Segoe UI"', fontWeight: 'bold', color:'white'}}
                                     gutterBottom
                                     >
@@ -87,7 +88,7 @@ const Landing = () => {
                                 </Grid>
                                 <Grid item sx={{width:{sm:500, md:600}}}>
                                     <Typography
-                                        variant='h6'
+                                        variant={extraSmall ? 'subtitle1' : 'h6'}
                                         align={belowMedium? 'center': 'justify'}
                                         style={{fontFamily:'-apple-system', color:'#63543a'}}
                                         gutterBottom
@@ -96,22 +97,23 @@ const Landing = () => {
                                     </Typography>
                                 </Grid>
                                 <Grid sx={{height:10}}/>
-                                <Grid item sx={{width:{sx:400, md:600}}}>
-                                    <Grid container direction='row' spacing={3}>
+                                <Grid item sx={{width:{xs: 280, sm:400, md:600}}}>
+                                    <Grid container direction= 'row' alignItems='center' >
                                         <Grid item>
                                             <Button
                                                 onClick={()=>{navigate('/signup')}}
                                                 variant="contained"
-                                                sx={{ width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: 20, fontWeight: 'bold' }}
+                                                sx={{ width:{xs: 130, sm:150, md:150}, height:{xs: 40, sm:45, md:45}, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: {xs: 16, sm:20, md:20}, fontWeight: 'bold' }}
                                             >
                                                 Sign Up
                                             </Button>
                                         </Grid>
+                                        <Grid sx={{ width:{xs:20, sm:10, md:10}} }/>
                                         <Grid item sx={{ display:{sm: 'flex', md:'none'} }}>
                                             <Button
                                                 onClick={()=>{navigate('/login')}}
                                                 variant="contained"
-                                                sx={{ width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: 20, fontWeight: 'bold' }}
+                                                sx={{ width:{xs: 130, sm:150, md:150}, height:{xs: 40, sm:45, md:45}, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: {xs: 16, sm:20, md:20}, fontWeight: 'bold' }}
                                             >
                                                 Login
                                             </Button>
@@ -123,9 +125,13 @@ const Landing = () => {
                             </Grid>
                         </Grid>
                        
-                        <Grid item sx={{flexGrow:{sx:0, sm:0, md:1}, height: 450}}>
-                            <Grid container direction='column' alignItems='center'>
+                        <Grid item sx={{flexGrow:{xs:0, sm:0, md:1}, height: {xs:'100%', sm:450, md:450}}}>
+                            <Grid container direction='column' alignItems='center' sx={{ display: {xs: 'none', sm: 'flex', md:'flex'} }}>
                                 <img src={LandingImage} width={500} height={500} alt='Intro' />
+                            </Grid>
+
+                            <Grid container direction='column' alignItems='center' sx={{ display: {xs: 'flex', sm: 'none', md:'none'} }}>
+                                <img src={LandingImage} width={300} height={300} alt='Intro' />
                             </Grid>
                         </Grid>
                     </Grid>
@@ -154,7 +160,7 @@ const Landing = () => {
                             { "Your needs are our purpose."}     
                         </Typography>
                     </Grid>
-                    <Grid item sx={{width:600}}>
+                    <Grid item sx={{width:{xs:300, sm:600, md:600}}}>
                         <Typography
                             variant='body1'
                             align='center'

@@ -1,50 +1,79 @@
-import React from 'react';
-import Box from '@mui/material/Box';
+//Components
+import React, {useState} from 'react';
 import Masonry from '@mui/lab/Masonry';
-import Grid from '@mui/material/Grid';
-import InputBase from '@mui/material/InputBase';
-import Divider from "@material-ui/core/Divider";
-import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
-import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import TextareaAutosize from '@mui/base/TextareaAutosize';
-import FormControl from '@mui/material/FormControl';
-import DialogTitle from '@mui/material/DialogTitle';
-//import DialogContent from '@mui/material/DialogContent';
-// import useMediaQuery from '@mui/material/useMediaQuery';
-// import { useTheme } from '@mui/material/styles';
+import {Stack, Box, TextField, Select, Grid, InputBase, InputLabel, MenuItem} from '@mui/material/';
+import { Typography, Divider} from "@material-ui/core/";
 
+//Reusable Components
 import ForumnCard from '../card/ForumCard';
 import Btn from '../basic/Button';
-import TextField from '../basic/TextField';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
 
 
+
+//Dialog
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+
+// Form and Data Handling
+import { useDispatch, useSelector } from 'react-redux';
+import { setForum } from '../../redux/forum';
+import { useAddForumMutation } from '../../services/forumApi';
+
+import { set, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import FormControl from '@mui/material/FormControl';
+
+//Styling and Icons
 import { styled } from '@mui/material/styles';
-import SearchIcon from '@mui/icons-material/Search';
 import { makeStyles } from "@material-ui/core/styles";
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 
+//Internal Styling
 const useStyles = makeStyles((theme) => ({
   searchBar: {
     display: "flex",
   },
-  postCaption: {
-    width: "325px",
-    fontSize: "15px",
-    // border: 'none',
-    outline: "none",
-    minHeight: "150px",
-    maxHeight: "150px",
-    resize: "none",
-    borderRadius: "5px",
-    padding: 10,
+  uploadButton:{
+    border: "1px solid #58a776",
+    borderRadius: 5,
+    paddingTop:10,
+    paddingBottom:10,
+    width:'100%',
+    height: '100%',
+    overflow: 'hidden'
   },
+
+  image: {
+      width:'330px',
+      height: '160px',
+      objectFit:'cover',
+      border: "1px solid #58a776",
+      borderRadius:5
+  },
+
+  image_mobile: {
+    width:'300px',
+    height: '160px',
+    objectFit:'cover',
+    border: "1px solid #58a776",
+    borderRadius:5
+},
 }));
 
+//Schema: Rules for inputs
+const schema = yup.object({
+  coverPhoto: yup.string().required('Upload your cover photo'), 
+  title: yup.string().required('Please, enter a title'),
+  description: yup.string().max(1000, 'Invalid Phone Number'),
+  visibility: yup.string().required(),
+});
 
+//Search Bar Styling
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -96,12 +125,30 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 
 const Forum = () => {
-  // const theme = useTheme();
-  // const matches = useMediaQuery(theme.breakpoints.down('xs'));
 
+  //For react hook form
+  const {register, handleSubmit,  formState: { errors }} = useForm({criteriaMode: "all"});
+
+  //Using the internal styling
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  
+
+  //For using the function in a redux (Forum.js -> setForum)
+  const dispatch = useDispatch();
+
+  //For using the variable in a redux (Forum.js -> forum.[variable_name])
+  const {forum} = useSelector((state) => state.forum)
+
+  //Renaming the RTK query into shorter name
+  const [addForum] = useAddForumMutation();
+
+  //States
+  const [open, setOpen] = React.useState(false); //-> for open and close of dialog
+  const [images, setImage] = React.useState(false); // -> for previewing of image
+  const [imageUpload, setImageUpload] = useState(''); // -> for setting the value of the image in 64 BaseEncode
+  const [title, setTitle] = React.useState(' ');
+  const [description, setDescription] = React.useState(' ');
+  const [privacy, setPrivacy] = React.useState(1);
+
   //function for opening and closing the dialog
   const handleClickOpen = () => {
     setOpen(true);
@@ -110,15 +157,60 @@ const Forum = () => {
   //Function for closing the create forumn dialog
   const handleClose = () => {
     setOpen(false);
+    setImageUpload(' ');
+    setImage(false);
   };
-
-  //state for initializing the value of the privacy for the forum
-  const [privacy, setPrivacy] = React.useState(1);
 
   //fucntion in changing the value of privacy selected privacy the forumn that the user want to create
   const handleChange = (event) => {
     setPrivacy(event.target.value);
   };
+
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+
+  const handleDescriptionChange = (event) => {
+    setDescription(event.target.value);
+  };
+
+  
+  //function for handling the change of an image upladed as the cover photo
+  function handleImageChange(e) {
+    if(e.target.files && e.target.files[0]){
+        let reader = new FileReader()
+        reader.onload = function(e){
+            setImageUpload(e.target.result); // -> setting the current image
+            setImage(true); // -> setting the preview to true (image will display)
+            dispatch(setForum({
+                forumImage: e.target.result
+            })); // -> setting the forum image with a 64 Base string of the current image, which will be use during upload of the forum
+            
+          }
+        reader.readAsDataURL(e.target.files[0])
+    }
+  }
+
+  const onSubmit = (data) => {
+    console.log(data);
+
+    const forumnInstance = {
+      'title': data.title,
+      'description': data.description,
+      'visibility': data.visibility,
+      'image': forum.forumImage
+    }
+
+    addForum(forumnInstance)
+    console.log(forumnInstance)
+
+    setTitle('')
+    setDescription('')
+    setPrivacy(1)
+    setOpen(false);
+    setImageUpload(' ');
+    setImage(false);
+  }
 
   return (
     //Box serve as the parent component just to hold a main component and the dialog
@@ -126,8 +218,10 @@ const Forum = () => {
       
       {/**Grid container: serve as the parent grid with vertical direction */}
       <Grid container direction='column'>
+
         <Grid item className={classes.searchBar}>
           <Grid container direction='row' style={{paddingRight:15}}> 
+            
             <Grid item sx={{display:{xs:'none', sm:'flex', md:'flex'}}}>
               <Search style= {{float: 'right'}} >
                   <SearchIconWrapper>
@@ -139,80 +233,143 @@ const Forum = () => {
                   />
               </Search>
             </Grid>
+
             <Box sx={{ flexGrow: 1, display:{xs:'none', sm:'flex', md:'flex'}}} />
+
             <Grid item>
               <Btn variant='contained'  color='#efeff4' text={"My forums"} textColor='#58a776'  btnWidth='140px' btnSize='large' btnComponent='span' startingIcon={<ForumOutlinedIcon size='large'/>} />
             </Grid>
             <div style={{width:10}} />
+
             <Grid item>
               <Btn variant='contained'  color='#efeff4' text={"Create a forum"} textColor='#58a776'  btnWidth='165px' btnSize='large' btnComponent='span' startingIcon={<AddOutlinedIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
             </Grid>
-          </Grid>
-        </Grid>
+          </Grid> {/** End of container Row for search bar and button */}
+        </Grid>{/** End  of first grid item */}
+
         <div style={{height:10}} />
         <Divider light variant='middle' />
         <div style={{height:10}} />
+
+        {/** Second Grid item: List of Forums */}
         <Grid item sx={{overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'}, backgroundColor: '#f6f7f6', width:{xs: '100%'}, height: {xs:'100%', sm:350, md:500}}}>
           <Masonry sx={{display:{xs:'none',sm:'flex', md:'flex'}}} columns={3} spacing={2}>
             {renderForum}
           </Masonry>
+          
+          {/** One column for the list of forum that shows in mobile view */}
           <Grid container direction='column' sx={{display:{xs:'flex',sm:'none', md:'none'}}}>
             {renderForum}
-          </Grid>
+          </Grid> 
         </Grid>
-      </Grid>
+      </Grid> {/**End of List of Forums */}
       
-      {/* A dialog that opens for creating a forum*/}
+      {/* A dialog that opens by pressing 'create a forum' button*/}
       <Dialog open={open} onClose={handleClose}>
         
-        <Grid container direction='row' alignItems='center' justify='center' style={{padding:5, paddingBottom:0}}>
-          <Grid item >
+        <Stack direction='column' alignItems='center' sx={{ width: '100%' }}>
+          <Grid item>
             <DialogTitle>Create a forum</DialogTitle>
           </Grid>
-          <Box sx={{flexGrow: 1, width:110}} />
-        </Grid>
-        <Divider light/>
 
-        <Grid container direction='column' alignItems='center' style={{padding:10}}>
+          <Grid item sx={{ width: '100%' }}>
+            <Divider light />
+          </Grid>
+        </Stack>
+
+        <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
+        <Grid container direction='column' alignItems='center' sx={{width: {xs:330, sm: 360, md:360}, padding:2}}>
 
           {/* Forumn Form*/}
-              <Grid item style={{ width:350}}>
-                <TextField label={'Title or Question'}/>
-                <div style={{height:10}} />
-              </Grid>
-              <Grid item >
-                <TextareaAutosize
-                  maxRows={10}
-                  aria-label="maximum height"
-                  placeholder="Any further details?"
-                  className={classes.postCaption}
-                />
-              </Grid>
-              <div style={{height:10}} />
-              <Grid item >
-                <FormControl variant="outlined" sx={{ m: 1, width:350 }}>
-                  <InputLabel id="demo-simple-select-helper-label">Visibility</InputLabel>
-                  <Select
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    label='Visibility'
-                    value={privacy}
-                    onChange={handleChange}
-                  >
-                    <MenuItem value={1}>Public</MenuItem>
-                    <MenuItem value={2}>Follower</MenuItem>
-                    <MenuItem value={3}>Followers and Following</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid item sx={{ width:'100%' }}>
+            <Typography
+              variant={'subtitle1'}
+              style={{fontFamily:'apple-system', color:'#2b332e',}}
+              gutterBottom
+              >
+                Cover Photo:  
+            </Typography> 
+          </Grid>
 
-          <div style={{height:10}} />
+          {/** Image Preview */}
+          <Grid item display={images ? 'flex': 'none'} sx={{ width:'100%' }}>
+            <Grid container> 
+              <Grid item className={classes.imageHolder} sx={{ display:{xs:'none', sm:'flex', md:'flex'} }}>
+                  <img src={imageUpload} alt='uploaded_image'  className={classes.image} />
+              </Grid>
+              <Grid item className={classes.imageHolder} sx={{ display:{xs:'flex', sm:'none', md:'none'} }}>
+                  <img src={imageUpload} alt='uploaded_image'  className={classes.image_mobile} />
+              </Grid>
+            </Grid>  
+          </Grid>
+
+          <Grid style={images?{height:15}:{height:5}} /> 
+          
+          {/** Image Upload */}
+          <Grid item  className={classes.uploadButton}>
+            <Stack direction='column' alignItems="center" spacing={2} sx={{ width:'100%' }}>
+                <input  {...register('picture')} accept="image/*" multiple  id="contained-button-file" type="file" onChange={handleImageChange} />
+            </Stack>
+          </Grid>
+
+          <div style={{height:15}} />
+          
+          <Grid item style={{ width:'100%'}}>
+            <TextField 
+              {...register("title")}
+              label={'Title or Question'} 
+              value={title}
+              onChange={handleTitleChange}
+              style={{ width: '100%' }}
+              size='small'
+            />
+          </Grid>
+
+          <div style={{height:15}} />
+
+          <Grid item style={{ width:'100%'}}>
+            <TextField
+              {...register("description")}
+              label="Any further details?"
+              value={description}
+              onChange={handleDescriptionChange}
+              multiline
+              minRows={3}
+              maxRows={10}
+              size='small'
+              style={{ width: '100%', fontSize:10, fontFamily:'apple-system' }}
+            />
+          </Grid>
+
+          <div style={{height:15}} />
+
+          <Grid item  sx={{ width:'100%' }}>
+            <FormControl variant="outlined" sx={{ width:'100%' }}>
+              <InputLabel id="demo-simple-select-helper-label">Visibility</InputLabel>
+              <Select
+                {...register("visibility")}
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                label='Visibility'
+                size='small'
+                value={privacy}
+                onChange={handleChange}
+              >
+                <MenuItem value={'1'}>Public</MenuItem>
+                <MenuItem value={'2'}>Follower</MenuItem>
+                <MenuItem value={'3'}>Followers and Following</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+
+          <div style={{height:15}} />
         </Grid>
         
-        <DialogActions>
-          <Btn  text={'Discard'} clickHandler={()=>handleClose()} color='transparent'/>
-          <Btn  text={'Post'} clickHandler={()=>handleClose()} color='transparent'/>
+        <DialogActions sx={{ paddingRight:2 }}>
+            <Btn  type={'button'} textColor='#58a776' text={'Discard'} clickHandler={()=>handleClose()} color='transparent'/>
+            <Btn variant='contained'  color='#58a776' text={"Post"} textColor='white'  btnWidth='140px' type={'submit'}/>
         </DialogActions>
+        </form>
       </Dialog>
     </Box>
 

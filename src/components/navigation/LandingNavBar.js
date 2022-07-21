@@ -60,7 +60,7 @@ const LandingNavbar = ({activePage, color}) => {
   
   
     return (
-      <AppBar position="static" elevation={0} sx={color==="transparent" ?{backgroundColor:'transparent', paddingLeft: 5, paddingRight: 5} : {backgroundColor:'#5C6D63', paddingLeft: 5, paddingRight: 5}} >
+      <AppBar position="static" elevation={0} sx={color==="transparent" ?{backgroundColor:'transparent', paddingLeft: 5, paddingRight: 5} : {backgroundColor:'#5C6D63', paddingLeft: {xs:0, sm:3, md:5}, paddingRight: {xs:0, sm:3, md:5}}} >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
 
@@ -103,16 +103,15 @@ const LandingNavbar = ({activePage, color}) => {
               >
                 {/** mapping the array of page as menu item */}
                 {pages.map(({id, pageName, location}) => (
-                  <MenuItem key={id}onClick={()=>{navigate(location)}}>
+                  <MenuItem key={id} onClick={()=>{navigate(location)}}>
                     <Typography textAlign="center" fontFamily={'-apple-system'}>{pageName}</Typography>
                   </MenuItem>
                 ))}
               </Menu> {/** end of menu */}
-            
-           
             </Box>
-            {/** Landing Title for tablet or mobile devices */}
-            <Box  sx={{display: { xs: 'flex', md: 'none' }, flexGrow:1}}>
+            
+            {/** Landing Logo for tablet or mobile devices */}
+            <Box  sx={{display: { xs: 'flex', md: 'none' }}}>
                <img src={logo} alt="Logo" width="120px" height="60px"/>
             </Box>
              

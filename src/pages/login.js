@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@mui/material'
 import LandingNavBar from '../components/navigation/LandingNavBar'
-import LoginForm from '../components/body/LoginForm'
+import LoginForm from '../components/forms/LoginForm'
 
 
 const login = () => {

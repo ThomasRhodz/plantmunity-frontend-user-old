@@ -37,12 +37,12 @@ const DiscoverTab = () => {
   };
   return ( 
     //Grid container: start of Parent components, children component's direction differ base on the size of the screen 
-    <Grid container direction={matches? 'column':'row'} alignItems="center" sx={{ padding: 3, paddingLeft: 0, marginTop: {xs:10,sm:10,md:13}, marginLeft: 'auto', marginRight: 'auto', width:{xs:'375',sm:'840px',md:'1425px'} , height: {xs:'100%',sm:'535px',md:'600px'}, bgcolor: 'background.paper',  }}>
+    <Grid container direction={matches? 'column':'row'} alignItems="center" sx={{ padding: 3, paddingRight:0, paddingLeft: 0, marginTop: {xs:10,sm:10,md:13}, marginLeft: 'auto', marginRight: 'auto', width:{xs:'375',sm:'840px',md:'1425px'} , height: {xs:'100%',sm:'535px',md:'600px'}, bgcolor: 'background.paper',  }}>
        {/* Grid Item (1st): holds the page title and selection tab */}
-      <Grid item>
+      <Grid item sx={{ width: {xs:'100%', sm:'100%', md:200} }}>
 
         {/* Grid container: allows to have a vertical arrangement of title and tab*/}
-        <Grid container direction='column' alignItems='center'>
+        <Grid container direction='column' alignItems='center' sx={{ width: '100%' }}>
           {/*Title*/}
           <Grid item>
             

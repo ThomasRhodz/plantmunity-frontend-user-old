@@ -8,15 +8,16 @@ import { useTheme } from '@mui/material/styles';
 const VisionStatement = () => {
     const theme = useTheme();
     const mvDeterminer = useMediaQuery(theme.breakpoints.down(1450));
+    const extraSmall = useMediaQuery(theme.breakpoints.down(600));
   return (
-    <Grid container direction='column' alignItems='center' sx={mvDeterminer ? { width:{xs:400, sm:500, md:600}, height: '100%', backgroundColor: 'white' } : { width:500, height: '100%', backgroundColor: 'white' }} >
+    <Grid container direction='column' alignItems='center' sx={mvDeterminer ? { width:{xs:300, sm:500, md:600}, height: '100%', backgroundColor: 'white' } : { width:500, height: '100%', backgroundColor: 'white' }} >
         <Grid item sx={{ padding:3 }}>
-            <img src={Icon} alt="Logo" width="110px" height="90px"/>
+            <img src={Icon} alt="Logo" width={extraSmall ? '90' :"110px"} height={extraSmall ? '70' :"90px"}/>
         </Grid>
         
         <Grid item>
             <Typography
-            variant='h5'
+            variant={extraSmall ? 'h6' : 'h5'}
             style={{fontFamily:'"Segoe UI"', color:'#2b332e', fontWeight: 'bold', letterSpacing:1}}
             gutterBottom
             >
@@ -26,7 +27,7 @@ const VisionStatement = () => {
         
         <Grid item>
             <Typography
-            variant='h6'
+            variant={extraSmall ? 'body1' : 'h6'}
             align='justify'
             style={{fontFamily:'-apple-system', color:'#63543a'}}
             gutterBottom

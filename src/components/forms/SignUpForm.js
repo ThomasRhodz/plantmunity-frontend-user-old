@@ -112,7 +112,7 @@ const SignUpForm = ({goToLogin}) => {
             'password': data.password
         };
 
-        addUser(user)
+        // addUser(user)
         // console.log(user)
         
         handleClickOpen()

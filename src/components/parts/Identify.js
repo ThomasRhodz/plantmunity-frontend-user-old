@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) =>
 const Identify = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
-    const matches2 = useMediaQuery(theme.breakpoints.down('xs'));
+    const matches2 = useMediaQuery(theme.breakpoints.down(600));
     const classes = useStyles();
 
     //Initialization for image
@@ -66,9 +66,9 @@ const Identify = () => {
     }
   return (
       <React.Fragment>
-        <Grid container direction={matches2?'column':'row'} alignItems='center' justify='center' sx={{overflowY: {xs: 'hidden', sm: 'hidden', md: 'scroll'}, height:{xs:'100%', sm:400, md:560}}}>
+        <Grid container direction={matches2 ? 'column':'row'} alignItems='center' sx={{ width:'100%', height:{xs:'100%', sm:400, md:560 }}}>
             <Grid item sx={{width:{xs:340, sm: 420, md:580}, height: {xs:420, sm: 400, md:550}}}>
-                <Grid container direction='column' alignItems='center' justify='center' style={{padding:10}}>
+                <Grid container direction='column' alignItems='center' style={{padding:10}}>
                     <Grid item sx={{display:{xs:'none', sm:'flex',md:'flex'}, width:{xs:300, sm: 390, md:530}, height:{xs:70, sm: 50, md:100}}}>
                         <Typography
                             variant={matches?'h6':'h5'}
@@ -154,9 +154,9 @@ const Identify = () => {
                             style={{fontFamily:'Roboto', marginTop: '-10px', color: '#6da58a'}}
                             gutterBottom
                         >
-                        Results:
-                    </Typography>
-                    <Divider/>
+                            Results:
+                        </Typography>
+                        <Divider/>
                     </Grid>
                     <div style={{height:10}} />
                     <Grid item sx={{overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'}, height: {xs:'100%', sm: 340, md:490}}}>
