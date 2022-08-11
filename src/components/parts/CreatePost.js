@@ -81,6 +81,7 @@ const CreatePost = () => {
         };
         addPost(postInstance)
         console.log('success')
+        setOpen(false);
     } 
 
     //Initialization for image
