@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
-import Typography from "@material-ui/core/Typography";
+import { Grid, Typography } from '@mui/material'
 import Fast from '../../images/icons/fast.png'
 import BeBold from '../../images/icons/BeBold.png'
 import Social from '../../images/icons/BuildSocialValues.png'

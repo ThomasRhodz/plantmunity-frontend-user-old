@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid, Stack, Avatar } from '@mui/material'
-import { Typography } from '@material-ui/core'
+import { Grid, Stack, Avatar, Typography } from '@mui/material'
 
 const CommentCard = ({user, date, comment}) => {
   return (

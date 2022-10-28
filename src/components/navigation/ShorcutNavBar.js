@@ -5,7 +5,7 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from '@mui/material/styles';
 
 import {navigate} from 'gatsby';
 
@@ -77,20 +77,14 @@ const ShorcutNavBar = () => {
   ];
 
   //style of the tab
-  const StyledTab = withStyles((theme) => ({
+  const StyledTab = styled(Tb)(() => ({
     root: {
       textTransform: "none",
       fontWeight: theme.typography.fontWeightRegular,
+      fontSize: "18px",
       marginRight: theme.spacing(1),
-      width:'100%',
-      '&:hover': {
-        color: "white",
-        borderRadius:35,
-        backgroundColor:'#f6f7f6'
-      }
     },
-    
-  }))((props) => <Tb {...props} />);
+  }));
 
   //use for ternary operation
   const theme = useTheme();

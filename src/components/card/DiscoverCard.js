@@ -1,19 +1,14 @@
 import React from 'react'
 import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Card from "@material-ui/core/Card";
-import {Grid, Stack, Box, TextField, Button, Typography} from "@mui/material/";
-import CardMedia from "@material-ui/core/CardMedia";
-import { CardActionArea } from '@mui/material';
+import {Grid, Stack, Box, TextField, Button, Typography, CardActionArea, CardMedia, Divider, Tooltip} from "@mui/material/";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
-import {  Divider} from "@material-ui/core/";
 import CloseIcon from '@mui/icons-material/Close';
 import {RiListCheck2} from 'react-icons/ri';
 import CommentCard from './CommentCard';
-import Tooltip from '@mui/material/Tooltip';
 
 //Icons
 import FavoriteIcon from '@mui/icons-material/Favorite';

@@ -4,11 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useSelector} from 'react-redux';
 import { navigate } from 'gatsby';
 
-
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
+import {Grid, TextField, Typography} from '@mui/material/';
+import { makeStyles } from '@mui/styles';
 //import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import Logo from '../../images/PlantmunityLogo.png';
 

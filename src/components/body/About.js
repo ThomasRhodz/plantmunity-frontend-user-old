@@ -1,8 +1,7 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
+import { Grid, Paper, Typography, Divider } from '@mui/material'
 import Masonry from '@mui/lab/Masonry';
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
+
 import Background from '../../images/AboutIntroImage.jpg'
 import MissionStatement from '../parts/MissionStatement';
 import VisionStatement from '../parts/VisionStatement';

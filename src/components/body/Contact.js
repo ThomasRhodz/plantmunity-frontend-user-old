@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Paper, Stack } from '@mui/material'
-import Typography from "@material-ui/core/Typography";
+import { Grid, Paper, Stack, Typography } from '@mui/material'
+
 import Background from '../../images/AboutIntroImage.jpg'
 import ContactIcon from '../../images/icons/contact.png'
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';

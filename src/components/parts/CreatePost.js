@@ -16,13 +16,13 @@ import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 //For Styling
 import { styled } from '@mui/material/styles';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import YardIcon from '@mui/icons-material/Yard';
 
 //For Form
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
+//import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPost } from '../../redux/post';
 import { useAddPostMutation } from '../../services/postApi'
@@ -30,7 +30,6 @@ import { useAddPostMutation } from '../../services/postApi'
 
 const Input = styled('input')({
     visibility: 'hidden'
-  
 });
 
 

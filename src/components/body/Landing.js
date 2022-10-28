@@ -1,7 +1,6 @@
 import React from 'react';
 import {navigate} from 'gatsby';
-import { Grid, Paper, Button } from '@mui/material';
-import Typography from "@material-ui/core/Typography";
+import { Grid, Paper, Button, Typography } from '@mui/material';
 import Background from '../../images/Background.png'
 import LandingImage from '../../images/LandingImage.png'
 import FeatureCard from '../card/FeatureCard';

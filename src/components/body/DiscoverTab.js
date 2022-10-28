@@ -1,14 +1,13 @@
 import React from 'react'
-import Grid from '@mui/material/Grid';
+import {Grid, Typography} from '@mui/material/';
 import Box from '@mui/material/Box';
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
-import Typography from "@material-ui/core/Typography";
 
 import ExploreIcon from '@mui/icons-material/Explore';
 import ForumIcon from '@mui/icons-material/Forum';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 
 import ImageList from '../parts/Explore';
 import ForumnList from '../parts/Forum';
@@ -19,14 +18,14 @@ import { useTheme } from '@mui/material/styles';
 const DiscoverTab = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('md'));
-  const StyledTab = withStyles((theme) => ({
+  const StyledTab = styled(Tb)(() => ({
     root: {
       textTransform: "none",
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: "18px",
       marginRight: theme.spacing(1),
     },
-  }))((props) => <Tb {...props} />);
+  }));
       
 
   const [value, setValue] = React.useState(0);

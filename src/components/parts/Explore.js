@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { Box, Grid} from '@mui/material/';
 import { Masonry } from '@mui/lab';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 import DiscoverCard from '../card/DiscoverCard';
 
 //Array of data for post sample

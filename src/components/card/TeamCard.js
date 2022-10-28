@@ -1,8 +1,5 @@
 import React from 'react'
-import Avatar from '@mui/material/Avatar';
-import { Grid, Paper, Stack } from '@mui/material';
-import Typography from "@material-ui/core/Typography";
-import Divider from '@mui/material/Divider';
+import { Grid, Paper, Stack, Typography, Divider, Avatar } from '@mui/material';
 import Background from '../../images/AboutIntroImage.jpg'
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';

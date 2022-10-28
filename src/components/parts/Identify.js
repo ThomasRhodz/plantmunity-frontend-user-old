@@ -1,17 +1,12 @@
 import  React, {useState} from 'react';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
+import {Grid, Box, Stack, Divider, Typography} from '@mui/material/';
 import Button from '../basic/Button';
-import Divider from "@material-ui/core/Divider";
-import Typography from "@material-ui/core/Typography";
-
 
 import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import LinkIcon from '@mui/icons-material/Link';
 
-import { makeStyles } from "@material-ui/core/styles";
 import { styled } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 import IdentifiedCard from '../card/IdentifiedCard';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';

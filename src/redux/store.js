@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-import counterReducer from './counter'
 import userReducer from './user'
 import postReducer from './post'
 import forumReducer from './forum'
@@ -11,7 +10,6 @@ import { concernApi } from '../services/concernApi';
 
 export const store = configureStore({
     reducer:{
-        counter: counterReducer,
         user: userReducer,
         post: postReducer,
         forum: forumReducer,

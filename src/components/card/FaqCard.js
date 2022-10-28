@@ -1,10 +1,6 @@
 import React from 'react'
 import { styled } from '@mui/material/styles';
-import { Grid, Stack } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
+import { Grid, Stack, Card, CardContent, CardActions, Collapse } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';

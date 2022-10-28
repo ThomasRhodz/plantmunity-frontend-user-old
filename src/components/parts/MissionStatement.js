@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
-import Typography from "@material-ui/core/Typography";
+import { Grid, Typography } from '@mui/material'
 import Icon from '../../images/icons/mission.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';

@@ -1,20 +1,12 @@
 import React from 'react'
-import Avatar from "@material-ui/core/Avatar";
-import AvatarGroup from '@mui/material/AvatarGroup';
-import Card from "@material-ui/core/Card";
-import {Grid, Stack, Box, TextField, Button} from "@mui/material/";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import { CardActionArea } from '@mui/material';
+import {Grid, Stack, Box, TextField, Button, Avatar, AvatarGroup, Card, CardMedia, CardContent, CardActionArea} from "@mui/material/";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
 import ActivityCard from './ActivityCard';
 
 import {MdSubtitles} from 'react-icons/md';

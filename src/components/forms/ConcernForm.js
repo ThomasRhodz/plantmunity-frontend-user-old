@@ -1,6 +1,5 @@
 import React from 'react';
-import { Grid, TextField, Stack } from '@mui/material';
-import Typography from "@material-ui/core/Typography";
+import { Grid, TextField, Stack, Typography } from '@mui/material';
 import InputAdornment from '@mui/material/InputAdornment';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';

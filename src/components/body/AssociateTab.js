@@ -1,13 +1,12 @@
 import React from 'react'
-import Grid from '@mui/material/Grid'
+import {Grid, Typography} from '@mui/material/'
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
-import Typography from "@material-ui/core/Typography";
 
 import ExploreIcon from '@mui/icons-material/Explore';
 import ForumIcon from '@mui/icons-material/Forum';
 import ImageSearchIcon from '@mui/icons-material/ImageSearch';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -19,16 +18,26 @@ const AssociateTab = () => {
     const matches = useMediaQuery(theme.breakpoints.down('md'));
     const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const StyledTab = withStyles((theme) => ({
+    // const StyledTab = withStyles((theme) => ({
+    //   root: {
+    //     textTransform: "none",
+    //     fontWeight: theme.typography.fontWeightRegular,
+    //     fontSize: "18px",
+    //     marginRight: theme.spacing(1),
+    //   },
+    // }))((props) => <Tb {...props} />);
+        
+  
+    const StyledTab = styled(Tb)(() => ({
       root: {
         textTransform: "none",
         fontWeight: theme.typography.fontWeightRegular,
         fontSize: "18px",
         marginRight: theme.spacing(1),
       },
-    }))((props) => <Tb {...props} />);
-        
-  
+    }));
+
+
     const [value, setValue] = React.useState(0);
   
     const handleChange = (event, newValue) => {

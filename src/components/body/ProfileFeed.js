@@ -1,15 +1,15 @@
 import React from 'react'
-import Grid from '@mui/material/Grid'
-import Avatar from '@mui/material/Avatar'
-import Btn from '../basic/Button';
-import Typography from '@mui/material/Typography';
+import {Grid, Avatar, Typography} from '@mui/material/'
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
-import { withStyles } from "@material-ui/core/styles";
-import {BsImages, BsFillFilePostFill, BsInfoSquare} from 'react-icons/bs';
-import { makeStyles } from "@material-ui/core/styles";
+
+import { styled } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
+
+import Btn from '../basic/Button';
 import CreatePost from '../parts/CreatePost';
 import PostCard from '../card/PostCard';
+import {BsImages, BsFillFilePostFill, BsInfoSquare} from 'react-icons/bs';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -80,14 +80,14 @@ const ProfileFeed = () => {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const classes = useStyles();
-  const StyledTab = withStyles((theme) => ({
+  const StyledTab = styled(Tb)(() => ({
     root: {
       textTransform: "none",
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: "18px",
       marginRight: theme.spacing(1),
     },
-  }))((props) => <Tb {...props} />);
+  }));
       
 
   const [value, setValue] = React.useState(0);

@@ -8,18 +8,11 @@ import { navigate } from 'gatsby';
 import { useAddUserMutation } from '../../services/userApi'
 
 import Button from '../basic/Button';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Typography from "@material-ui/core/Typography"; 
+import {TextField, Grid, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
 import Btn from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
 import '../../css/style.css';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import Logo from '../../images/PlantmunityLogo.png';
 import Check from '../../images/leafCheckIcon.png';

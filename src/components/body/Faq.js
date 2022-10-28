@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid, Paper } from '@mui/material'
-import Typography from "@material-ui/core/Typography";
+import { Grid, Paper, Typography } from '@mui/material'
 import Background from '../../images/AboutIntroImage.jpg'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';

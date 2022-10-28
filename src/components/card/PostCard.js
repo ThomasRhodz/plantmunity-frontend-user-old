@@ -2,15 +2,7 @@
 //MUI Components
 import * as React from 'react';
 import propType from 'prop-types';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Tooltip from '@mui/material/Tooltip';
-import CardMedia from '@mui/material/CardMedia';
-import { CardActions } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
+import {Card, CardContent, CardMedia, CardActions, Tooltip, Grid, Typography, Avatar, IconButton} from '@mui/material/';
 
 //Icons
 import FavoriteIcon from '@mui/icons-material/Favorite';

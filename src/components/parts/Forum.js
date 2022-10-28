@@ -1,19 +1,16 @@
 //Components
 import React, {useState} from 'react';
 import Masonry from '@mui/lab/Masonry';
-import {Stack, Box, TextField, Select, Grid, InputBase, InputLabel, MenuItem} from '@mui/material/';
-import { Typography, Divider} from "@material-ui/core/";
+import {Stack, Box, TextField, Select, Grid, InputBase, InputLabel, MenuItem, Typography, Divider} from '@mui/material/';
 
 //Reusable Components
 import ForumnCard from '../card/ForumCard';
 import Btn from '../basic/Button';
 
-
-
 //Dialog
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
+// import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 
 // Form and Data Handling
@@ -28,7 +25,7 @@ import FormControl from '@mui/material/FormControl';
 
 //Styling and Icons
 import { styled } from '@mui/material/styles';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@mui/styles';
 import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import SearchIcon from '@mui/icons-material/Search';
