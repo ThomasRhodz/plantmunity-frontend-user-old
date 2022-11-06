@@ -151,7 +151,7 @@ const Search = styled('div')(({ theme }) => ({
 
         {
             id: 3,
-            location: '/marketplace',
+            location: '/marketPlace',
             name: 'Marketplace',
             icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
