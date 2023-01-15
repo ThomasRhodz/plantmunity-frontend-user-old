@@ -62,18 +62,18 @@ const Identify = () => {
   return (
       <React.Fragment>
         <Grid container direction={matches2 ? 'column':'row'} alignItems='center' sx={{ width:'100%', height:{xs:'100%', sm:400, md:560 }}}>
-            <Grid item sx={{width:{xs:340, sm: 420, md:580}, height: {xs:420, sm: 400, md:550}}}>
+            <Grid item sx={{width:{xs:340, sm: 420, md:505}, height: {xs:420, sm: 400, md:550}}}>
                 <Grid container direction='column' alignItems='center' style={{padding:10}}>
-                    <Grid item sx={{display:{xs:'none', sm:'flex',md:'flex'}, width:{xs:300, sm: 390, md:530}, height:{xs:70, sm: 50, md:100}}}>
+                    <Grid item sx={{display:{xs:'none', sm:'flex',md:'flex'}, width:{xs:300, sm: 390, md:500}, height:{xs:70, sm: 50, md:100}}}>
                         <Typography
-                            variant={matches?'h6':'h5'}
-                            style={matches?{fontFamily:'apple-system', fontSize:'15px',marginTop: '-10px'}:{fontFamily:'apple-system', marginTop: '-10px'}}
+                            variant={matches?'body1':'h6'}
+                            style={matches?{fontFamily:'apple-system', fontSize:'15px',marginTop: '-10px'}:{fontFamily:'apple-system', marginTop: '-10px', maxWidth:500}}
                             gutterBottom
                         >
                             Identify, explore and learn from your observations of wild plants by uploading an image or using an online image link.   
                         </Typography>
                     </Grid>
-                    <Grid item sx={{display:{xs:'flex', sm:'none',md:'none'}, width:{xs:300, sm: 390, md:530}, height:{xs:70, sm: 50, md:100}}}>
+                    <Grid item sx={{display:{xs:'flex', sm:'none',md:'none'}, width:{xs:300, sm: 390, md:500}, height:{xs:70, sm: 50, md:100}}}>
                         <Typography
                             variant='h6'
                             style={matches?{fontFamily:'apple-system', fontSize:'13px'}:{fontFamily:'apple-system', marginTop: '-10px'}}
@@ -83,10 +83,10 @@ const Identify = () => {
                         </Typography>
                     </Grid>
                     <div style={{height:20}} />
-                    <Grid item  style={{ backgroundColor:'#6da58a', padding: 20, borderRadius:20}} sx={{width:{xs:320, sm: 360, md:530}}}>
+                    <Grid item  style={{ backgroundColor:'#6da58a', padding: 20, borderRadius:20}} sx={{width:{xs:320, sm: 360, md:500}}}>
                         <Grid container  direction='column' alignItems='center' style={{padding: 20, border: '3px dashed white', borderRadius:25}}>
                             {/* <Grid item> */}
-                                <Grid container alignItems='center' direction='column' sx={{width:{xs:250, sm: 290, md:460}}}spacing={1}>
+                                <Grid container alignItems='center' direction='column' sx={{width:{xs:250, sm: 290, md:430}}}spacing={1}>
                                     <Grid item display={image ? 'flex': 'flex'}>
                                             <Stack alignItems="center" spacing={2} sx={{display:{xs:'none',sm:'flex',md:'flex'}}}>
                                                 <label htmlFor="contained-button-file">
@@ -141,7 +141,7 @@ const Identify = () => {
 
             <Box sx={{width:{xs:0, sm:0, md:20}, height:{xs:5, sm:5, md:0}}} />
 
-            <Grid item style={{backgroundColor: '#efeff4', padding: 10, paddingTop:17}} sx={{width:{xs:330, sm:390, md:580}, height:{xs:'100%', sm: 400, md:550}}}>
+            <Grid item style={{backgroundColor: '#efeff4', padding: 10, paddingTop:17}} sx={{width:{xs:330, sm:390, md:505}, height:{xs:'100%', sm: 400, md:550}}}>
                 <Grid container direction='column' alignItems='Left'>
                     <Grid item>
                         <Typography

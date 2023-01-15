@@ -79,7 +79,7 @@ const DiscoverCard = ({image, altText}) => {
   const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <React.Fragment>
-      <Card sx={{border: 3, boxShadow: '5px 10px #888888'}}>
+      <Card sx={{boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
         <CardActionArea onClick={handleClickOpen}>
           <CardMedia
                     height={matches2?'200px':''}

@@ -120,26 +120,19 @@ const CreatePost = () => {
     return (
         <React.Fragment>
             {/* For displaying an card with a button for creating a post*/}
-            <Card sx={{ maxWidth: '600px'}}>
-                <CardContent>
-                    <Grid container direction='row' alignItems='center' justify='center'>
+            <Card sx={{ width: { xs:350, sm:500, md:600}}}>
+                <CardContent sx={{width:'100%'}}>
+                    <Grid container direction='row' alignItems='center' justify='center' sx={{width:'100%'}}>
                         {/* Account Avatar or user Icon*/}
-                        <Grid item>
+                        <Grid item sx={{width:{xs:'16%', sm:'11%', md:'11%'}}}>
                             <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
                                 <Avatar size='small' alt='Tanjiro' src='https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd'/>
                             </IconButton>
                         </Grid>
-                        <div style={{width:10}} />
 
                         {/* Button that vary in sizse that appeard depending on screen size*/}
-                        <Grid item sx={{display: {xs:'none', sm:'none', md:'flex'}}}>
-                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='512px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
-                        </Grid>
-                        <Grid item sx={{display: {xs:'none', sm:'flex', md:'none'}}}>
-                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='419px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
-                        </Grid>
-                        <Grid item sx={{display: {xs:'flex', sm:'none', md:'none'}}}>
-                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='265px' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
+                        <Grid item sx={{width:{xs:'84%', sm:'89%', md:'89%'}}}>
+                            <Button variant='contained' color='#efeff4' text={"What's your plantly story?"} textColor='#58a776'  btnWidth='100%' btnSize='large' startingIcon={<YardIcon size='large'/>} clickHandler={() => handleClickOpen()}/>
                         </Grid>
                     </Grid>
                 </CardContent>

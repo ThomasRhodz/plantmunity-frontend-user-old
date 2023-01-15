@@ -218,7 +218,7 @@ const Forum = () => {
 
   return (
     //Box serve as the parent component just to hold a main component and the dialog
-    <Box sx={{width: {xs:350, sm:800, md:1200}, minHeight: 253,  height: {xs:'100%', sm:400, md:550}, paddingLeft:1}}>
+    <Box sx={{width: {xs:350, sm:800, md:1000}, minHeight: 253,  height: {xs:'100%', sm:400, md:550}, paddingLeft:1}}>
       
       {/**Grid container: serve as the parent grid with vertical direction */}
       <Grid container direction='column'>
@@ -491,7 +491,7 @@ const sampleForums = [
 
 const renderForum = sampleForums.map(sample => {
   return (
-    <Grid key={sample.forumnID}>
+    <Grid key={sample.forumnID} sx={{mb:{xs:1}}}>
       <ForumnCard id={sample.forumnID} question={sample.question} author={sample.author} interaction={sample.interaction} coverImage={sample.coverImage} />
     </Grid>
   );

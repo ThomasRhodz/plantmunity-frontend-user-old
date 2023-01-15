@@ -62,7 +62,7 @@ const Timeline = () => {
       })
   return (
       // Grid container (Parent) : the intention of having a column as direction is to center the following children component
-      <Grid  container direction='row'  sx={{width:'100%', mt:3}}>
+      <Grid  container direction={matches ? 'column' :'row'} alignItems={matches ? 'center' :'left'}  sx={{width:'100%', mt:3}}>
               <Grid item sx={{width:'65%' }}>
                   <Stack  direction='column' alignItems='center'>
                       <CreatePost />
@@ -71,7 +71,7 @@ const Timeline = () => {
                   </Stack>
               </Grid>
               {/** Grid item that the right side of the interface where ads and other possible components can be placed */}
-              <Grid item sx={{ width:'35%' }}>
+              <Grid item sx={{ width:'35%', display: { xs: 'none', sm: 'flex', md: 'flex' }}}>
                 <AdsTimeline/>
               </Grid>
       </Grid>

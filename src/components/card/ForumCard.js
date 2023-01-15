@@ -101,7 +101,7 @@ const ForumCard = ({coverImage, question, author, interaction, id, avatars}) => 
   const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <React.Fragment>
-      <Card  key={id} variant='outlined'>
+      <Card  key={id} variant='outlined' sx={{boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
         <CardActionArea onClick={handleClickOpen}>
           <CardMedia
                     height={matches2?'200px':''}

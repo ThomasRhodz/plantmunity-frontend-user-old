@@ -18,6 +18,7 @@ import 'react-toastify/dist/ReactToastify.css';
 //Navigation
 import { navigate } from 'gatsby';
 import NavBar from './NavBar';
+import BottomAppBar from './BottomNavBar';
 
 import Timeline from '../body/Timeline';
 
@@ -125,7 +126,7 @@ const HomeNavBar = () => {
     };
 
   return (
-    <Box sx={{ display: 'flex', height:'100%' }}>
+    <Box sx={{ display: {xs:'block', sm:'block', md:'flex'}, height:'100%' }}>
       {/* Component that contain the notification as toas when action is done. */}
       <ToastContainer position="top-right"
         autoClose={5000}
@@ -152,7 +153,8 @@ const HomeNavBar = () => {
             width: drawerWidth,
             boxSizing: 'border-box',
             borderRight: '1px solid white',
-            backgroundColor:'#5C6D63'
+            backgroundColor:'#5C6D63',
+            display: { xs: 'none', sm: 'none', md: 'flex' }
           },
         }}
         variant="permanent"
@@ -237,6 +239,7 @@ const HomeNavBar = () => {
 
       </Box>
       
+      <BottomAppBar/>
     </Box>
   );
 }

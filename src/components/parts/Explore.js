@@ -79,7 +79,7 @@ const itemData = [
   
 const  Explore = () => {
   return (
-    <Box sx={{ width: {xs:350, sm:800, md:1200}, height: {xs:'100%', sm:400, md:550}, overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'} }}>
+    <Box sx={{ width: {xs:350, sm:800, md:1050}, height: {xs:'100%', sm:400, md:550}, overflowY: {xs: 'hidden', sm: 'scroll', md: 'scroll'} }}>
       <Masonry sx={{display:{xs:'flex',sm:'flex', md:'flex'}}} columns={3} spacing={2}>
         {renderExplore}
       </Masonry>

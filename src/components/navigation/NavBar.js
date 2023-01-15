@@ -15,12 +15,11 @@ import {navigate} from 'gatsby';
 
  //Icons
  import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
- import SearchIcon from '@mui/icons-material/Search';
  import Avatar from '@mui/material/Avatar';
  import ExploreIcon from '@mui/icons-material/Explore';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-
+ import Logo from '../../images/PlantmunityLogo2.png';
 //MUI Styling
 import '../../css/pageStyles.css';
 import { SearchField } from '../basic/StyledComponents';
@@ -93,14 +92,28 @@ const drawerWidth = 230;
      return (
         <AppBar 
             position="fixed"
-            sx={{ width: `calc(100% - ${drawerWidth}px)`, height:65, ml: `${drawerWidth}px`, backgroundColor:'#F3F4F8'}}
+            sx={{ 
+                width: {xs: '100%', sm: '100%', md:`calc(100% - ${drawerWidth}px)`}, 
+                height:65, ml: `${drawerWidth}px`, 
+                backgroundColor:{xs: '#5C6D63', sm: '#5C6D63', md:'#F3F4F8'}
+            }}
             elevation={0}
         >
             <Container maxWidth="xl">
                 <Toolbar disableGutters >
-                    <Grid container direction="row" alignItems="center" style={{ width: '100%'}} sx={{display: { xs: 'none', sm: 'none', md: 'flex' } }}>
-                        
-                        <Grid item sx={{flexGrow:1}}>
+                    <Grid container direction="row" alignItems="center" style={{ width: '100%'}} >
+                        <Grid item sx={{flexGrow:1, display: { xs: 'flex', sm: 'flex', md: 'none' }}}>
+                            <Stack direction='column' alignItems={'center'} >
+                                <Grid >
+                                    <img
+                                        src= {Logo}
+                                        style={{width:130, height:60}}
+                                        alt='logo'
+                                    />
+                                </Grid> 
+                            </Stack>
+                        </Grid>
+                        <Grid item sx={{flexGrow:1, display: { xs: 'none', sm: 'none', md: 'flex' }}}>
                             <Typography 
                                 variant={'h5'}
                                 sx={{
@@ -114,7 +127,7 @@ const drawerWidth = 230;
                         </Grid>
 
                         {/* For search Bar */}  
-                        <Grid item sx={{flexGrow:1}}>
+                        <Grid item sx={{flexGrow:1, display: { xs: 'none', sm: 'flex', md: 'flex'}}}>
                             <Stack 
                                 direction='row' 
                                 alignItems={'center'}
@@ -141,10 +154,10 @@ const drawerWidth = 230;
                             </Stack>
                         </Grid>
 
-                        <Grid item sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}>
-                            <Stack direction='row' alignItems={'center'} sx={{minWidth:200}}>
+                        <Grid item >
+                            <Stack direction='row' alignItems={'center'} sx={{minWidth:{xs:50, sm:50, md:200}}}>
                                 {page.map(({id, location, name, icon}) => (
-                                    <Box key={id}>
+                                    <Box key={id} sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}>
                                         <Tooltip  title={name} role='link' sx={{mb:2}} onClick={()=>{navigate(location)}}>
                                             <IconButton color="inherit" aria-label="open drawer" size='large' sx={{p:1, mr:1}}>
                                                 {icon}
