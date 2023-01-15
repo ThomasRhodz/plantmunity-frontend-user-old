@@ -1,7 +1,5 @@
 import React from 'react'
-import Avatar from "@material-ui/core/Avatar";
-import Card from "@material-ui/core/Card";
-import {Grid, Stack, Box, TextField, Button, Typography, CardActionArea, CardMedia, Divider, Tooltip} from "@mui/material/";
+import {Grid, Stack, Box, TextField, Button, Typography, CardActionArea, CardMedia, Divider, Tooltip, Avatar, Card} from "@mui/material/";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
