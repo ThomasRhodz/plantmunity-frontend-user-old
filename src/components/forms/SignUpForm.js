@@ -1,381 +1,386 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { ErrorMessage } from "@hookform/error-message";
-import _ from "lodash/fp";
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../app/persists/user';
-import { navigate } from 'gatsby';
 import { useAddUserMutation } from '../../app/services/userApi'
+import { Button, Grid, TextField, Typography, Stack } from '@mui/material'
+import React, {useState} from 'react'
+import ArrowBackIosRoundedIcon from '@mui/icons-material/ArrowBackIosRounded';
+import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
 
-import Button from '../basic/Button';
-import {TextField, Grid, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
-import Btn from '@mui/material/Button';
+// Form and Data Handling
+import {useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
+import bcrypt  from 'bcryptjs';
+import { navigate } from 'gatsby';
 
-import '../../css/style.css';
-import { makeStyles } from '@mui/styles';
-import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
-import Logo from '../../images/PlantmunityLogo.png';
-import Check from '../../images/leafCheckIcon.png';
 
-const useStyles = makeStyles ((theme) => ({
+//Schema: Rules for inputs
+const schema1 = yup.object({
+    first_name: yup.string(),
+    middle_name: yup.string(),
+    last_name: yup.string(),
+    address: yup.string(),
+    contact: yup.string(),
+    email: yup.string().email(),
+    username: yup.string(),
+    confirm_password: yup.string(),
+    password: yup.string().matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, {message: "Password must contain at least 8 characters, one uppercase, one number and one special case character", excludeEmptyString: true})
+    //,
+    
+  });
 
-    signUpHeading: {
+//---------------------------------------------------------------------------------------------------------------------------
 
-        fontFamily: "Georgia, serif",
-        color: "#83c2a4",
-        fontSize: '21px',
-    },
-    signUpHolder: {
-        borderRadius: '0px 0px 0px 0px',
-        backgroundColor: 'white',
-        padding: '30px',
-        width: '400px',
-        height: '490px',
-        overflowY: 'scroll', 
-        [theme.breakpoints.down('md')]: {
-            width: '330px',
-        },
+const SignUpForm = ({stepValue,stepChange, backChange }) => {
+   
+    //STATES
+    const [firstName, setFirstName] = useState('');
+    const [middleName, setMiddleName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [address, setAddress] = useState('');
+    const [contact, setContact] = useState('');
+    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-        [theme.breakpoints.down('sm')]: {
-            borderRadius: '25px 25px 25px 25px',
-            height: '100%',
-            overflowY:'hidden'
-        },
-    },
+    //For react hook form
+    const {register, handleSubmit, formState:{ errors }} = useForm({
+        resolver: yupResolver(schema1),
+    });
 
-    signUpImageHolder:{
-        
-        borderRadius: '30px',
-        width:'400px',
-        height: '490px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none'
-        },
-    },
-
-    signUpImage: {
-        borderRadius: '25px 0px 0px 25px',
-        width:'400px',
-        height: '490px',
-        objectFit: 'cover',
-    },
-
-    signUpContainer:{
-        width: '100%',
-        height: '100%',
-        [theme.breakpoints.down('sm')]: {
-            padding: '20px'
-        },
-    },
-}));
-
-const SignUpForm = ({goToLogin}) => {
-    // const {user} = useSelector((state) => state.user)
-
-    const [addUser] = useAddUserMutation();
-
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleProceed = () => {
-        navigate('/login')
-    };
-
-    const dispatch = useDispatch();
-    const classes = useStyles();
-    const {register, handleSubmit,  formState: { errors }} = useForm({criteriaMode: "all"});
-    const onSubmit = (data) => {
-       
-        dispatch(setUser({
-            fname: data.firstName,
-            lname: data.lastName,
-            userName: data.userName,
-            password: data.password,
-            email:data.email
-        }));
-
-        const user = {
-            'first_name': data.firstName,
-            'last_name': data.lastName,
-            'username': data.userName,
-            'email': data.email,
-            'password': data.password
-        };
-
-        addUser(user)
-        // console.log(user)
-        
-        handleClickOpen()
+    const [addUser] = useAddUserMutation()
+   
+    const onSubmit = () => {
+        stepChange(2)  
     }
-    return (
-        <Grid container direction='column' alignItems='center' className={classes.signUpContainer}>
-            <Grid sx={{height:{xs:30, sm:30, md:50}}} />
-            <Grid item>
-                <Grid container direction='row' alignItems='center'>
 
-                    <Grid item className={classes.signUpImageHolder}>
-                        <img
-                            src='https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'
-                            alt='Plant'
-                            className={classes.signUpImage}
-                        /> 
-                    </Grid>
-                    <Grid item className={classes.signUpHolder}>
-                        <Grid container direction='column' alignItems='center' sx={{width: '100%'}}>
-                            <Grid item>
-                                <img
-                                    src={Logo}
-                                    width={280}
-                                    alt='logo'
-                                />
-                            </Grid>
+    const onSubmit2 = () => {
+        stepChange(3)  
+    }
 
-                            <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
-                                <Grid item sx={{width: '100%'}}>
-                                    <p className={classes.signUpHeading}>Personal Details</p>
-                                </Grid>
-                                <Grid item sx={{width: '100%'}}>
-                                    <TextField style={{width: '100%'}} type={'text'} label={'First name'} variant={'outlined'} size={'regular'}  {...register('firstName', {required: 'Required'})} />
-                                </Grid>
+    const onSubmit3 = (data) => {
+        
+         
+        if (data.password === data.confirm_password){
 
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="firstName"
-                                    render={({ message }) => (
-                                        <Grid container direction='row' alignItems='center'>
-                                        <Grid item>
-                                            <WarningAmberRoundedIcon sx={{fontSize:"18px", color:'#e9be16'}}/>
-                                        </Grid>
-                                        <div style={{width:4}} />
-                                        <Grid item>
-                                            <Typography
-                                                variant='subtitle1'
-                                                style={{fontFamily:'apple-system', color:'#e9be16'}}
-                                                gutterBottom
-                                            >
-                                                {message} 
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    )}
-                                />
-                                <div style={{height:20}} /> 
-                                <Grid item sx={{width: '100%'}}>
-                                    <TextField style={{width: '100%'}} type={'text'} label={'Last name'} variant={'outlined'} size={'regular'} {...register('lastName', {required: 'Required'})} />
-                                </Grid>
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="lastName"
-                                    render={({ message }) => (
-                                        <Grid container direction='row' alignItems='center'>
-                                        <Grid item>
-                                            <WarningAmberRoundedIcon sx={{fontSize:"18px", color:'#e9be16'}}/>
-                                        </Grid>
-                                        <div style={{width:4}} />
-                                        <Grid item>
-                                            <Typography
-                                                variant='subtitle1'
-                                                style={{fontFamily:'apple-system', color:'#e9be16'}}
-                                                gutterBottom
-                                            >
-                                                {message} 
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    )}
-                                />
-                                <div style={{height:20}}  />
+            const hashedPassword = bcrypt.hashSync(data.password,10);   
+            
+            const input = {
+                'first_name': data.first_name,
+                'middle_name': data.middle_name,
+                'last_name': data.last_name,
+                'address': data.address,
+                'contact': data.contact,
+                'email': data.email,
+                'username': data.username,
+                'password': hashedPassword
+            }
 
-                                <Grid item sx={{width: '100%'}}>
-                                    <p className={classes.signUpHeading}>Account Details</p>
-                                </Grid>
-                                <Grid item sx={{width: '100%'}}>
-                                    <TextField 
-                                        id='username'
-                                        style={{width: '100%'}} 
-                                        type={'text'} 
-                                        label={'Username'} 
-                                        variant={'outlined'} 
-                                        size={'regular'} 
-                                        {...register('userName', {
-                                            required: "Required", 
-                                            maxLength: { value: 15, message: "Only 15 characters are allowed"},
-                                            minLength: { value: 3, message: "It should atleast contain 3 characters"},
-                                         })}
-                                        />
-                                        
-                                </Grid>
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="userName"
-                                    render={({ messages }) => {
-                                    return messages
-                                        ? _.entries(messages).map(([type, message]) => (
-                                            <Grid container direction='row' alignItems='center' key={type}>
-                                                <Grid item>
-                                                    <WarningAmberRoundedIcon sx={{fontSize:"18px", color:'#e9be16'}}/>
-                                                </Grid>
-                                                <div style={{width:4}} />
-                                                <Grid item>
-                                                    <Typography
-                                                        variant='subtitle1'
-                                                        style={{fontFamily:'apple-system', color:'#e9be16'}}
-                                                        gutterBottom
-                                                    >
-                                                        {message} 
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                            
-                                        ))
-                                        : null;
-                                    }}
-                                />
-                                <div style={{height:20}} />
+            console.log(input)
 
-                                <Grid item sx={{width: '100%'}}>
-                                    <TextField 
-                                        style={{width: '100%'}} 
-                                        type={'password'} 
-                                        label={'Password'} 
-                                        variant={'outlined'} 
-                                        size={'regular'} 
-                                        {...register('password', {
-                                            required: 'Required', 
-                                            maxLength: { value: 15, message: "Only 15 characters are allowed"},
-                                            minLength: { value: 8, message: "It should atleast contain 8 characters"},
-                                            pattern: {
-                                                value: /^[a-zA-Z0-9]{1}[a-zA-Z./!@#$%^&*\d]{7,15}$/,
-                                                message:'Must have and start with a letter or number'
-                                            }
-                                            })}/>       
-                                </Grid>
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="password"
-                                    render={({ messages }) => {
-                                    return messages
-                                        ? _.entries(messages).map(([type, message]) => (
-                                            <Grid container direction='row' alignItems='center' key={type}>
-                                                <Grid item>
-                                                    <WarningAmberRoundedIcon sx={{fontSize:"18px", color:'#e9be16'}}/>
-                                                </Grid>
-                                                <div style={{width:4}} />
-                                                <Grid item>
-                                                    <Typography
-                                                        variant='subtitle1'
-                                                        style={{fontFamily:'apple-system', color:'#e9be16'}}
-                                                        gutterBottom
-                                                    >
-                                                        {message} 
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                            
-                                        ))
-                                        : null;
-                                    }}
-                                />
-                                <div style={{height:20}} />
-                                <Grid item sx={{width: '100%'}}>
-                                    <TextField 
-                                        style={{width: '100%'}} 
-                                        type={'email'} 
-                                        label={'Email'} 
-                                        variant={'outlined'} 
-                                        size={'regular'} 
-                                        {...register('email', {required: 'Required'})} />
-                                </Grid>
-                                <ErrorMessage
-                                    errors={errors}
-                                    name="email"
-                                    render={({ message }) => (
-                                        <Grid container direction='row' alignItems='center'>
-                                        <Grid item>
-                                            <WarningAmberRoundedIcon sx={{fontSize:"18px", color:'#e9be16'}}/>
-                                        </Grid>
-                                        <div style={{width:4}} />
-                                        <Grid item>
-                                            <Typography
-                                                variant='subtitle1'
-                                                style={{fontFamily:'apple-system', color:'#e9be16'}}
-                                                gutterBottom
-                                            >
-                                                {message} 
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                    )}
-                                />
-                                <div style={{height:40}} />
-                                <Grid item sx={{width: '100%'}}>
-                                <Button type={'submit'} variant='contained' color='#58a776' text='Sign Up' textColor='white' btnWidth='100%' btnSize='large'/>
-                                </Grid>
-                            </form>
-                            <div style={{height:15}} />
-                            <Grid item>
-                                <Grid container direction='row' alignItems='center'>
-                                    <Grid item>
-                                        <Typography
-                                            variant='caption'
-                                            style={{fontFamily:'apple-system',}}
-                                            gutterBottom
-                                        >
-                                            Already have an Account?   
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button variant='text' btnSize='small' color='none' text='Login here'  textSize='13px' textColor='#58a776' clickHandler={() => navigate('/login')}/>
-                                    </Grid>
-                                </Grid> 
-                            </Grid>  
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
+            // addUser(input)
+            // .then((payload) => {
+            //     console.log('fulfilled',payload)
+            //     navigate('/')
+            // })
+            // .catch((error) => console.error('rejected', error))
+            
+        }
+        else{
+            console.log('Password does not match')
+            setPassword('')
+            setConfirmPassword('')
+        }
+    }
 
-            <Dialog
-                open={open}
-                onClose={handleProceed}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                
-                <DialogContent>
-                    <Grid container direction='column' alignItems={'center'} sx={{width:'100%'}}>
+
+  return (
+        <Grid sx={{width:'100%', marginTop: 4}}>
+            <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
+            <Stack direction='column' sx={{width:'100%', display: stepValue === 1 ? 'flex' : 'none'}}>
+                <Typography  sx={{fontFamily:'raleway', fontSize: 17}}>
+                    Personal Details
+                </Typography> 
+
+                <Grid sx={{pb:2,  pt:1}}>
+                    <TextField  
+                        {...register("first_name")} 
+                        type='text'
+                        required
+                        value={firstName}
+                        label="First name" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined" 
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setFirstName(event.target.value);
                         
-                        <Grid item sx={{ height: 100}}>
-                            <img
-                                src={Check}
-                                width={100}
-                                height={100}
-                                alt='logo'
-                            />
-                        </Grid>
-                        <Grid item sx={{ height: 100}}>
-                            <DialogTitle id="alert-dialog-title">
-                                {"Registration Successful"}
-                            </DialogTitle>
-                        </Grid>
-                        <Grid item sx={{marginTop:'-40px'}}>
-                            <DialogContentText id="alert-dialog-description" sx={{textAlign:'center'}}>
-                                Congratulations, your account has been successfully created. 
-                                Initial login is required, please login to proceed
-                            </DialogContentText>
-                        </Grid>
+                        }}
+                    />
+                </Grid>
+
+            
+                <Grid sx={{pb:2,  width:'100%'}}>
+                    <TextField  
+                        {...register("middle_name")}
+                        value={middleName} 
+                        type='text'
+                        required
+                        label="Middle name" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setMiddleName(event.target.value);
+                            
+                        }}
+                    />
+                </Grid>
+
+                
+                <Grid sx={{pb:2,  width:'100%', mb:2}}>
+                    <TextField  
+                        {...register("last_name")} 
+                        value={lastName}
+                        type='text'
+                        required
+                        label="Last name" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setLastName(event.target.value);
+                        
+                        }}
+                    />
+                </Grid>
+
+                <Stack direction='row' sx={{width:'100%', display: stepValue === 1 ? 'flex' : 'none'}}>
+                    <div style={{flexGrow:1}}/>
+
+                    <Button 
+                        endIcon={<ArrowForwardIosRoundedIcon/>}
+                        variant='contained' 
+                        type='submit'
+                        sx={{
+                            backgroundColor:'#7CB2B1',
+                            color:'white',
+                            borderRadius:5,
+                            textTransform:'none',
+                            fontFamily:'Arvo',
+                            fontSize:12,
+                            height:30,
+                            width:150
+                        }}
+                    >
+                        Next
+                    </Button>
+                </Stack>
+            </Stack>
+            </form>
+
+            <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit2)}>
+            <Stack direction='column' sx={{width:'100%', display: stepValue === 2 ? 'flex' : 'none'}}>
+                <Typography  sx={{fontFamily:'raleway', fontSize: 17}}>
+                    Contact Details
+                </Typography> 
+
+                <Grid sx={{pb:2,  pt:1}}>
+                    <TextField  
+                        {...register("address")} 
+                        value={address}
+                        type='text'
+                        required
+                        label="Address" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setAddress(event.target.value);
+                        }}
+                    />
+                </Grid>
+
+                <Grid sx={{pb:2,  width:'100%'}}>
+                    <TextField  
+                        {...register("contact")} 
+                        value={contact}
+                        type='text'
+                        required
+                        label="Contact" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setContact(event.target.value);
+                        }}
+                    />
+                </Grid>
+                
+                <Grid sx={{pb:2,  width:'100%', mb:2}}>
+                    <TextField  
+                        {...register("email")}
+                        value={email} 
+                        type='email'
+                        label="Email" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setEmail(event.target.value);
+                        }}
+                    />
+                </Grid>
+
+                <Stack direction='row' sx={{width:'100%', display: stepValue === 2 ? 'flex' : 'none'}}>
+                    <Button 
+                        startIcon={<ArrowBackIosRoundedIcon/>}
+                        type='button'
+                        onClick={()=>backChange(1)}
+                        sx={{
+                            backgroundColor: 'transparent',
+                            borderRadius:5,
+                            color:'#7CB2B1',
+                            textTransform:'none',
+                            fontFamily:'Arvo',
+                            fontSize:12,
+                            height:30,
+                            width:100
+                        }}
+                    >
+                        Back
+                    </Button>
+                    <div style={{flexGrow:1}}/>
+                    <Button 
+                        endIcon={<ArrowForwardIosRoundedIcon/>}
+                        variant='contained' 
+                        type='sumbit'
+                        sx={{
+                            backgroundColor:'#7CB2B1',
+                            color:'white',
+                            borderRadius:5,
+                            textTransform:'none',
+                            fontFamily:'Arvo',
+                            fontSize:12,
+                            height:30,
+                            width:150
+                        }}
+                        
+                    >
+                        Next
+                    </Button>
+                </Stack> 
+            </Stack>
+            </form>
+
+            <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit3)}>
+            <Stack direction='column' sx={{width:'100%', display: stepValue === 3 ? 'flex' : 'none'}}>
+                <Typography  sx={{fontFamily:'raleway', fontSize: 17}}>
+                    Account Details
+                </Typography> 
+
+                <Grid sx={{pb:2, pt:1}}>
+                    <TextField
+                        {...register("username")}
+                        value={username} 
+                        type='text'
+                        required
+                        label="Username" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setUsername(event.target.value);
+                        }}
+                    />
+                </Grid>
+
+                { console.log(errors.password?.message)}
+                <Grid sx={{pb:2} }>
+                    <TextField
+                        {...register("password")}
+                        value={password} 
+                        type='password'
+                        label="Password" 
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setPassword(event.target.value);
+                        }} 
+                        required 
+                    />
+                </Grid>
+                <Grid sx={{pb:2,  mb:2}}>
+                    <TextField
+                        {...register("confirm_password")}
+                        value={confirmPassword} 
+                        type='password'
+                        label="Confirm password" 
+                        required
+                        size='regular' 
+                        inputProps={{ style: { fontFamily: 'raleway'}}}
+                        variant="outlined"
+                        sx={{width:'100%'}}
+                        onChange={(event) => {
+                            setConfirmPassword(event.target.value);
+                        }}
+                    />
+                </Grid>
+
+                <Stack direction='row' sx={{width:'100%', display: stepValue === 3 ? 'flex' : 'none'}}>
+
+                    <Button 
+                        startIcon={<ArrowBackIosRoundedIcon/>}
+                        type='button'
+                        onClick={() => backChange(2)}
+                        sx={{
+                            backgroundColor: 'transparent',
+                            borderRadius:5,
+                            color:'#7CB2B1',
+                            textTransform:'none',
+                            fontFamily:'Arvo',
+                            fontSize:10,
+                            height:30,
+                            width:100
+                        }}
+                    >
+                        Back
+                    </Button>
+                    <div style={{flexGrow:1}}/>
+                    <Grid>
+                        <Button 
+                            type='submit'
+                            // onClick={() => handleSubmitUser()}  
+                            variant='contained' 
+                            sx={{
+                                width:200, 
+                                backgroundColor:'#7CB2B1',
+                                color:'white', 
+                                fontFamily: 'Arvo',
+                                fontSize: 15, 
+                                textTransform:'none', 
+                                borderRadi2s: 5, 
+                                height:30,
+                                color:'white'
+                            }}
+                        >
+                            Submit
+                        </Button>
                     </Grid>
-                </DialogContent>
-                <DialogActions>
-                <Btn onClick={handleProceed}>
-                    Continue
-                </Btn>
-                </DialogActions>
-            </Dialog>
+                </Stack>
+            </Stack>
+            </form>
         </Grid>
-    )
+    
+  )
 }
 
 export default SignUpForm

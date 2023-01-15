@@ -1,11 +1,10 @@
 import React from 'react'
-import SideBar from '../navigation/ShorcutNavBar';
-import PostCard from '../card/PostCard';
-import SideAds from '../parts/AdsTimeline';
 import CreatePost from '../parts/CreatePost';
-import { Grid } from '@mui/material';
+import { Grid, Stack} from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import PostCard from '../card/PostCard';
+import AdsTimeline from '../parts/AdsTimeline'
 
 const Timeline = () => {
     const theme = useTheme();
@@ -22,7 +21,7 @@ const Timeline = () => {
           shares: '3',
           liked: true,
           timePosted: 'Mar. 21, 2021',
-          caption: 'Let there be plants! AHAHAHAHA :)'
+          caption: 'Let there be plants! AHAHAHAHA'
           
         },
         {
@@ -63,32 +62,20 @@ const Timeline = () => {
       })
   return (
       // Grid container (Parent) : the intention of having a column as direction is to center the following children component
-      <Grid  container direction='column' alignItems='center' sx={{overflowX:'hidden',width:'100%'}}>
-        
-        {/** only one item and serve as the grid that holds everything and which is centered */}
-        <Grid item  sx={{ width:{xs:350, sm: 1350, md:1350}}}>
-          {/** another grid cointer is created to have a row direction for the following components */}
-          <Grid container direction='row'>
-              {/**Grid item: calling the SideBar Component or the shortcut menu */}
-              <Grid item position='fixed'>
-                  <SideBar />
-              </Grid>
-
-              {/** Grid item that hold the center interface which contains the CreatePost components and collection of Post */}
-              <Grid item>
-                  <Grid container direction='column' alignItems='center' position='relative' sx={matches?{marginLeft:{sm:15,md:17}, marginRight:{sm:21,md:52}}:{marginLeft:{sm:21,md:29}} }>
+      <Grid  container direction='row'  sx={{width:'100%', mt:3}}>
+              <Grid item sx={{width:'65%' }}>
+                  <Stack  direction='column' alignItems='center'>
                       <CreatePost />
                       <div style={{height:10}} />
                       {renderPosts}
-                  </Grid>
+                  </Stack>
               </Grid>
               {/** Grid item that the right side of the interface where ads and other possible components can be placed */}
-              <Grid item position='fixed' sx={{marginLeft:{sm:15,md:125}, height:620, overflowY: 'auto' }}>
-                  <SideAds />
+              <Grid item sx={{ width:'35%' }}>
+                <AdsTimeline/>
               </Grid>
-          </Grid>
-        </Grid>
       </Grid>
+      
     
     
   )

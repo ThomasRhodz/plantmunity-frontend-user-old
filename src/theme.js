@@ -15,7 +15,7 @@ const theme = createTheme({
     },
     background: {
       //default: "#a2b897"
-      default: "#b6c7ad"
+      default: "#F3F4F8"
     }
   },
 });

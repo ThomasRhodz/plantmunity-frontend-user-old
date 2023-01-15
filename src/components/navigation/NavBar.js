@@ -1,7 +1,6 @@
 //MUI Components
 import React from 'react'
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -9,10 +8,7 @@ import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import Grid from '@mui/material/Grid';
-import InputBase from '@mui/material/InputBase';
-import { styled } from '@mui/material/styles';
-import Logo from '../../images/PlantmunityLogo2.png';
+import {Box, Grid, Stack} from '@mui/material';
 
 import {navigate} from 'gatsby';
 
@@ -22,91 +18,17 @@ import {navigate} from 'gatsby';
  import SearchIcon from '@mui/icons-material/Search';
  import Avatar from '@mui/material/Avatar';
  import ExploreIcon from '@mui/icons-material/Explore';
- import StorefrontIcon from '@mui/icons-material/Storefront';
- import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 
 //MUI Styling
 import '../../css/pageStyles.css';
-import { makeStyles } from "@material-ui/core/styles";
+import { SearchField } from '../basic/StyledComponents';
 
-
-//styling
-const useStyles = makeStyles((theme) => ({
-    Bar: {
-        backgroundColor: 'white',
-        color: 'black',
-    },
-
-    searchBar: {
-        display: 'flex',
-        [theme.breakpoints.between('sm','md')]: {
-            display: 'none',
-        },
-    },
-
-    searchIcon: {
-        display: 'none',
-        [theme.breakpoints.between('sm', 'md')]: {
-            display: 'flex',
-        },
-        [theme.breakpoints.down('sm')]: {
-            display: 'none',
-        },
-    },
-    
-}));
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor:'#efeff4',
-    '&:hover': {
-        border: "1px solid #58a776",
-
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto',
-    },
-  }));
-  
-  const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }));
-  
-  const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    color: 'inherit',
-    '& .MuiInputBase-input': {
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '15ch',
-        '&:focus': {
-          width: '21ch',
-        },
-      },
-    },
-  }));
-
+const drawerWidth = 230;
 
 //Actual Components
- const NavBar = ({iconID}) => {
-
-    //Variables
-    const classes = useStyles();
+ const NavBar = ({title, iconID}) => {
 
     const menu = [
         {
@@ -134,42 +56,26 @@ const Search = styled('div')(({ theme }) => ({
 
     const page = [
         {
+            id: 0,
+            location: '/discover',
+            name: 'Discover',
+            icon: <ExploreIcon style={{fontSize: 28, color: '#707F77'}}/>
+
+        },
+
+        {
             id: 1,
-            location: '/home',
-            name: 'Home',
-            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: 'white'}:{color: '#BFCBA5'}}/>
+            location: '/messages',
+            name: 'Messages',
+            icon: <EmailRoundedIcon style={{fontSize: 28, color: '#707F77'}}/>
 
         },
 
         {
             id: 2,
-            location: '/discover',
-            name: 'Discover',
-            icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: 'white'}:{color: '#BFCBA5'}}/>
-
-        },
-
-        {
-            id: 3,
-            location: '/marketPlace',
-            name: 'Marketplace',
-            icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: 'white'}:{color: 'BFCBA5'}}/>
-
-        },
-
-        {
-            id: 4,
-            location: '/messages',
-            name: 'Messages',
-            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: 'white'}:{color: 'BFCBA5'}}/>
-
-        },
-
-        {
-            id: 5,
             location: '/notifications',
             name: 'Notifications ',
-            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: 'white'}:{color: 'BFCBA5'}}/>
+            icon: <NotificationsIcon  style={{fontSize: 28, color: '#707F77'}}/>
 
         },
 
@@ -185,130 +91,102 @@ const Search = styled('div')(({ theme }) => ({
     };
 
      return (
-        <AppBar position="fixed" style={{backgroundColor: '#5C6D63', color: 'black'}}>
+        <AppBar 
+            position="fixed"
+            sx={{ width: `calc(100% - ${drawerWidth}px)`, height:65, ml: `${drawerWidth}px`, backgroundColor:'#F3F4F8'}}
+            elevation={0}
+        >
             <Container maxWidth="xl">
                 <Toolbar disableGutters >
-
-                    <Grid container direction="row" alignItems="center" style={{ width: '380px'}} sx={{display: { xs: 'none', sm: 'none', md: 'flex' } }}>
-                        {/* For Iogo without flex for desktop view*/}
-                        <Grid item justify='center' display={{xs: 'none', md: 'flex'}}>
-                                <div>
-                                    <div style={{width: '120px', marginRight: 'auto', marginLeft: 'auto'}}>
-                                        <img
-                                            src= {Logo}
-                                            width={120}
-                                            alt='logo'
-                                        />
-                                    </div>
-                                </div>
+                    <Grid container direction="row" alignItems="center" style={{ width: '100%'}} sx={{display: { xs: 'none', sm: 'none', md: 'flex' } }}>
+                        
+                        <Grid item sx={{flexGrow:1}}>
+                            <Typography 
+                                variant={'h5'}
+                                sx={{
+                                    fontFamily:'Arvo', 
+                                    minWidth:200,
+                                    color:'#5C6D63'
+                                }}
+                            >
+                                {title}
+                            </Typography>
                         </Grid>
 
                         {/* For search Bar */}  
-                        <Grid item className={classes.searchBar}>
-                            <Search sx={{ display: { xs: 'none', sm: 'flex', md: 'flex' } }} >
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </Search>
-                        </Grid>
-                              
-                    </Grid>
-                    
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'flex' }}} />
-                    
-                    {/* For logo with flex that stays on the left side of the header for tablet and mobile devices*/}
-                    <Grid item justify='center' sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-                        <div>
-                            <div style={{width: '130px', marginRight: 'auto', marginLeft: 'auto'}}>
-                                <img
-                                    src={Logo}
-                                    width={130}
-                                    alt='logo'
-                                />
-                            </div>
-                        </div>
-                    </Grid>
-                    
-
-                    <Search sx={{ display: { xs: 'none', sm: 'flex', md: 'none' } }} >
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                            <StyledInputBase
-                                placeholder="Search…"
-                                inputProps={{ 'aria-label': 'search' }}
-                            />
-                    </Search>
-                    {/* For nav option or pages */}
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'none', md: 'flex' } }}>
-
-                        {page.map(({id, location, name, icon}) => (
-                            <React.Fragment key={id} >
-                                <Tooltip title={name} role='link' onClick={()=>{navigate(location)}}>
-                                    <IconButton color="inherit" aria-label="open drawer" size='large' >
-                                        {icon}
-                                    </IconButton>
-                                </Tooltip>
-                                <div style={{width:20}} />
-                            </React.Fragment>
-                        ))}
-                    </Box>
-
-                    
-
-                    {/* Box that pushes avatar icon to make the serach bar center (For tablets) */} 
-                    <Box sx={{ flexGrow: 1, display: { xs: 'none', sm: 'flex', md: 'none' }}} />
-
-                    {/* For Icon Button for mobile devices */}   
-                    <IconButton color="inherit" aria-label="open drawer" size='large' sx={iconID===2?{ display: 'none'}:{display: { xs: 'flex', sm: 'none', md: 'none' } }} >
-                        <SearchRoundedIcon fontSize='large' style={{ color: '#6da58a'}}/>
-                    </IconButton>
-
-                    {/* For Account Menu*/}
-                    <Grid container direction='row' alignItems='center' sx={{ flexGrow: 0, width: {xs: '40px', sm: '130px', md:'400px'}}}>
-                       <Grid item sx={{flexGrow: 1}} />
-                       <Grid item className={classes.searchIcon} >
-                            {/* For Icon Button for mobile devices */}   
-                            <IconButton color="inherit" aria-label="open drawer" size='large'> 
-                                <SearchRoundedIcon fontSize='large' style={{ color: '#6da58a'}}/>
-                            </IconButton>
-                        </Grid> 
-                       <Grid item>
-                            <Tooltip title="Open settings">
-                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                    <Avatar alt="Remy Sharp" src="https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd" />
+                        <Grid item sx={{flexGrow:1}}>
+                            <Stack 
+                                direction='row' 
+                                alignItems={'center'}
+                                sx={{
+                                    backgroundColor:'white', 
+                                    width:250, 
+                                    borderRadius:10,  
+                                    border:'1px solid #E7E9EB',
+                                }} 
+                            >
+                                <IconButton>
+                                    <SearchRoundedIcon sx={{ color:'#5C6D63' }} />
                                 </IconButton>
-                            </Tooltip>
-                       </Grid>
-                        
 
-                        {/*Menu for User Account */}
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {menu.map(({id, location, name}) => (
-                                <MenuItem key={id} role='link' onClick={()=>{navigate(location)}}>
-                                    <Typography textAlign="center">{name}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
+                                <SearchField
+                                    variant='outlined'
+                                    inputProps={{ style: { fontFamily: 'Arvo',}}}
+                                    placeholder={"Search Plantmunity"}
+                                    // value={ search } 
+                                    // onChange={handleSearchChange}
+                                    size='small'
+                                />
+                                
+                            </Stack>
+                        </Grid>
+
+                        <Grid item sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}>
+                            <Stack direction='row' alignItems={'center'} sx={{minWidth:200}}>
+                                {page.map(({id, location, name, icon}) => (
+                                    <Box key={id}>
+                                        <Tooltip  title={name} role='link' sx={{mb:2}} onClick={()=>{navigate(location)}}>
+                                            <IconButton color="inherit" aria-label="open drawer" size='large' sx={{p:1, mr:1}}>
+                                                {icon}
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
+                                   
+                                ))} 
+                                <Box >
+                                    <Tooltip title="Open settings">
+                                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
+                                            <Avatar sx={{   width:35, height:35}} alt="Remy Sharp" src="https://scontent.fdvo2-2.fna.fbcdn.net/v/t39.30808-6/316676504_3212779305641197_1050176977558317665_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=174925&_nc_ohc=1QHMPCZzvX8AX-NK3_a&tn=rNDVmRy3DV9Pe2vC&_nc_ht=scontent.fdvo2-2.fna&oh=00_AfB1h6f_ojh6lIzBpoXhftRaVAmBFqG2C4xTPQ6IDTulIg&oe=63C849F5" />
+                                        </IconButton>
+                                    </Tooltip> 
+                                </Box>
+                               
+
+                                {/*Menu for User Account */}
+                                <Menu
+                                    sx={{ mt: '45px' }}
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    {menu.map(({id, location, name}) => (
+                                        <MenuItem key={id} role='link' onClick={()=>{navigate(location)}}>
+                                            <Typography textAlign="center">{name}</Typography>
+                                        </MenuItem>
+                                    ))}
+                                </Menu>
+                            </Stack>
+                        </Grid>      
                     </Grid>
                 </Toolbar>
             </Container>
