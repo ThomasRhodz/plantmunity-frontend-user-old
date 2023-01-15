@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Stack, Typography, Divider, Avatar } from '@mui/material';
-import Background from '../../images/AboutIntroImage.jpg'
+import { Grid, Paper, Stack, Typography , Avatar } from '@mui/material';
 import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';

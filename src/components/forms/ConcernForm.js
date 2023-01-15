@@ -12,7 +12,7 @@ import Button from '../basic/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { useAddConcernMutation } from '../../services/concernApi'
+import { useAddConcernMutation } from '../../app/services/concernApi'
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -31,7 +31,11 @@ const ConcernForm = () => {
     const theme = useTheme();
     const belowMedium = useMediaQuery(theme.breakpoints.down(1300));
 
-    const { register, handleSubmit, formState:{ errors } } = useForm({
+    const { 
+        register, 
+        handleSubmit, 
+        //formState:{ errors } 
+    } = useForm({
         resolver: yupResolver(schema)
       });
 

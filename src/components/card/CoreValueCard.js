@@ -18,19 +18,14 @@ const CoreValueCard = ({image, title}) => {
         switch(image) {
             case 2:
                 return (<img src={BeBold} alt="Logo" width={ extraSmall ? "50px" : "70px"} height={ extraSmall ? "50px" : "70px"}/>);
-                break;
             case 3:
                 return (<img src={OpenMinded} alt="Logo" width={ extraSmall ? "50px" : "70px"} height={ extraSmall ? "50px" : "70px"}/>);
-                break;
             case 4:
                 return (<img src={Fast} alt="Logo" width={ extraSmall ? "50px" : "70px"} height={ extraSmall ? "50px" : "70px"}/>);
-                break;
             case 5:
                 return (<img src={Secure} alt="Logo" width={ extraSmall ? "50px" : "70px"} height={ extraSmall ? "50px" : "70px"}/>);
-                break;
             case 6:
                 return (<img src={Social} alt="Logo" width={ extraSmall ? "50px" : "70px"} height={ extraSmall ? "50px" : "70px"}/>);
-                break;
             default: return (<img src={Information} alt="Logo" width={ extraSmall ? "50px" : "70px"} height={ extraSmall ? "50px" : "70px"}/>);
               
           }

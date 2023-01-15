@@ -16,7 +16,7 @@ import Following from '../card/FollowingCard'
 const AssociateTab = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down('md'));
-    const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
+    //const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
 
     // const StyledTab = withStyles((theme) => ({
     //   root: {

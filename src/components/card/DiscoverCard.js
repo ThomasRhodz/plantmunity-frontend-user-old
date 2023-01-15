@@ -77,7 +77,7 @@ const DiscoverCard = ({image, altText}) => {
   };
 
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('md'));
+  //const matches = useMediaQuery(theme.breakpoints.down('md'));
   const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <React.Fragment>

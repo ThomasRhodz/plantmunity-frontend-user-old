@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Grid, Stack, Typography, IconButton, Button, Paper, Divider } from '@mui/material';
+import {Box, Grid, Stack, Typography, IconButton, Button, Paper } from '@mui/material';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import { SearchField } from '../basic/StyledComponents';

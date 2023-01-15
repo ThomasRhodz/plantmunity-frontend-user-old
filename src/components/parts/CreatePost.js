@@ -24,8 +24,8 @@ import YardIcon from '@mui/icons-material/Yard';
 import { useForm } from 'react-hook-form';
 //import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPost } from '../../redux/post';
-import { useAddPostMutation } from '../../services/postApi'
+import { setPost } from '../../app/persists/post';
+import { useAddPostMutation } from '../../app/services/postApi'
 
 
 const Input = styled('input')({
@@ -70,7 +70,11 @@ const CreatePost = () => {
 
     const [addPost] = useAddPostMutation();
 
-    const {register, handleSubmit,  formState: { errors }} = useForm({criteriaMode: "all"});
+    const {
+        register, 
+        handleSubmit,  
+        //formState: { errors }
+    } = useForm({criteriaMode: "all"});
 
     const onSubmit = (data) => {
 

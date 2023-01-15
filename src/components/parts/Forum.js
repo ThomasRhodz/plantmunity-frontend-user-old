@@ -15,12 +15,15 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 // Form and Data Handling
 import { useDispatch, useSelector } from 'react-redux';
-import { setForum } from '../../redux/forum';
-import { useAddForumMutation } from '../../services/forumApi';
+import { setForum } from '../../app/persists/forum';
+import { useAddForumMutation } from '../../app/services/forumApi';
 
-import { set, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
+import { 
+  //set, 
+  useForm 
+} from 'react-hook-form';
+//import { yupResolver } from '@hookform/resolvers/yup';
+//import * as yup from "yup";
 import FormControl from '@mui/material/FormControl';
 
 //Styling and Icons
@@ -63,12 +66,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //Schema: Rules for inputs
-const schema = yup.object({
-  coverPhoto: yup.string().required('Upload your cover photo'), 
-  title: yup.string().required('Please, enter a title'),
-  description: yup.string().max(1000, 'Invalid Phone Number'),
-  visibility: yup.string().required(),
-});
+// const schema = yup.object({
+//   coverPhoto: yup.string().required('Upload your cover photo'), 
+//   title: yup.string().required('Please, enter a title'),
+//   description: yup.string().max(1000, 'Invalid Phone Number'),
+//   visibility: yup.string().required(),
+// });
 
 //Search Bar Styling
 const Search = styled('div')(({ theme }) => ({
@@ -124,7 +127,11 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const Forum = () => {
 
   //For react hook form
-  const {register, handleSubmit,  formState: { errors }} = useForm({criteriaMode: "all"});
+  const {
+    register, 
+    handleSubmit,  
+    //formState: { errors }
+  } = useForm({criteriaMode: "all"});
 
   //Using the internal styling
   const classes = useStyles();

@@ -10,13 +10,10 @@ const FeatureCard = ({title, image, description}) => {
         switch(image) {
             case 2:
                 return (<img src={social} alt="Logo" width="60px" height="50px"/>);
-                break;
             case 3:
                 return (<img src={store} alt="Logo" width="60px" height="50px"/>);
-                break;
             case 4:
                 return (<img src={delivery} alt="Logo" width="60px" height="50px"/>);
-                break;
             default: return (<img src={photo} alt="Logo" width="60px" height="50px"/>);
               
           }

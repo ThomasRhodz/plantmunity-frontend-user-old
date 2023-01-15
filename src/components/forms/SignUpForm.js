@@ -3,9 +3,9 @@ import { useForm } from 'react-hook-form';
 import { ErrorMessage } from "@hookform/error-message";
 import _ from "lodash/fp";
 import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/user';
+import { setUser } from '../../app/persists/user';
 import { navigate } from 'gatsby';
-import { useAddUserMutation } from '../../services/userApi'
+import { useAddUserMutation } from '../../app/services/userApi'
 
 import Button from '../basic/Button';
 import {TextField, Grid, Typography, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from '@mui/material';
