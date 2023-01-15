@@ -85,7 +85,7 @@ const LoginForm = () => {
         <Grid container direction='column' alignItems='center' className={classes.logInContainer}>
             <Grid sx={{height:{xs:60, sm:60, md:50}}} />
             <Grid item>
-                <Grid container direction='row' alignItems='center'>
+                <Grid container direction='row' alignItems='center' sx={{ borderRadius: 5, boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)'}}>
 
                     <Grid item className={classes.logInImageHolder}>
                         <img

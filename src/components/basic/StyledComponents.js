@@ -21,5 +21,4 @@ export const SearchField = styled(TextField)(() => ({
       borderColor: 'transparent',
     },
 },
-
 }));
