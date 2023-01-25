@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Grid, Card, CardContent, Typography, Avatar} from '@mui/material/';
-import Button from '../basic/Button';
+import Button from '../../basic/Button';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 

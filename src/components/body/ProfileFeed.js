@@ -8,7 +8,7 @@ import { makeStyles } from '@mui/styles';
 
 import Btn from '../basic/Button';
 import CreatePost from '../parts/CreatePost';
-import PostCard from '../card/PostCard';
+import PostCard from '../card/timelineCards/PostCard';
 import {BsImages, BsFillFilePostFill, BsInfoSquare} from 'react-icons/bs';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -99,10 +99,10 @@ const ProfileFeed = () => {
 
   return (
     <React.Fragment>
-        <Grid container direction='column' alignItems='center' sx={{backgroundColor:'white', width:{xs:370, sm:800, md:800}, minHeight:1000}}>
+        <Grid container direction='column' alignItems='center' sx={{backgroundColor:'white', width:{xs:370, sm:800, md:800}, minHeight:1000, boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
 
           {/* Profile cover */}
-          <Grid item sx={{backgroundColor:'red', width:'100%', height:{xs:250, sm:300, md:300}}}>
+          <Grid item sx={{ width:'100%', height:{xs:250, sm:300, md:300}}}>
             <img
               src='https://i.pinimg.com/originals/9d/bd/aa/9dbdaa44c34cfdaaa226e3921b5f9510.jpg'
               alt='cover_photo'
@@ -147,12 +147,12 @@ const ProfileFeed = () => {
           <Grid item sx={{width:'100%'}}>
             <Grid container direction='column' alignItems='center' sx={{width:'100%', height:'100%'}}>
               <Grid item >
-                <Typography variant={matches?'h6':'h4'} fontFamily='apple-system' >
+                <Typography variant={matches?'h6':'h4'} fontFamily='Arvo' >
                   Rorona Virus
                 </Typography>
               </Grid>
               <Grid item>
-                <Typography variant={matches?'body1':'h6'}  fontFamily='apple-system' >
+                <Typography variant={matches?'body1':'h6'}  fontFamily='raleway' >
                   @Thomas_Rhodz
                 </Typography>
               </Grid>
@@ -169,19 +169,19 @@ const ProfileFeed = () => {
                     icon={<BsFillFilePostFill style={value===0?{ color: '#6da58a' }:{ color: '' } }/>} 
                     iconPosition="start" 
                     label={<span style={value===0?{ color: '#6da58a' }:{ color: '' } }>Posts</span>} 
-                    sx={{fontFamily: 'apple-system', fontSize: {xs:12, sm:15, md:15}}}
+                    sx={{fontFamily: 'arvo', fontSize: {xs:12, sm:15, md:15}}}
                 />
                 <StyledTab 
                     icon={<BsInfoSquare style={value===1?{ color: '#6da58a' }:{ color: '' } }/>} 
                     iconPosition="start" 
                     label={<span style={value===1?{ color: '#6da58a' }:{ color: '' } }>About</span>} 
-                    sx={{fontFamily: 'apple-system', fontSize: {xs:12, sm:15, md:15}}}
+                    sx={{fontFamily: 'arvo', fontSize: {xs:12, sm:15, md:15}}}
                 />
                 <StyledTab 
                     icon={<BsImages style={value===2?{ color: '#6da58a' }:{ color: '' } }/>} 
                     iconPosition="start" 
                     label={<span style={value===2?{ color: '#6da58a' }:{ color: '' } }>Media</span>}  
-                    sx={{fontFamily: 'apple-system', fontSize: {xs:12, sm:15, md:15}}}
+                    sx={{fontFamily: 'arvo', fontSize: {xs:12, sm:15, md:15}}}
                 />
               </Tbs>
           </Grid> {/* end of tab */}

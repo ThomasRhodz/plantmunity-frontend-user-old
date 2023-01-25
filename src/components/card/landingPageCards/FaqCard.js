@@ -6,8 +6,8 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import Question from '../../images/question.png'
-import Answer from '../../images/answer.png'
+import Question from '../../../images/question.png'
+import Answer from '../../../images/answer.png'
 
 
 

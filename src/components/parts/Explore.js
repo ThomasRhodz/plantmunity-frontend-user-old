@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box, Grid} from '@mui/material/';
 import { Masonry } from '@mui/lab';
-import DiscoverCard from '../card/DiscoverCard';
+import DiscoverCard from '../card/discoverPageCards/DiscoverCard';
 
 //Array of data for post sample
 const itemData = [

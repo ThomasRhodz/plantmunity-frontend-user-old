@@ -3,7 +3,7 @@ import {navigate} from 'gatsby';
 import { Grid, Paper, Button, Typography } from '@mui/material';
 import Background from '../../images/Background.png'
 import LandingImage from '../../images/LandingImage.png'
-import FeatureCard from '../card/FeatureCard';
+import FeatureCard from '../card/landingPageCards/FeatureCard';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 

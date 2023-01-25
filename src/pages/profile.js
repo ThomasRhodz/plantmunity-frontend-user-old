@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/navigation/NavBar';
+import PageNavBar from '../components/navigation/PageNavBar';
 import BottomNavBar from '../components/navigation/BottomNavBar';
 import ProfileFeed from '../components/body/ProfileFeed';
 import Grid from '@mui/material/Grid'
@@ -11,7 +11,7 @@ const profile = () => {
         {/* <ReduxTrial /> */}
         <Grid container direction='column' alignItems='center'>
           <Grid item>
-            <NavBar />
+            <PageNavBar title={'Profile'} />
           </Grid>
           <Grid item>
             <ProfileFeed />

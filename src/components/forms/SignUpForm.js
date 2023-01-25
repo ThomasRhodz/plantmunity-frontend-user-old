@@ -172,7 +172,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                             fontFamily:'Arvo',
                             fontSize:12,
                             height:30,
-                            width:150
+                            width:{xs:110, sm:150, md:150}
                         }}
                     >
                         Next
@@ -268,7 +268,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                             fontFamily:'Arvo',
                             fontSize:12,
                             height:30,
-                            width:150
+                            width: {xs:100, sm:150, md:150}
                         }}
                         
                     >

@@ -16,3 +16,20 @@ body{
     border-radius: 25px;
 }
 
+.grid-item {
+    block-size:4.5em;
+    height: 300px;
+    overflow:hidden;
+}
+
+.grid-item img {
+    width:100%;
+    transition: transform 1.5s ease;
+  }
+  
+.grid-item :hover img {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5); 
+}
+

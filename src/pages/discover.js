@@ -1,5 +1,5 @@
 import React from 'react'
-import NavBar from '../components/navigation/NavBar';
+import PageNavBar from '../components/navigation/PageNavBar';
 import Tab from '../components/body/DiscoverTab';
 import BottomNavBar from '../components/navigation/BottomNavBar';
 
@@ -7,7 +7,7 @@ const discover = () => {
 
     return (
         <React.Fragment>
-            <NavBar iconID={2}/>
+            <PageNavBar title={'Discover'}/>
             <Tab/>
             <BottomNavBar iconID={2}/>
         </React.Fragment>

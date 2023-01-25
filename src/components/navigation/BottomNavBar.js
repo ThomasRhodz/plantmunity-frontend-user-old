@@ -42,7 +42,7 @@ import '../../css/pageStyles.css';
 
         {
             id: 3,
-            location: '/marketplace',
+            location: '/market',
             name: 'Marketplace',
             icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 

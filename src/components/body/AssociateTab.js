@@ -10,8 +10,8 @@ import { styled } from "@mui/material/styles";
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import Follower from '../card/FollowerCard';
-import Following from '../card/FollowingCard'
+import Follower from '../card/affiliateCards/FollowerCard';
+import Following from '../card/affiliateCards/FollowingCard'
 
 const AssociateTab = () => {
     const theme = useTheme();

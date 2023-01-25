@@ -7,7 +7,7 @@ import LinkIcon from '@mui/icons-material/Link';
 
 import { styled } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
-import IdentifiedCard from '../card/IdentifiedCard';
+import IdentifiedCard from '../card/discoverPageCards/IdentifiedCard';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 

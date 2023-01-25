@@ -4,7 +4,7 @@ import Masonry from '@mui/lab/Masonry';
 import {Stack, Box, TextField, Select, Grid, InputBase, InputLabel, MenuItem, Typography, Divider} from '@mui/material/';
 
 //Reusable Components
-import ForumnCard from '../card/ForumCard';
+import ForumnCard from '../card/discoverPageCards/ForumCard';
 import Btn from '../basic/Button';
 
 //Dialog

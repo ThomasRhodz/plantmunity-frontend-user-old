@@ -1,16 +1,16 @@
 import React from 'react'
-import NavBar from '../components/navigation/NavBar';
+import PageNavBar from '../components/navigation/PageNavBar';
 import BottomNavBar from '../components/navigation/BottomNavBar';
 import MarketPlace from '../components/body/MarketPlace';
 
-const marketPlace = () => {
+const market = () => {
   return (
     <React.Fragment>
-        <NavBar iconID={3}/>
+        <PageNavBar title={'Marketplace'}/>
         <MarketPlace />
         <BottomNavBar iconID={3}/>
     </React.Fragment>
   )
 }
 
-export default marketPlace
+export default market

@@ -1,6 +1,6 @@
 import { Button, Grid, Stack, Typography } from '@mui/material'
 import React from 'react'
-import FriendReqCard from '../card/FriendReqCard'
+import FriendReqCard from '../card/affiliateCards/FriendReqCard'
 
 const FriendReqList = () => {
   return (

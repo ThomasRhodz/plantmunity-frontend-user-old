@@ -7,9 +7,9 @@ import { Link } from 'gatsby';
 const SignUp = () => {
   return (
     <Grid container direction='column' alignItems='center' sx={{
-        width:500,
+        width:{xs:'100%', sm:500, md:500},
         height:570,
-        backgroundColor:'white',
+        backgroundColor:{xs:'transparent', sm:'white', md:'white'},
         borderRadius:4,
         position: 'absolute',
         p:2,
@@ -18,7 +18,7 @@ const SignUp = () => {
         left: '50%',
         transform: 'translate(-50%, -50%)',
         // border: '3px #7CB2B1 solid',
-        boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',
+        boxShadow:{xs:'', sm:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)', md:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)'},
         overflow: 'hidden'
     }}>
         <Grid item sx={{marginTop:'-10px'}}>

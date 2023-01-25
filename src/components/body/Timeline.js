@@ -3,7 +3,7 @@ import CreatePost from '../parts/CreatePost';
 import { Grid, Stack} from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import PostCard from '../card/PostCard';
+import PostCard from '../card/timelineCards/PostCard';
 import AdsTimeline from '../parts/AdsTimeline'
 
 const Timeline = () => {

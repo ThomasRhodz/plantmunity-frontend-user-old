@@ -1,32 +1,35 @@
 import { Grid,Typography, Stack, Avatar } from '@mui/material'
 import React, {useState} from 'react'
 import SignUpForm from '../forms/SignUpForm';
-
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
-
- 
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 5,
-    marginLeft:'-8px',
-    marginTop:'-20px',
-    width:115,
-    borderRadius:5,
-    backgroundColor:'#7CB2B1',
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 5,
-      backgroundColor: theme.palette.mode === 'light' ? '#7CB2B1' : '#308fe8',
-    },
-  }));
 
 
 
 //---------------------------------------------------------------------------------------------------------------------------
 
 const SignUpProgress = () => {
+
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down(500));
+
+    const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+        height: 5,
+        marginLeft:'-8px',
+        marginTop:'-20px',
+        width:mobile ? 100:115,
+        borderRadius:5,
+        backgroundColor:'#7CB2B1',
+        [`&.${linearProgressClasses.colorPrimary}`]: {
+          backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+        },
+        [`& .${linearProgressClasses.bar}`]: {
+          borderRadius: 5,
+          backgroundColor: theme.palette.mode === 'light' ? '#7CB2B1' : '#308fe8',
+        },
+      }));
    
     // const [stepTwo, setStepTwo] = useState(0);
 

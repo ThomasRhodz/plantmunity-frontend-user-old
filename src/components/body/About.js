@@ -5,8 +5,8 @@ import Masonry from '@mui/lab/Masonry';
 import Background from '../../images/AboutIntroImage.jpg'
 import MissionStatement from '../parts/MissionStatement';
 import VisionStatement from '../parts/VisionStatement';
-import CoreValueCard from '../card/CoreValueCard';
-import TeamCard from '../card/TeamCard';
+import CoreValueCard from '../card/landingPageCards/CoreValueCard';
+import TeamCard from '../card/landingPageCards/TeamCard';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -112,7 +112,7 @@ const About = () => {
     }
   };
   return (
-    <Grid container direction='column' alignItems='center' sx={{ width: '100%'}}>
+    <Grid container direction='column' alignItems='center' sx={{ width: '100%', bgcolor:'#BFCBA5'}}>
         <Grid item sx={{ width: '100%',height: {xs: '100%', sm: 300, md: 250}, backgroundColor:'white'}}>
           <Paper  style={styles.paperContainer} elevation={0} sx={{width: '100%', height: {xs: '100%', sm: 300, md: 250}, borderRadius: 0, padding:8}}>
             <Grid container direction='column' alignItems='center' sx={{ width: '100%'}}>
@@ -208,8 +208,7 @@ const About = () => {
                   Core Values  
                 </Typography>
             </Grid>
-            <Grid item sx={{height:30}}/>
-            <Grid item >
+            <Grid item>
               <Grid container direction='row' alignItems='center' sx={coreDeterminer? {width:{xs:360, sm:450, md:800}}:{width:1500}}>
                 <Grid item sx={{width:'100%'}}>
                   <Masonry sx={{width:'100%', display:{xs:'none', sm:'none', md:'flex'}}} columns={coreDeterminer ? 3 :6} spacing={2} >

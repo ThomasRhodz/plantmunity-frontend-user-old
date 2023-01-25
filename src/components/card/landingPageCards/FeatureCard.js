@@ -1,9 +1,9 @@
 import React from 'react';
 import { Grid, Typography } from '@mui/material';
-import photo from '../../images/icons/photo.png'
-import store from '../../images/icons/store.png'
-import delivery from '../../images/icons/delivery.png'
-import social from '../../images/icons/social.png'
+import photo from '../../../images/icons/photo.png'
+import store from '../../../images/icons/store.png'
+import delivery from '../../../images/icons/delivery.png'
+import social from '../../../images/icons/social.png'
 
 const FeatureCard = ({title, image, description}) => {
     const iconSwitcher = () => {

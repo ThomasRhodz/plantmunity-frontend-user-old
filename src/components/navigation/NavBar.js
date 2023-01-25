@@ -11,12 +11,13 @@ import MenuItem from '@mui/material/MenuItem';
 import {Box, Grid, Stack} from '@mui/material';
 
 import {navigate} from 'gatsby';
-
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
  //Icons
  import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
  import Avatar from '@mui/material/Avatar';
- import ExploreIcon from '@mui/icons-material/Explore';
+ import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
  import Logo from '../../images/PlantmunityLogo2.png';
@@ -28,6 +29,8 @@ const drawerWidth = 230;
 
 //Actual Components
  const NavBar = ({title, iconID}) => {
+    const theme = useTheme();
+    const desktop = useMediaQuery(theme.breakpoints.down(1000));
 
     const menu = [
         {
@@ -56,9 +59,9 @@ const drawerWidth = 230;
     const page = [
         {
             id: 0,
-            location: '/discover',
-            name: 'Discover',
-            icon: <ExploreIcon style={{fontSize: 28, color: '#707F77'}}/>
+            location: '/myCart',
+            name: 'My Cart',
+            icon: <ShoppingCartRoundedIcon style={{fontSize: 28, color: '#707F77'}}/>
 
         },
 
@@ -155,11 +158,11 @@ const drawerWidth = 230;
                         </Grid>
 
                         <Grid item >
-                            <Stack direction='row' alignItems={'center'} sx={{minWidth:{xs:50, sm:50, md:200}}}>
+                            <Stack direction='row' alignItems={'center'} sx={{minWidth:{xs:50, sm:50, md: desktop? 30:200}}}>
                                 {page.map(({id, location, name, icon}) => (
-                                    <Box key={id} sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}>
+                                    <Box key={id} sx={{ display: { xs: 'none', sm: 'none', md: desktop? 'none' :'flex' } }}>
                                         <Tooltip  title={name} role='link' sx={{mb:2}} onClick={()=>{navigate(location)}}>
-                                            <IconButton color="inherit" aria-label="open drawer" size='large' sx={{p:1, mr:1}}>
+                                            <IconButton color="inherit" aria-label="open drawer" size='large' sx={{p:1, marginRight:'3px'}}>
                                                 {icon}
                                             </IconButton>
                                         </Tooltip>

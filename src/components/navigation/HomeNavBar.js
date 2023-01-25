@@ -1,13 +1,13 @@
 //React Components
-import React, { useEffect } from 'react';
-import {Avatar, Box, Drawer, Divider, Grid,Menu, MenuItem, Stack, IconButton, Tooltip, Typography} from '@mui/material/';
-import {CssBaseline, AppBar, Toolbar, List, ListItem, ListItemButton, ListItemIcon,ListItemText } from '@mui/material/';
+import React from 'react';
+import {Avatar, Box, Drawer, Divider, Grid, Stack, Typography} from '@mui/material/';
+import {CssBaseline, Toolbar, List, ListItem, ListItemButton, ListItemIcon,ListItemText } from '@mui/material/';
 
 //Icons
-import {BsShop, BsFillCameraFill, BsFillPeopleFill} from 'react-icons/bs';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import PersonOutlineRoundedIcon from '@mui/icons-material/PersonOutlineRounded';
-import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import {BsFillPeopleFill} from 'react-icons/bs';
+import {FaUser, FaStore } from 'react-icons/fa';
+import ExploreIcon from '@mui/icons-material/Explore';
+import StoreIcon from '@mui/icons-material/Store';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import Logo from '../../images/PlantmunityLogo2.png';
 
@@ -21,6 +21,8 @@ import NavBar from './NavBar';
 import BottomAppBar from './BottomNavBar';
 
 import Timeline from '../body/Timeline';
+import MyShop from '../body/MyShop';
+import MarketPlace from '../body/MarketPlace';
 
 // //Hooks abd API Calls
 // import useAuth from '../../app/hooks/useAuth';
@@ -31,31 +33,32 @@ const mainMenu = [
     {
         id: 0,
         name: 'Home',
+        destination: '',
     },
     {
         id: 1,
         name: 'Profile',
-    },
-    {
-        id: 2,
-        name: 'My Shop',
-        custom: true,
-    },
-    {
-        id: 3,
-        name: 'My Cart',
+        destination: '/profile',
     },
     {
         id: 4,
-        name: 'My Forum',
+        name: 'My Shop',
+        destination: '',
+    },
+    {
+        id: 2,
+        name: 'Discover',
+        destination: '/discover',
+    },
+    {
+        id: 3,
+        name: 'Marketplace',
+        destination: '',
     },
     {
         id: 5,
-        name: 'Identify',
-    },
-    {
-        id: 6,
         name: 'Affiliates',
+        destination: '/accountAssociates',
     },
 ];
 
@@ -109,21 +112,24 @@ const HomeNavBar = () => {
     // function that will help the menu item to set ther icon base on the menu title.
     const iconChanger = (menuName) => {
         if (menuName === 'Home') {
-            return <HomeRoundedIcon sx={{fontSize:22, color: selectedMenu === 0 ? '#BFCBA5' : 'white'}}/>;
+            return <HomeRoundedIcon sx={{fontSize:25, color: selectedMenu === 0 ? '#BFCBA5' : 'white'}}/>;
         }else if (menuName === 'Profile') {
-          return <PersonOutlineRoundedIcon sx={{fontSize:25, color: selectedMenu === 1 ? '#BFCBA5' : 'white'}}/>;
+          return <FaUser style={{fontSize:22, color: selectedMenu === 1 ? '#BFCBA5' : 'white'}}/>;
+        }else if (menuName === 'Marketplace') {
+          return <StoreIcon sx={{fontSize:25, color: selectedMenu === 3 ? '#BFCBA5' : 'white'}}/>;
+        }else if (menuName === 'Discover') {
+          return <ExploreIcon sx={{fontSize:22, color: selectedMenu === 2 ? '#BFCBA5' : 'white'}}/>;
         }else if (menuName === 'My Shop') {
-          return <BsShop style={{fontSize:20, color: selectedMenu === 2 ? '#BFCBA5' : 'white'}}/>;
-        }else if (menuName === 'My Cart') {
-          return <ShoppingCartOutlinedIcon sx={{fontSize:22, color: selectedMenu === 3 ? '#BFCBA5' : 'white'}}/>;
-        }else if (menuName === 'My Forum') {
-          return <ForumOutlinedIcon style={{fontSize:22, color: selectedMenu === 4 ? '#BFCBA5' : 'white'}}/>;
-        }else if (menuName === 'Identify') {
-          return <BsFillCameraFill style={{fontSize:20, color: selectedMenu === 5 ? '#BFCBA5' : 'white'}}/>;
+          return <FaStore style={{fontSize:20, color: selectedMenu === 4 ? '#BFCBA5' : 'white'}}/>;
         }else{
-            return <BsFillPeopleFill style={{fontSize:20, color: selectedMenu === 6 ? '#BFCBA5' : 'white'}}/>;
+            return <BsFillPeopleFill style={{fontSize:20, color: selectedMenu === 5 ? '#BFCBA5' : 'white'}}/>;
         }   
     };
+
+    const handleChangeMenu = (id, name) => {
+      setSelectedMenu(id)   
+      setMenuName(name)
+    }
 
   return (
     <Box sx={{ display: {xs:'block', sm:'block', md:'flex'}, height:'100%' }}>
@@ -194,17 +200,16 @@ const HomeNavBar = () => {
 
        {/* Side menu that shows a differencet menu based  on user's type */}
         <List sx={{mt:1}}>
-          {mainMenu.map(({id, name}) => (
+          {mainMenu.map(({id, name, destination}) => (
             <ListItem key={id} disablePadding sx={{pl:2, pb:1,}}>
               <ListItemButton onClick={() => 
                   {
-                        setSelectedMenu(id); 
-                        setMenuName(name) 
+                        destination === '' ? handleChangeMenu(id, name) : navigate(destination)
                   } 
                 } 
                 sx={{backgroundColor:selectedMenu === id ? '#F3F4F8' : '', borderRadius:'20px 0px 0px 20px'}}
               >
-                <ListItemIcon sx={{ml:4}}>
+                <ListItemIcon sx={{ml:3}}>
                   {iconChanger(name)}
                 </ListItemIcon>
                 <ListItemText 
@@ -226,15 +231,23 @@ const HomeNavBar = () => {
         {/* Box that holds the nmain contents */}
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3, height:'100%'}}
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: {xs:0, sm:2, md:2}, height:'100%'}}
       >
         <Toolbar />
-        <Stack sx={{width:'100%', marginTop:'-23px'}}>
-            <Divider style={{color:'black', width:'100%', height:2 }}/>
+        <Stack sx={{width:'100%', marginTop:'-15px'}}>
+            <Divider sx={{bgcolor:'#f3f4f8', width:'100%', height:2 }}/>
         </Stack>
 
         <Grid sx={{width:'100%', display: selectedMenu === 0 ? 'flex' : 'none',}}>
-         <Timeline />
+          <Timeline />
+        </Grid>
+
+        <Grid sx={{width:'100%', display: selectedMenu === 4 ? 'flex' : 'none',}}>
+          <MyShop />
+        </Grid>
+
+        <Grid sx={{width:'100%', display: selectedMenu === 3 ? 'flex' : 'none',}}>
+          <MarketPlace />
         </Grid>
 
       </Box>

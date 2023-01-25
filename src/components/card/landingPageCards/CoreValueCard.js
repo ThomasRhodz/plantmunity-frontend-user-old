@@ -1,11 +1,11 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import Fast from '../../images/icons/fast.png'
-import BeBold from '../../images/icons/BeBold.png'
-import Social from '../../images/icons/BuildSocialValues.png'
-import OpenMinded from '../../images/icons/openminded.png'
-import Secure from '../../images/icons/Secure.png'
-import Information from '../../images/icons/growth.png'
+import Fast from '../../../images/icons/fast.png'
+import BeBold from '../../../images/icons/BeBold.png'
+import Social from '../../../images/icons/BuildSocialValues.png'
+import OpenMinded from '../../../images/icons/openminded.png'
+import Secure from '../../../images/icons/Secure.png'
+import Information from '../../../images/icons/growth.png'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
