@@ -1,12 +1,5 @@
 import React from 'react'
-import {Grid, Typography} from '@mui/material/'
-import Tbs from '@mui/material/Tabs';
-import Tb from '@mui/material/Tab';
-
-import ExploreIcon from '@mui/icons-material/Explore';
-import ForumIcon from '@mui/icons-material/Forum';
-import ImageSearchIcon from '@mui/icons-material/ImageSearch';
-import { styled } from "@mui/material/styles";
+import {Divider, Grid, Tab, Tabs, Typography} from '@mui/material/'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -14,30 +7,10 @@ import Follower from '../card/affiliateCards/FollowerCard';
 import Following from '../card/affiliateCards/FollowingCard'
 
 const AssociateTab = () => {
-    const theme = useTheme();
-    const matches = useMediaQuery(theme.breakpoints.down('md'));
-    //const matches2 = useMediaQuery(theme.breakpoints.down('sm'));
-
-    // const StyledTab = withStyles((theme) => ({
-    //   root: {
-    //     textTransform: "none",
-    //     fontWeight: theme.typography.fontWeightRegular,
-    //     fontSize: "18px",
-    //     marginRight: theme.spacing(1),
-    //   },
-    // }))((props) => <Tb {...props} />);
-        
-  
-    const StyledTab = styled(Tb)(() => ({
-      root: {
-        textTransform: "none",
-        fontWeight: theme.typography.fontWeightRegular,
-        fontSize: "18px",
-        marginRight: theme.spacing(1),
-      },
-    }));
-
-
+  const theme = useTheme();
+  const tablet = useMediaQuery(theme.breakpoints.down(1200));
+  const mobile = useMediaQuery(theme.breakpoints.down(700));
+    
     const [value, setValue] = React.useState(0);
   
     const handleChange = (event, newValue) => {
@@ -98,7 +71,7 @@ const AssociateTab = () => {
     const renderFollowers = sampleFollowers.map(follower => {
       return(
           //It is inserted inside a grid item because this collection of Grid item will be inserted in grid container
-          <Grid item key={follower.userID}>
+          <Grid item key={follower.userID} sx={{ width:'100%' }}>
             <Follower userName={follower.userName} user={follower.user} userProfilePic={follower.userProfilePic} bio={follower.bio} followBackStatus={follower.followBackStatus}/>
             <Grid sx={{height:10}}/>
           </Grid>
@@ -168,7 +141,7 @@ const AssociateTab = () => {
     const renderFollowings = sampleFollowings.map(follower => {
       return(
           //It is inserted inside a grid item because this collection of Grid item will be inserted in grid container
-          <Grid item key={follower.userID}>
+          <Grid item key={follower.userID}  sx={{ width:'100%' }}>
             <Following userName={follower.userName} user={follower.user} userProfilePic={follower.userProfilePic} bio={follower.bio} followBackStatus={follower.followBackStatus}/>
             <Grid sx={{height:10}}/>
           </Grid>
@@ -176,69 +149,103 @@ const AssociateTab = () => {
     })
 
   return (
-    //Grid Container (Parent): Horizontal direction
-    <Grid container direction={matches?'column':'row'} alignContent={matches?'center':''} sx={{width:{xs:'100%',sm:'100%',md:1425},  marginLeft: 'auto', marginRight: 'auto', backgroundColor:'white', overflowX:'hidden'}}>
-        {/*Grid item (1st): holds the component that serve as the tab */}
+    <Grid
+      container 
+      direction={mobile ? 'column' : 'row'}
+      sx={{ 
+        width:'100%',
+        bgcolor:'white',
+        height:mobile ? '100%' : "85vh",
+        borderRadius:3,
+        mt:3,
+        //border: '2px solid #5C6D64',
+        boxShadow: "2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)",
+        overflow:'hidden'
+       }}
+    >
+      <Grid item sx={{ width:mobile ? '100%': tablet? "18%" : "13%", 'height':'100%' , p:2, pr:0}}>
+        <Tabs
+        centered={tablet? true:false}
+          value={value}
+          sx={{ width:'100%' }}
+          orientation={mobile ? 'horizontal' : 'vertical'}
+          onChange={handleChange}
+          textColor="secondary"
+          indicatorColor="secondary"
+          aria-label="secondary tabs example"
+          TabIndicatorProps={{
+              sx: { height: 5, width:5, borderRadius:5 } 
+          }}
+        >
+          <Tab value= {0} label={
+            <Typography 
+              align='left'
+              variant={mobile ? 'body2' : tablet ? 'body1': 'h6' }
+              sx={{
+                  fontFamily:'raleway', 
+                  fontWeight:'bold',
+                  width:'100%', 
+                  textTransform: 'none', 
+                  color: value === 0 ? '#5C6D64' : '#8e896b'  
+              }}
+            >
+                Following
+            </Typography>} 
+          />
+          <Tab value= {1} label={
+            <Typography 
+              align='left'
+              variant={mobile ? 'body2' : tablet ? 'body1':  'h6' }
+              sx={{
+                  width:'100%',
+                  fontFamily:'raleway', 
+                  fontWeight:'bold', 
+                  textTransform: 'none', 
+                  color: value === 1 ? '#5C6D63' : '#8e896b'  
+              }}
+            >
+                Followers
+            </Typography>
+            } 
+          />
+          <Tab value= {2} label={
+            <Typography 
+              align='left'
+              variant={mobile ? 'body2'  :tablet ? 'body1': 'h6' }
+              sx={{
+                  width:'100%',
+                  fontFamily:'raleway', 
+                  fontWeight:'bold', 
+                  textTransform: 'none', 
+                  color: value === 2 ? '#5C6D63' : '#8e896b'  
+              }}
+            >
+                Requests
+            </Typography>
+            } 
+          />
+        </Tabs>
 
-        <Grid item>
-            {/* Grid container: will serve as the container that has a vertical direction */}
-            <Grid container direction='column' alignItems='center' sx={{padding:4,paddingLeft:0, paddingRight:0}}>
-               
-                {/* Page title/ Header*/}
-                <Grid item>
-                    <Typography
-                        variant={matches?'h5':'h4'}
-                        style={{fontFamily:'apple-system', marginTop: '-10px'}}
-                        gutterBottom
-                    >
-                    Associates   
-                    </Typography>
-                </Grid>
-                <Grid sx={{height:10}}/>
+        
+      </Grid>
 
-                {/* Grid item that contains the Tabs */}
-                <Grid item>
-                    <Tbs variant='fullWidth' TabIndicatorProps={{style: {background:'#6da58a'}}} orientation={matches? 'horizontal':'vertical'} value={value} onChange={handleChange} sx={{ height:{xm:55, sm:55, md:500}, borderRight: {xs:0, sm:0, md:1}, borderBottom:{xs:1, sm:1, md:0}, width: {xs:350, sm:700, md:230}}} style={{borderColor: '#dddfdc', marginTop:'-20px'}}>
-                    <StyledTab 
-                        icon={<ExploreIcon style={value===0?{ color: '#6da58a' }:{ color: '' } }/>} 
-                        iconPosition="start" 
-                        label={<span style={value===0?{ color: '#6da58a' }:{ color: '' } }>Followers</span>} 
-                        sx={{fontFamily: 'apple-system', fontSize: {xs:12, sm:15, md:15}}}
-                    />
-                    <StyledTab 
-                        icon={<ForumIcon style={value===1?{ color: '#6da58a' }:{ color: '' } }/>} 
-                        iconPosition="start" 
-                        label={<span style={value===1?{ color: '#6da58a' }:{ color: '' } }>Following</span>} 
-                        sx={{fontFamily: 'apple-system', fontSize: {xs:12, sm:15, md:15}}}
-                    />
-                    <StyledTab 
-                        icon={<ImageSearchIcon style={value===2?{ color: '#6da58a' }:{ color: '' } }/>} 
-                        iconPosition="start" 
-                        label={<span style={value===2?{ color: '#6da58a' }:{ color: '' } }>Requests</span>}  
-                        sx={{fontFamily: 'apple-system', fontSize: {xs:12, sm:15, md:15}}}
-                    />
-                    </Tbs>
-                </Grid> {/* ending of Grid with tabs */}
-            </Grid>{/* ending of vertical container */}
-        </Grid>{/* ending of first Grid item in row direction */}
+      <Grid item sx={mobile ? {width:'100%'} : {height:'100%' } }>
+       <Divider orientation={mobile ? 'horizontal' : 'vertical'}/>
+      </Grid>
 
-         {/* Grid item that contains followers that displays if follower tab is clicked */}
-         <Grid item sx={value===0?{ width:{xs:450,sm:880, md:1192}, height: {xs:'100%',sm:'100%', md:600}, backgroundColor:'#f6f7f6', overflowY:{xs:'hidden', sm:'hidden', md:'scroll'}, padding: {xs:1,sm:2, md:2}}:{display:'none'}}>
-          <Grid container direction='column' alignItems='center'>
-              {renderFollowers}
-              <Grid sx={{height:60, display:{xs:'flex', sm:'flex', md:'none'}}}/>
-            </Grid>
+      <div style={{ flexGrow:1 }}/>
+
+      <Grid item sx={{ml: mobile? 0:1, width:mobile ? '100%' : tablet ? "78%" : "85%", height:'100%', p:mobile?0:2, overflowY:'auto' }}>
+
+        <Grid container direction='column' alignItems={'center'} sx={{ width:'100%', p:2 }}>
+            {
+             value === 0 ? renderFollowings : value === 1 ? renderFollowers : 'Hello'
+            }
         </Grid>
 
-        {/* Grid item that contains list of followed users that displays if following tab is clicked */}
-        <Grid item sx={value===1?{ width:{xs:400,sm:880, md:1192}, height: {xs:'100%',sm:'100%', md:600}, backgroundColor:'#f6f7f6', overflowY:{xs:'hidden', sm:'hidden', md:'scroll'}, padding:  {xs:1,sm:2, md:2}}:{display:'none'}}>
-          <Grid container direction='column' alignItems='center'>
-            {renderFollowings}
-            <Grid sx={{height:60, display:{xs:'flex', sm:'flex', md:'none'}}}/>
-          </Grid>
-        </Grid>
-       
-    </Grid> // ending of Grid (Parent)
+      </Grid>
+
+    </Grid>
   )
 }
 

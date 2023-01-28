@@ -7,32 +7,32 @@ import { useTheme } from '@mui/material/styles';
 
 const FollowerCard = ({userName, user, userProfilePic, bio, followBackStatus}) => {
   const theme = useTheme();
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const tablet = useMediaQuery(theme.breakpoints.down(1200));
   const status = followBackStatus;
   return (
     //Starting of follower card (parent component)
-    <Card sx={{ display: 'flex', padding:1, paddingLeft:2, paddingRight:2, width: {xs: 350, sm:700, md:800} }}>
+    <Card sx={{ display: 'flex', padding:1, paddingLeft:2, paddingRight:2, mt:1, width: '100%', boxShadow: "2.0px 2.0px 2.0px 2.0px hsl(0deg 0% 0% / 0.38)",}}>
       
       {/* Container Grid: Grid that holds the card components that give a horizontal direction*/}
       <Grid container direction='row' alignItems='center' >
 
         {/*1st Grid: User avatar */}
         <Grid item>
-        <Avatar sx={{width: {xs: 65, sm:75, md:75}, height: {xs: 65, sm:75, md:75} }} alt='Tanjiro' src={userProfilePic} />
+        <Avatar sx={{width: {xs: 55, sm:65, md:75}, height: {xs: 55, sm:65, md:75} }} alt='Tanjiro' src={userProfilePic} />
         </Grid>
 
         {/* 2nd Grid: Grid that holds CardContent that contains the user details */}
-        <Grid item sx={{maxWidth:{xs:220, sm:420, md:420}}}>
+        <Grid item sx={{maxWidth:{xs:320, sm:420, md: tablet? 300 : 500}}}>
 
           {/* CardContent, vertically arranged by default */}
           <CardContent>
-            <Typography component="div" variant="subtitle1" fontFamily='apple-system' sx={{fontWeight:'bold'}}>
+            <Typography component="div" variant="body1" sx={{fontWeight:'bold', fontFamily:'Arvo'}}>
               {user}
             </Typography>
-            <Typography component="div" variant="subtitle2" fontFamily='apple-system'>
+            <Typography component="div" variant="body2" sx={{ fontFamily:'Raleway' }}>
               @{userName}
             </Typography>
-            <Typography component="div" variant={matches?'caption':"subtitle1"} fontFamily='apple-system'>
+            <Typography component="div" variant='caption' sx={{ fontFamily:'Arvo' }}>
               {bio}
             </Typography>
           </CardContent> {/* end of CardContents */}

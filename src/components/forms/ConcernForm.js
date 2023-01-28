@@ -12,7 +12,7 @@ import Button from '../basic/Button';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
-import { useAddConcernMutation } from '../../app/services/concernApi'
+
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -39,7 +39,7 @@ const ConcernForm = () => {
         resolver: yupResolver(schema)
       });
 
-    const [addConcern] = useAddConcernMutation();
+    
 
     const onSubmit = (data) => {
         // console.log(data);
@@ -54,7 +54,7 @@ const ConcernForm = () => {
         };
 
         // console.log(concern)
-        addConcern(concern)
+       
     }
 
   return (

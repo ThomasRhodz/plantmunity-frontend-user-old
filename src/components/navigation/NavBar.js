@@ -13,7 +13,7 @@ import {Box, Grid, Stack} from '@mui/material';
 import {navigate} from 'gatsby';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-
+import useAuth from '../../app/hooks/useAuth';
  //Icons
  import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
  import Avatar from '@mui/material/Avatar';
@@ -28,7 +28,9 @@ import { SearchField } from '../basic/StyledComponents';
 const drawerWidth = 230;
 
 //Actual Components
- const NavBar = ({title, iconID}) => {
+ const NavBar = ({title, handleChange, iconID}) => {
+
+    const {logout} = useAuth()
     const theme = useTheme();
     const desktop = useMediaQuery(theme.breakpoints.down(1000));
 
@@ -39,17 +41,22 @@ const drawerWidth = 230;
             name: 'Profile'
 
         },
-
         {
-            id: 2,
-            location: '/settings',
-            name: 'Account'
+            id: 4,
+            location: '',
+            name: 'My Shop'
+
+        },
+        {
+            id: 5,
+            location: '',
+            name: 'Affiliates'
 
         },
 
         {
             id: 3,
-            location: '/login',
+            location: 'bye',
             name: 'Logout'
 
         },
@@ -196,8 +203,16 @@ const drawerWidth = 230;
                                     onClose={handleCloseUserMenu}
                                 >
                                     {menu.map(({id, location, name}) => (
-                                        <MenuItem key={id} role='link' onClick={()=>{navigate(location)}}>
-                                            <Typography textAlign="center">{name}</Typography>
+                                        <MenuItem 
+                                            key={id} 
+                                            role='link' 
+                                            onClick={()=>{
+                                                location === 'bye' ? logout() :
+                                                location === '' ? handleChange(id) :
+                                                navigate(location)
+                                            }}
+                                        >
+                                            <Typography textAlign="left" sx={{ fontFamily:'Arvo', minWidth:80 }}>{name}</Typography>
                                         </MenuItem>
                                     ))}
                                 </Menu>

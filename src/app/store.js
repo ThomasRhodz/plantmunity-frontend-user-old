@@ -9,29 +9,23 @@ import {
     PURGE,
     REGISTER,
   } from 'redux-persist';
-
+  //import autoMergeLevel2 from 'redux-persist/lib/stateReconciler/autoMergeLevel2';
   import storage from './storage';
+  
+// RTK Query
+import { userApi } from './services/userAPi'
+import { authApi } from './services/authApi';
 
-//redux persists
-import userReducer from './persists/user'
-import postReducer from './persists/post'
-import forumReducer from './persists/forum'
-
-//RTK Query
-import { userApi } from './services/userApi'
-import { postApi } from './services/postApi'
-import { forumApi } from './services/forumApi'
-import { concernApi } from './services/concernApi';
+//Redux
+import authReducer from './persist/authentication/authSlice'
+import userReducer from './persist/account/userSlice'
 
 
 const rootReducer = combineReducers({
+    auth: authReducer,
     user: userReducer,
-    post: postReducer,
-    forum: forumReducer,
-    [userApi.reducerPath]: userApi.reducer, 
-    [postApi.reducerPath]: postApi.reducer,
-    [forumApi.reducerPath]: forumApi.reducer,
-    [concernApi.reducerPath]: concernApi.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   });
 
   const persistConfig = {
@@ -39,19 +33,20 @@ const rootReducer = combineReducers({
     version: 1,
     storage,
     //stateReconciler: autoMergeLevel2,
-    blacklist: [userApi.reducerPath, postApi.reducerPath, forumApi.reducerPath, concernApi.reducerPath],
+    blacklist: [userApi.reducerPath, authApi.reducerPath],
   };
-
+  
   const persistedReducer = persistReducer(persistConfig, rootReducer);
-
+  
+  
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) => 
-        getDefaultMiddleware({
-            serializableCheck: {
-                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-              },
-        }).concat(userApi.middleware, postApi.middleware, forumApi.middleware, concernApi.middleware),
-});
-
-setupListeners(store.dispatch);
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        serializableCheck: {
+          ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+        },
+      }).concat(userApi.middleware, authApi.middleware),
+  });
+  
+  setupListeners(store.dispatch);

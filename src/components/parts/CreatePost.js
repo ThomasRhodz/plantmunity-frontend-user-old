@@ -24,8 +24,7 @@ import YardIcon from '@mui/icons-material/Yard';
 import { useForm } from 'react-hook-form';
 //import * as yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
-import { setPost } from '../../app/persists/post';
-import { useAddPostMutation } from '../../app/services/postApi'
+
 
 
 const Input = styled('input')({
@@ -66,9 +65,9 @@ const useStyles = makeStyles((theme) =>
 const CreatePost = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {post} = useSelector((state) => state.post)
+    // const {post} = useSelector((state) => state.post)
 
-    const [addPost] = useAddPostMutation();
+    
 
     const {
         register, 
@@ -78,11 +77,11 @@ const CreatePost = () => {
 
     const onSubmit = (data) => {
 
-        const postInstance = {
-            'post_caption': data.caption,
-            'image': post.post
-        };
-        addPost(postInstance)
+        // const postInstance = {
+        //     'post_caption': data.caption,
+        //     'image': post.post
+        // };
+       
         console.log('success')
         setOpen(false);
     } 
@@ -109,9 +108,9 @@ const CreatePost = () => {
                 setImageUpload(e.target.result)
                 setImage(true)
                 console.log(e.target.result)
-                dispatch(setPost({
-                    post: e.target.result
-                }))
+                // dispatch(setPost({
+                //     post: e.target.result
+                // }))
             }
             reader.readAsDataURL(e.target.files[0])
         }

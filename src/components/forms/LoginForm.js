@@ -1,169 +1,115 @@
-import React from 'react';
-import Button from '../basic/Button';
-import { useForm } from 'react-hook-form';
-import { useSelector} from 'react-redux';
-import { navigate } from 'gatsby';
+//MUI Components
+import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
+import { navigate } from 'gatsby'
+import React, {useLayoutEffect, useState} from 'react'
 
-import {Grid, TextField, Typography} from '@mui/material/';
-import { makeStyles } from '@mui/styles';
-//import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
-import Logo from '../../images/PlantmunityLogo.png';
+//Data fetching
+import { useDispatch,useSelector } from 'react-redux';
+import { setCredentials } from '../../app/persist/authentication/authSlice';
+import { useLoginUserMutation } from '../../app/services/authApi';
+import useAuth from '../../app/hooks/useAuth'
 
+//Form and Data Handling
+import {useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
-const useStyles = makeStyles((theme) =>
-  ({
-
-    logInHolder: {
-        borderRadius: '0px 25px 25px 0px',
-        backgroundColor: 'white',
-        padding: '30px',
-        width: '400px',
-        height: '490px', 
-        [theme.breakpoints.down('md')]: {
-            width: '330px',
-        },
-
-        [theme.breakpoints.down('sm')]: {
-            borderRadius: '25px 25px 25px 25px',
-        },
-    },
-
-    logInImageHolder:{
-        
-        borderRadius: '30px',
-        width:'400px',
-        height: '490px',
-        [theme.breakpoints.down('sm')]: {
-            display: 'none'
-        },
-
-        [theme.breakpoints.down('xs')]: {
-            width: '360px',
-        },
-    },
-
-    logInImage: {
-        borderRadius: '25px 0px 0px 25px',
-        // border: "1px solid #58a776",
-        width:'400px',
-        height: '490px',
-        objectFit: 'cover',
-    },
-
-    logInContainer:{
-        width: '100%',
-        height: '100%',
-        [theme.breakpoints.down('sm')]: {
-            padding: '20px'
-        },
-    },
-  }));
-
-
+//Schema: Rules for inputs
+const schema = yup.object({
+    username: yup.string().required('username is required'),
+    password: yup.string().required('password is required'),
+  });
+ 
+//---------------------------------------------------------------------------------------------------------------------------
 
 const LoginForm = () => {
+    
+    const [loginUser] = useLoginUserMutation();
+    const { isLoggedIn, auth } = useAuth();
+    const dispatch = useDispatch();
 
-    const {user} = useSelector((state) => state.user)
-    const {register, handleSubmit} = useForm({criteriaMode: "all"});
+    const [warning, setWarning] = useState('');
+
+    //For react hook form
+    const {register, handleSubmit} = useForm({
+        resolver: yupResolver(schema)
+    });
 
     const onSubmit = (data) => {
-        console.log(data)
-        console.log(user.userName)
-        console.log(user.email)
-        console.log(user.password)
-
-        if((data.userNameEmail===user.userName || data.userNameEmail===user.email) && data.password === user.password){
-           navigate('/home')
-        }
-        else{
-            console.log('invalid input')
-        }
         
+        loginUser(data)
+        .unwrap()
+        .then((res) => {
+            console.log("Result", res);
+            // dispatch(setCredentials(res));
+             
+        })
+        .catch((err) => {
+            setWarning(err.data.message)
+            //console.log('error')
+        }); 
     }
-    const classes = useStyles();
-    return (
-        <Grid container direction='column' alignItems='center' className={classes.logInContainer}>
-            <Grid sx={{height:{xs:60, sm:60, md:50}}} />
-            <Grid item>
-                <Grid container direction='row' alignItems='center' sx={{ borderRadius: 5, boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)'}}>
 
-                    <Grid item className={classes.logInImageHolder}>
-                        <img
-                            src='https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1623959191-medium-plant-dieffenbachia-white-pot_2048x.jpg'
-                            alt='Plant'
-                            className={classes.logInImage}
-                        /> 
-                    </Grid>
-                    <Grid item className={classes.logInHolder}>
-                        <Grid container direction='column' alignItems='center' sx={{width: '100%'}}>
-                            <Grid item>
-                                <img
-                                    src={Logo}
-                                    width={280}
-                                    alt='logo'
-                                />
-                            </Grid>
-                            <form style={{width: '100%'}} onSubmit={handleSubmit(onSubmit)}>
-                            <Grid item sx={{width: '100%'}}>
-                                    <TextField 
-                                        id='username'
-                                        style={{width: '100%'}} 
-                                        type={'text'} 
-                                        label={'Username or Email'} 
-                                        variant={'outlined'} 
-                                        size={'regular'} 
-                                        {...register('userNameEmail', {
-                                            required: "Required", 
-                                         })}
-                                        />
-                                        
-                                </Grid>
-                                <div style={{height:20}} />
+    // useLayoutEffect(() => {
+    //     console.log("Logged In:", isLoggedIn);
+    //     if (isLoggedIn) {
+    //         navigate('/welcome')
+    //     }
 
-                                <Grid item sx={{width: '100%'}}>
-                                    <TextField 
-                                        style={{width: '100%'}} 
-                                        type={'password'} 
-                                        label={'Password'} 
-                                        variant={'outlined'} 
-                                        size={'regular'} 
-                                        {...register('password', {
-                                            required: 'Required', 
-                                            })}/>       
-                                </Grid>
-                                <div style={{height:5}} />
-                                <Grid item sx={{width: '100%'}}>
-                                    <Button variant='text' btnSize='small' color='white' text='Forgot your password?'  textSize='13px' textColor='#58a776'/>
-                                </Grid>
-                                <div style={{height:20}}  />
-                                <Grid item sx={{width: '100%'}}>
-                                    <Button type={'submit'} variant='contained' color='#58a776' text='Log In' textColor='white' btnWidth='100%' btnSize='large'/>
-                                </Grid>
-                            </form>
-                            
-                            <div style={{height:15}} />
-                            <Grid item>
-                                <Grid container direction='row' alignItems='center'>
-                                    <Grid item>
-                                        <Typography
-                                            variant='caption'
-                                            style={{fontFamily:'apple-system',}}
-                                            gutterBottom
-                                        >
-                                            Don't have an Account?   
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Button variant='text' btnSize='small' color='none' text='Signup now!'  textSize='13px' textColor='#58a776' clickHandler={() => navigate('/signup')}/>
-                                    </Grid>
-                                </Grid> 
-                            </Grid>  
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
+    //   }, [isLoggedIn, auth]);
+
+  return (
+    <Grid item sx={{
+        width: '100%',
+        height:'100%',
+        pt:3,
+    }}>
+        <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
+        <Grid sx={{pb:2, width:'100%'}}>
+            <Stack direction='column' align='center' sx={{width:'100%'}}>
+                <Typography variant='caption' align='center' sx={{fontFamily:'raleway', color:'orange'}}>
+                    {warning}
+                </Typography>  
+            </Stack>
+            
         </Grid>
-    ) 
+        <Grid sx={{pb:2}}>
+            <TextField  
+                {...register("username")} 
+                type='text'
+                label="Username" 
+                size='small' 
+                variant="filled" 
+                sx={{width:'100%'}}
+            />
+        </Grid>
+
+        <Grid sx={{pb:2}}>
+            <TextField
+                {...register("password")} 
+                type='password'
+                label="Password" 
+                size='small' 
+                variant="filled" 
+                sx={{width:'100%'}}
+            />
+        </Grid>
+
+        <Grid sx={{pb:5}}>
+            <Typography variant='subtitle2'  align='right' sx={{fontFamily:'Arvo'}}>
+              Forgot your password?
+            </Typography>
+        </Grid>
+
+        <Grid sx={{pb:2}}>
+            <Button type='submit'  variant='contained' sx={{width:'100%', backgroundColor:'#7CB2B1', fontFamily: 'Arvo', textTransform:'none', borderRadius: 5, color:'white'}}>
+                Login
+            </Button>
+            
+        </Grid>
+        </form>
+    </Grid>
+  )
 }
 
 export default LoginForm

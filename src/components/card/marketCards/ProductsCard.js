@@ -52,12 +52,12 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
         sx={{ width: "100%", overflow: "hidden" }}
         className="grid-item"
       >
-        <Box sx={{ width: "100%", height: { xs: 200, sm: 250, md: 250 } }}>
+        <Box sx={{ width: "100%", height: { xs: 200, sm: 250, md: 250 } }} onClick={() => handleClickOpen()}>
           <img
             src={productImage}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
             alt="product_image"
-            onClick={() => handleClickOpen()}
+            
           />
         </Box>
         <Stack

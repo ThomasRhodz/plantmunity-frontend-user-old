@@ -15,8 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 // Form and Data Handling
 import { useDispatch, useSelector } from 'react-redux';
-import { setForum } from '../../app/persists/forum';
-import { useAddForumMutation } from '../../app/services/forumApi';
+
 
 import { 
   //set, 
@@ -140,10 +139,10 @@ const Forum = () => {
   const dispatch = useDispatch();
 
   //For using the variable in a redux (Forum.js -> forum.[variable_name])
-  const {forum} = useSelector((state) => state.forum)
+  // const {forum} = useSelector((state) => state.forum)
 
-  //Renaming the RTK query into shorter name
-  const [addForum] = useAddForumMutation();
+  // //Renaming the RTK query into shorter name
+  // const [addForum] = useAddForumMutation();
 
   //States
   const [open, setOpen] = React.useState(false); //-> for open and close of dialog
@@ -186,9 +185,9 @@ const Forum = () => {
         reader.onload = function(e){
             setImageUpload(e.target.result); // -> setting the current image
             setImage(true); // -> setting the preview to true (image will display)
-            dispatch(setForum({
-                forumImage: e.target.result
-            })); // -> setting the forum image with a 64 Base string of the current image, which will be use during upload of the forum
+            // dispatch(setForum({
+            //     forumImage: e.target.result
+            // })); // -> setting the forum image with a 64 Base string of the current image, which will be use during upload of the forum
             
           }
         reader.readAsDataURL(e.target.files[0])
@@ -198,15 +197,15 @@ const Forum = () => {
   const onSubmit = (data) => {
     console.log(data);
 
-    const forumnInstance = {
-      'title': data.title,
-      'description': data.description,
-      'visibility': data.visibility,
-      'image': forum.forumImage
-    }
+    // const forumnInstance = {
+    //   'title': data.title,
+    //   'description': data.description,
+    //   'visibility': data.visibility,
+    //   'image': forum.forumImage
+    // }
 
-    addForum(forumnInstance)
-    console.log(forumnInstance)
+    // addForum(forumnInstance)
+    // console.log(forumnInstance)
 
     setTitle('')
     setDescription('')

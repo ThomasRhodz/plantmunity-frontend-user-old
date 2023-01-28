@@ -43,8 +43,7 @@ const drawerWidth = 230;
                             <Typography 
                                 variant={'h6'}
                                 sx={{
-                                    fontFamily:'Arvo', 
-                                    minWidth:200,
+                                    fontFamily:'Arvo',
                                     color:'white'
                                 }}
                             >

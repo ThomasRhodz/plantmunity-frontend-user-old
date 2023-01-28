@@ -19,13 +19,13 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import '../../css/pageStyles.css';
 
 //Actual Components
- const BottomAppBar = ({iconID}) => {
+ const BottomAppBar = ({iconID, handleChange}) => {
 
     // //Variables
     // Array of navigating pages
     const page = [
         {
-            id: 1,
+            id: 0,
             location: '/home',
             name: 'Home',
             icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: 'white'}:{color: '#BFCBA5'}}/>
@@ -69,10 +69,10 @@ import '../../css/pageStyles.css';
         <AppBar position="fixed" style={{backgroundColor: '#5C6D63', color: '#6da58a', }} sx={{ top: 'auto', bottom: 0, display: { xs: 'flex', sm: 'flex', md: 'none' } }}>
             <Toolbar>
                 <Box sx={{ flexGrow: 1 }} />
-                    {page.map(({id, location, name, icon}) => (
+                    {page.map(({id, name, icon}) => (
                         <React.Fragment key={id} >
-                            <Tooltip title={name} role='link' onClick={()=>{navigate(location)}}>
-                                <IconButton color="inherit" aria-label="open drawer" size='large' >
+                            <Tooltip title={name} role='link' >
+                                <IconButton color="inherit" aria-label="open drawer" size='large' onClick={()=>handleChange(id)}>
                                     {icon}
                                 </IconButton>
                             </Tooltip>

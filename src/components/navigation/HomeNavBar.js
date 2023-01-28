@@ -23,6 +23,7 @@ import BottomAppBar from './BottomNavBar';
 import Timeline from '../body/Timeline';
 import MyShop from '../body/MyShop';
 import MarketPlace from '../body/MarketPlace';
+import AssociateTab from '../body/AssociateTab';
 
 // //Hooks abd API Calls
 // import useAuth from '../../app/hooks/useAuth';
@@ -58,7 +59,7 @@ const mainMenu = [
     {
         id: 5,
         name: 'Affiliates',
-        destination: '/accountAssociates',
+        destination: '',
     },
 ];
 
@@ -101,13 +102,11 @@ const HomeNavBar = () => {
     
 
     // for opening menu
-    const handleMenu = (event) => {
-      setAnchorEl(event.currentTarget);
+    const handleBottomNavChange = (target) => {
+      setSelectedMenu(target);
+      console.log(target)
     };
-  
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
+
  
     // function that will help the menu item to set ther icon base on the menu title.
     const iconChanger = (menuName) => {
@@ -148,7 +147,7 @@ const HomeNavBar = () => {
       <CssBaseline />
 
       {/* Top Bar */}
-      <NavBar title={menuName} />
+      <NavBar title={menuName} handleChange={(target)=> handleBottomNavChange(target)}/>
 
       {/* Side Bar | Side Drawer */}
       <Drawer
@@ -231,7 +230,7 @@ const HomeNavBar = () => {
         {/* Box that holds the nmain contents */}
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: 'background.default', p: {xs:0, sm:2, md:2}, height:'100%'}}
+        sx={{ flexGrow: 1, bgcolor: 'background.default', p: {xs:1, sm:2, md:2}, height:'100%'}}
       >
         <Toolbar />
         <Stack sx={{width:'100%', marginTop:'-15px'}}>
@@ -250,9 +249,13 @@ const HomeNavBar = () => {
           <MarketPlace />
         </Grid>
 
+        <Grid sx={{width:'100%', display: selectedMenu === 5 ? 'flex' : 'none',}}>
+          <AssociateTab />
+        </Grid>
+
       </Box>
       
-      <BottomAppBar/>
+      <BottomAppBar handleChange={(value)=>handleBottomNavChange(value)}/>
     </Box>
   );
 }

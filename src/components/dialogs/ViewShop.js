@@ -1,14 +1,16 @@
-import { Box, Divider, Grid, IconButton, Stack, Tab, Tabs, Tooltip, Typography, Rating, Toolbar } from '@mui/material'
+import { Box, Button, Divider, Grid, IconButton, Stack, Tab, Tabs, Tooltip, Typography, Rating, Toolbar } from '@mui/material'
 import React from 'react'
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
-import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
-import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
-import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
-import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 
+import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 import ShopProductList from '../parts/marketplace/ShopProductList';
 
@@ -56,22 +58,23 @@ const ViewShop = ({handleClose}) => {
         <Grid item sx={{ width:'100%', mt:2}}>
             <Grid container direction={mobile ? 'column' : 'row'} sx={{ width:'100%', p:2 }}>
                 
-                <Grid item sx={{ width:mobile ? '100%' : tablet? '35%' : '30%', height: mobile ? '100%' :'80vh', bgcolor:'white', mr:2, borderRadius:3, p:2, boxShadow:'2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.38)' }}>
+                <Grid item sx={{ width:mobile ? '100%' : tablet? '35%' : '30%', height: mobile ? '100%' :'85vh', bgcolor:'white', mr:2, borderRadius:3, p:2, boxShadow:'2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.38)' }}>
                     <Stack direction='column' alignItems={'center'} sx={{ width:'100%', pt:1 }}>
+                       
                        <img
                             src={
                             "https://images-platform.99static.com//5bJtEaPw4JVjNVJlprXQPzm5pLk=/137x135:1362x1361/fit-in/500x500/99designs-contests-attachments/129/129927/attachment_129927926"
                             }
                             alt="shop_logo"
                             style={{
-                            width: 200,
-                            height: 200,
+                            width: 180,
+                            height: 180,
                             borderRadius: "50%",
                             objectFit: "cover",
                             }}
                         />
         
-                        <Typography variant={ tablet ? 'h6' : 'h4'} align={'center'} sx={{ fontFamily:'Arvo', mt:2 }}>
+                        <Typography variant={ tablet ? 'h6' : 'h5'} align={'center'} sx={{ fontFamily:'Arvo', mt:2 }}>
                             Palimtintin Hand Garden
                         </Typography>
                         <Stack direction='row' alignItems='center' >
@@ -84,40 +87,64 @@ const ViewShop = ({handleClose}) => {
 
                         <Stack direction={'column'} alignItems={'left'} sx={{ mt: 2, mb:1,  width: mobile ? '70%' : tablet ? '60%' : '70%' }}>
                             
-
                             <Stack direction='row' sx={{ mt:1 }}>
-                                <SmartphoneRoundedIcon sx={{fontSize:18}}/>
-                                <Typography variant='caption' align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:16, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
-                                    {"+6394 6680 1637"}
+                                <AccessTimeRoundedIcon sx={{fontSize:19}}/>
+                                <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
+                                    {"08:00am - 05:00pm"}
                                 </Typography>
                             </Stack>
-
-                            <Stack direction='row' sx={{ mt:1 }}>
-                                <LocalPhoneRoundedIcon sx={{fontSize:18}}/>
-                                <Typography variant='caption' align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:16, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
-                                    {"082 77536"}
-                                </Typography>
-                            </Stack>
-                           
                             <Stack direction='row' sx={{ mt:1}}>
-                                <EmailRoundedIcon sx={{fontSize:18}}/>
-                                <Typography variant='caption' align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:16, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
+                                <EmailOutlinedIcon sx={{fontSize:20}}/>
+                                <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
                                     {"J.Rodis.477524@umindanao.edu.ph"}
                                 </Typography>
                             </Stack>
 
+                            <Stack direction='row' sx={{ mt:1 }}>
+                                <SmartphoneRoundedIcon sx={{fontSize:20}}/>
+                                <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
+                                    {"+6394 6680 1437"}
+                                </Typography>
+                            </Stack>
+
+                            <Stack direction='row' sx={{ mt:1 }}>
+                                <LocalPhoneOutlinedIcon sx={{fontSize:20}}/>
+                                <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
+                                    {"082 77536"}
+                                </Typography>
+                            </Stack>
+                           
+
                             <Stack direction='row' sx={{ mt: 1  }}>
-                                <LocationOnRoundedIcon sx={{fontSize:18}}/>
-                                <Typography variant='caption' align='justify' sx={{maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:16, fontFamily:'Arvo', ml:tablet ? '8px' : 2,mr: tablet ? 0:2, }}>
+                                <LocationOnOutlinedIcon sx={{fontSize:20}}/>
+                                <Typography  align='justify' sx={{maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2,mr: tablet ? 0:2, }}>
                                     {"Purok 5, Kalambuan Village, Talomo, Davao City, Davao del Sur"}
                                 </Typography>
                             </Stack>
                             
                         </Stack>
+
+                        <Stack direction="column" sx={{ width:'70%', mt:2, mb:2 }}>
+                            <Button
+                                variant="contained"
+                                size="regular"
+                                sx={compStyle["shop-botton"]}
+                            >
+                                View Owner Detail
+                            </Button>
+
+                            <Button
+                                variant="contained"
+                                size="regular"
+                                sx={compStyle["shop-botton"]}
+                            >
+                                Follow Shop Now!
+                            </Button>
+                        </Stack>
                     </Stack>
                 </Grid>
 
-                <Grid item sx={{p:2, width: mobile ? '100%' : tablet ? '62%' : '68%', height: mobile ? '100%' : '80vh', bgcolor:'white', borderRadius:3, boxShadow:'2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.38)', mt: mobile? 2:0 }}>
+                <Grid item sx={{p:2, width: mobile ? '100%' : tablet ? '62%' : '68%', height: mobile ? '100%' : '85vh', bgcolor:'white', borderRadius:3, boxShadow:'2.0px 4.0px 4.0px hsl(0deg 0% 0% / 0.38)', mt: mobile? 2:0 }}>
                     
                 <Tabs
                         value={value}
@@ -168,3 +195,25 @@ const ViewShop = ({handleClose}) => {
 }
 
 export default ViewShop
+
+
+
+const compStyle ={
+   
+    'shop-botton':{ 
+        mt:1,
+        width:'100%',
+        height:40,
+        textTransform:'none',
+        fontFamily:'Arvo',
+        borderRadius:25,
+        border:'2px #5C6D63 solid',
+        bgcolor:'white',
+        color:'#5C6D63',
+        '&:hover':{
+            bgcolor:'#5C6D63',
+            color:'white',
+        }
+    },
+  }
+  
