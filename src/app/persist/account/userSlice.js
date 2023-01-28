@@ -10,6 +10,8 @@ const initialState = {
   contact: null,
   email: null,
   image: null,
+  bio_note:null,
+  sex: null
 };
 
 export const userSlice = createSlice({
@@ -17,7 +19,7 @@ export const userSlice = createSlice({
   initialState,
   
   reducers: {
-    setPersonalDetails: (state, { payload: { first_name, middle_name, last_name, username, user_type, address, contact, email, image } }) => {
+    setPersonalDetails: (state, { payload: { first_name, middle_name, last_name, username, user_type, address, contact, email, image, bio_note, sex } }) => {
         state.first_name = first_name;
         state.middle_name = middle_name;
         state.last_name = last_name;
@@ -27,6 +29,8 @@ export const userSlice = createSlice({
         state.contact = contact;
         state.email = email;
         state.image = image;
+        state.bio_note = bio_note;
+        state.sex = sex;
     },
     resetPersonalDetails: (state) => {
         state.first_name = null;
@@ -38,6 +42,8 @@ export const userSlice = createSlice({
         state.contact = null;
         state.email = null;
         state.image = null;
+        state.bio_note = null;
+        state.sex = null;
     },
   },
 });

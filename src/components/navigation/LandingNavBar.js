@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 
-import logo from '../../images/PlantmunityLogo2.png'
+import logo from '../../images/Plantmunity.png'
 import {navigate} from 'gatsby';
 
 

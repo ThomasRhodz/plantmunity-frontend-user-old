@@ -1,7 +1,10 @@
 //MUI Components
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
-import { navigate } from 'gatsby'
+import { navigate, Link } from 'gatsby'
 import React, {useLayoutEffect, useState} from 'react'
+import Logo from '../../images/Plantmunity.png'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
 
 //Data fetching
 import { useDispatch,useSelector } from 'react-redux';
@@ -16,13 +19,16 @@ import * as yup from "yup";
 
 //Schema: Rules for inputs
 const schema = yup.object({
-    username: yup.string().required('username is required'),
+    email: yup.string().email('email is required'),
     password: yup.string().required('password is required'),
   });
  
 //---------------------------------------------------------------------------------------------------------------------------
 
 const LoginForm = () => {
+
+    const theme = useTheme();
+    const tablet = useMediaQuery(theme.breakpoints.down(900));
     
     const [loginUser] = useLoginUserMutation();
     const { isLoggedIn, auth } = useAuth();
@@ -36,78 +42,107 @@ const LoginForm = () => {
     });
 
     const onSubmit = (data) => {
-        
+        console.log(data)
         loginUser(data)
         .unwrap()
         .then((res) => {
-            console.log("Result", res);
-            // dispatch(setCredentials(res));
+            console.log(res.message);
+            dispatch(setCredentials(res));
              
         })
         .catch((err) => {
-            setWarning(err.data.message)
-            //console.log('error')
+            //setWarning(err)
+            console.log(err)
         }); 
     }
 
-    // useLayoutEffect(() => {
-    //     console.log("Logged In:", isLoggedIn);
-    //     if (isLoggedIn) {
-    //         navigate('/welcome')
-    //     }
+    useLayoutEffect(() => {
+        //console.log("Logged In:", isLoggedIn);
+        if (isLoggedIn) {
+            navigate('/welcome')
+        }
 
-    //   }, [isLoggedIn, auth]);
+      }, [isLoggedIn, auth]);
 
   return (
     <Grid item sx={{
-        width: '100%',
+        width: tablet ? '100%' : '50%',
         height:'100%',
-        pt:3,
+        p:4,
     }}>
-        <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
-        <Grid sx={{pb:2, width:'100%'}}>
-            <Stack direction='column' align='center' sx={{width:'100%'}}>
-                <Typography variant='caption' align='center' sx={{fontFamily:'raleway', color:'orange'}}>
-                    {warning}
-                </Typography>  
+        <Stack direction='column' alignItems={'center'} sx={{ width:'100%' }}>
+            <Grid sx={{ width:'100%', height:100, mt:2 }}>
+                <img 
+                    alt={'login_pic'}
+                    style={{ 
+                        width:'100%',
+                        height:  tablet ? 120 : 100,
+                        objectFit:'cover'
+                    }}
+                    src={Logo}
+                />
+            </Grid>
+            <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
+            <Grid sx={{pb:2, width:'100%'}}>
+                <Stack direction='column' align='center' sx={{width:'100%'}}>
+                    <Typography variant='caption' align='center' sx={{fontFamily:'raleway', color:'orange'}}>
+                        {warning}
+                    </Typography>  
+                </Stack>
+                
+            </Grid>
+            <Grid sx={{pb:2}}>
+                <TextField  
+                    {...register("email")} 
+                    type='text'
+                    label="Email" 
+                    size='small' 
+                    variant="filled" 
+                    sx={{width:'100%'}}
+                />
+            </Grid>
+
+            <Grid sx={{pb:2}}>
+                <TextField
+                    {...register("password")} 
+                    type='password'
+                    label="Password" 
+                    size='small' 
+                    variant="filled" 
+                    sx={{width:'100%'}}
+                />
+            </Grid>
+
+            <Grid sx={{pb:5}}>
+                <Typography variant='subtitle2'  align='right' sx={{fontFamily:'Arvo'}}>
+                Forgot your password?
+                </Typography>
+            </Grid>
+
+            <Grid sx={{pb:2}}>
+                <Button type='submit'  variant='contained' sx={{width:'100%', backgroundColor:'#ACBCA4', fontFamily: 'Arvo', textTransform:'none', borderRadius: 5, color:'white'}}>
+                    Login
+                </Button>
+                
+            </Grid>
+            </form>
+
+            <Stack direction='row' sx={{mt:5}}>
+
+              <Typography align='center' sx={{ fontFamily:'raleway', fontSize:12,  color: '#0F3E47', pb:2}}>
+                Don't have an account?
+              </Typography>
+              <Grid sx={{width:5}} />
+
+              <Link to={'/signup'} style={{ textDecoration: 'none' }}>
+                <Typography align='center' sx={{ fontFamily:'raleway', fontSize:12,  color: '#ACBCA4', pb:2}}>
+                  Sign up now!
+                </Typography>
+              </Link>
+
             </Stack>
-            
-        </Grid>
-        <Grid sx={{pb:2}}>
-            <TextField  
-                {...register("username")} 
-                type='text'
-                label="Username" 
-                size='small' 
-                variant="filled" 
-                sx={{width:'100%'}}
-            />
-        </Grid>
 
-        <Grid sx={{pb:2}}>
-            <TextField
-                {...register("password")} 
-                type='password'
-                label="Password" 
-                size='small' 
-                variant="filled" 
-                sx={{width:'100%'}}
-            />
-        </Grid>
-
-        <Grid sx={{pb:5}}>
-            <Typography variant='subtitle2'  align='right' sx={{fontFamily:'Arvo'}}>
-              Forgot your password?
-            </Typography>
-        </Grid>
-
-        <Grid sx={{pb:2}}>
-            <Button type='submit'  variant='contained' sx={{width:'100%', backgroundColor:'#7CB2B1', fontFamily: 'Arvo', textTransform:'none', borderRadius: 5, color:'white'}}>
-                Login
-            </Button>
-            
-        </Grid>
-        </form>
+        </Stack>
     </Grid>
   )
 }

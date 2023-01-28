@@ -1,7 +1,7 @@
 import { Grid, Stack, Typography } from '@mui/material'
 import React from 'react';
 import SignUpProgress from '../parts/SignUpProgress';
-import Logo from '../../images/PlantmunityLogo3.png'
+import Logo from '../../images/Plantmunity.png'
 import { Link } from 'gatsby';
 
 const SignUp = () => {

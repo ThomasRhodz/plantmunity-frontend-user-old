@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { resetCredentials } from '../persist/authentication/authSlice';
 import { resetPersonalDetails } from '../persist/account/userSlice';
 import { useLogoutUserMutation } from '../services/authApi';
+import { navigate } from 'gatsby';
 
 export default function useAuth() {
   const auth = useSelector((state) => state.auth); //for getting the value in authSlice[redux]
@@ -27,7 +28,7 @@ export default function useAuth() {
     exitUser(); //revoke token
     dispatch(resetCredentials()); //reset the values of variables in authSlice
     dispatch(resetPersonalDetails()); //reset the values of variables in authSlice
-
+    navigate('/login')
   };
 
   return { isLoggedIn, auth, logout };

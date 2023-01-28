@@ -22,22 +22,24 @@ export default function useUser() {
 
       getUser()
       console.log(data);
-      const userDetail = data ? data.user_details : [];
-      const petOwner = userDetail ? {
+      const userDetail = data ? data.user : [];
+      const user = userDetail ? {
         first_name: userDetail.first_name,
         middle_name: userDetail.middle_name,
         last_name: userDetail.last_name,
         username: userDetail.username,
-        user_type: userDetail.account_type, 
+        user_type: userDetail.type, 
         address: userDetail.address,
         contact: userDetail.contact,
         email: userDetail.email,
-        image: userDetail.pet_owner_image,
+        image: userDetail.profile_picture,
+        bio_note: userDetail.bio_note,
+        sex: userDetail.sex
       } : {};
 
-      console.log(petOwner)
+      console.log(user)
       
-      dispatch(setPersonalDetails(petOwner))
+      dispatch(setPersonalDetails(user))
 
     },[count]); 
 
