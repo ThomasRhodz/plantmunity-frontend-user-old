@@ -7,7 +7,6 @@ import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
-import { BsFacebook } from 'react-icons/bs';
 
 const MyShopDetails = () => {
     const theme = useTheme();

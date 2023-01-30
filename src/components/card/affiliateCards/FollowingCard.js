@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material/styles';
 
 const FollowingCard = ({userName, user, userProfilePic, bio, followBackStatus}) => {
   const theme = useTheme();
-  const tablet = useMediaQuery(theme.breakpoints.down(1200));
+  //const tablet = useMediaQuery(theme.breakpoints.down(1200));
   const status = followBackStatus;
   return (
     //Start of the outer component (card)

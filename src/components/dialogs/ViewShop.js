@@ -8,14 +8,14 @@ import { useTheme } from '@mui/material/styles';
 import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+// import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
 import ShopProductList from '../parts/marketplace/ShopProductList';
 
 //Icons
-import Logo from '../../images/PlantmunityLogo2.png';
+import Logo from '../../images/PlantmunityAlt.png';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 const ViewShop = ({handleClose}) => {
     const theme = useTheme();

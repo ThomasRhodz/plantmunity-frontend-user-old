@@ -13,12 +13,13 @@ import {
   import storage from './storage';
   
 // RTK Query
-import { userApi } from './services/userAPi'
+import { userApi } from './services/userAPi';
 import { authApi } from './services/authApi';
+import { postApi } from './services/postApi';
 
 //Redux
-import authReducer from './persist/authentication/authSlice'
-import userReducer from './persist/account/userSlice'
+import authReducer from './persist/authentication/authSlice';
+import userReducer from './persist/account/userSlice';
 
 
 const rootReducer = combineReducers({
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     [userApi.reducerPath]: userApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [postApi.reducerPath]: postApi.reducer,
   });
 
   const persistConfig = {
@@ -33,7 +35,7 @@ const rootReducer = combineReducers({
     version: 1,
     storage,
     //stateReconciler: autoMergeLevel2,
-    blacklist: [userApi.reducerPath, authApi.reducerPath],
+    blacklist: [userApi.reducerPath, authApi.reducerPath, postApi.reducerPath],
   };
   
   const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -46,7 +48,7 @@ export const store = configureStore({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(userApi.middleware, authApi.middleware),
+      }).concat(postApi.middleware, userApi.middleware, authApi.middleware),
   });
   
   setupListeners(store.dispatch);

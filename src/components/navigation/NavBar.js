@@ -20,7 +20,7 @@ import useAuth from '../../app/hooks/useAuth';
  import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
- import Logo from '../../images/PlantmunityLogo2.png';
+ import Logo from '../../images/Plantmunity.png';
 //MUI Styling
 import '../../css/pageStyles.css';
 import { SearchField } from '../basic/StyledComponents';

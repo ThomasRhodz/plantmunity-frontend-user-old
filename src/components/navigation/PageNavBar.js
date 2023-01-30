@@ -11,7 +11,7 @@ import {navigate} from 'gatsby';
 
 
  //Icons
- import Logo from '../../images/PlantmunityLogo2.png';
+ import Logo from '../../images/PlantmunityAlt.png';
 //MUI Styling
 import '../../css/pageStyles.css';
 const drawerWidth = 230;
@@ -55,7 +55,7 @@ const drawerWidth = 230;
                                 <Grid >
                                     <img
                                         src= {Logo}
-                                        style={{width:130, height:60}}
+                                        style={{width:90, height:30}}
                                         alt='logo'
                                     />
                                 </Grid> 

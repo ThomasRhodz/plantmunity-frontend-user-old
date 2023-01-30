@@ -1,5 +1,6 @@
 import React from 'react'
 import {Grid, Avatar, Typography} from '@mui/material/'
+import { useSelector } from 'react-redux';
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
 
@@ -10,6 +11,7 @@ import Btn from '../basic/Button';
 import CreatePost from '../parts/CreatePost';
 import PostCard from '../card/timelineCards/PostCard';
 import {BsImages, BsFillFilePostFill, BsInfoSquare} from 'react-icons/bs';
+import EditUserForm from '../forms/EditUserForm';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
@@ -28,6 +30,13 @@ const useStyles = makeStyles((theme) =>
   }));
 
 const ProfileFeed = () => {
+
+  const image = useSelector((state) => state.user.image) ;
+  const firstname = useSelector((state) => state.user.first_name);
+  const middlename = useSelector((state) => state.user.middle_name);
+  const lastname = useSelector((state) => state.user.last_name);
+  const username = useSelector((state) => state.user.username);
+
   const samplePosts = [
     {
       postID: '1',
@@ -138,7 +147,7 @@ const ProfileFeed = () => {
           <Grid item sx={{width:'100%', marginTop:{xs: '-40px', sm:'-80px', md:'-80px'}}}>
             <Grid container direction='column' alignItems='center' sx={{width:'100%', height:'100%'}}>
               <Grid item sx={{width:{xs: 100, sm:180, md:180}, height:{xs: 100, sm:180, md:180}}}>
-                <Avatar sx={{  border:' 5px solid white', width: {xs: 98, sm:178, md:178}, height: {xs: 98, sm:178, md:178} }}  alt='Tanjiro' src='https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd'/>
+                <Avatar sx={{  border:' 5px solid white', width: {xs: 98, sm:178, md:178}, height: {xs: 98, sm:178, md:178} }}  alt='Tanjiro' src={image}/>
               </Grid>
             </Grid>
           </Grid> {/* end of profile picture */}
@@ -148,12 +157,12 @@ const ProfileFeed = () => {
             <Grid container direction='column' alignItems='center' sx={{width:'100%', height:'100%'}}>
               <Grid item >
                 <Typography variant={matches?'h6':'h4'} fontFamily='Arvo' >
-                  Rorona Virus
+                  {firstname + ' ' + (middlename === null ? ' ' : middlename === '' ? ' ' : middlename) + ' ' + lastname}
                 </Typography>
               </Grid>
               <Grid item>
                 <Typography variant={matches?'body1':'h6'}  fontFamily='raleway' >
-                  @Thomas_Rhodz
+                  @{username}
                 </Typography>
               </Grid>
             </Grid>
@@ -197,9 +206,7 @@ const ProfileFeed = () => {
           </Grid>
 
           <Grid item sx={value===1?{display:'flex', backgroundColor: '#f6f7f6', width:'100%'} : {display:'none'}}>
-            <Grid container direction='column' alignItems={'center'}>
-              
-            </Grid>
+            <EditUserForm/>
           </Grid>
           
 

@@ -8,7 +8,6 @@ import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRound
 import {useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
-import bcrypt  from 'bcryptjs';
 import { navigate } from 'gatsby';
 
 
@@ -21,7 +20,7 @@ const schema1 = yup.object({
     contact: yup.string(),
     email: yup.string().email(),
     username: yup.string(),
-    confirm_password: yup.string(),
+    password_confirmation: yup.string(),
     password: yup.string().matches(/^.*(?=.{8,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, {message: "Password must contain at least 8 characters, one uppercase, one number and one special case character", excludeEmptyString: true})
     //,
     
@@ -60,10 +59,8 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
     const onSubmit3 = (data) => {
         
          
-        if (data.password === data.confirm_password){
+        if (data.password === data.password_confirmation){
 
-            const hashedPassword = bcrypt.hashSync(data.password,10);   
-            
             const input = {
                 'first_name': data.first_name,
                 'middle_name': data.middle_name,
@@ -72,17 +69,18 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                 'contact': data.contact,
                 'email': data.email,
                 'username': data.username,
-                'password': hashedPassword
+                'password': data.password,
+                'password_confirmation': data.password_confirmation
             }
 
             console.log(input)
 
-            // addUser(input)
-            // .then((payload) => {
-            //     console.log('fulfilled',payload)
-            //     navigate('/')
-            // })
-            // .catch((error) => console.error('rejected', error))
+            addUser(input)
+            .then((payload) => {
+                //console.log('fulfilled',payload)
+                navigate('/login')
+            })
+            .catch((error) => console.error('rejected', error))
             
         }
         else{
@@ -125,7 +123,6 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                         {...register("middle_name")}
                         value={middleName} 
                         type='text'
-                        required
                         label="Middle name" 
                         size='regular' 
                         inputProps={{ style: { fontFamily: 'raleway'}}}
@@ -320,7 +317,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                 </Grid>
                 <Grid sx={{pb:2,  mb:2}}>
                     <TextField
-                        {...register("confirm_password")}
+                        {...register("password_confirmation")}
                         value={confirmPassword} 
                         type='password'
                         label="Confirm password" 
@@ -363,7 +360,6 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                             sx={{
                                 width:200, 
                                 backgroundColor:'#7CB2B1',
-                                color:'white', 
                                 fontFamily: 'Arvo',
                                 fontSize: 15, 
                                 textTransform:'none', 

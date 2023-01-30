@@ -2,6 +2,7 @@
 import React from 'react';
 import {Avatar, Box, Drawer, Divider, Grid, Stack, Typography} from '@mui/material/';
 import {CssBaseline, Toolbar, List, ListItem, ListItemButton, ListItemIcon,ListItemText } from '@mui/material/';
+import { useSelector } from 'react-redux';
 
 //Icons
 import {BsFillPeopleFill} from 'react-icons/bs';
@@ -9,7 +10,7 @@ import {FaUser, FaStore } from 'react-icons/fa';
 import ExploreIcon from '@mui/icons-material/Explore';
 import StoreIcon from '@mui/icons-material/Store';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import Logo from '../../images/PlantmunityLogo2.png';
+import Logo from '../../images/PlantmunityAlt.png';
 
 //For notification
 import { ToastContainer, toast } from 'react-toastify';
@@ -86,19 +87,18 @@ const HomeNavBar = () => {
 
 
     //Redux Static Values (User details -> userSlice.js)
-    const firstname = "John Eliezar"//useSelector((state) => state.user.first_name);
-    const image = "https://scontent.fdvo2-2.fna.fbcdn.net/v/t39.30808-6/316676504_3212779305641197_1050176977558317665_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=174925&_nc_ohc=1QHMPCZzvX8AX-NK3_a&tn=rNDVmRy3DV9Pe2vC&_nc_ht=scontent.fdvo2-2.fna&oh=00_AfB1h6f_ojh6lIzBpoXhftRaVAmBFqG2C4xTPQ6IDTulIg&oe=63C849F5" //useSelector((state) => state.user.image);
-    const lastname = "Rodis" //useSelector((state) => state.user.last_name);
-    const username = "ThomasRhodz" //useSelector((state) => state.user.username);
+    const firstname = useSelector((state) => state.user.first_name);
+    const image = useSelector((state) => state.user.image) ;
+    const lastname = useSelector((state) => state.user.last_name);
+    const username = useSelector((state) => state.user.username);
 
     const fullName = firstname+' '+lastname;
 
     //States
     const [selectedMenu, setSelectedMenu] = React.useState(0)
     const [menuName, setMenuName] = React.useState('Home')
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [userFullName, setFullName] = React.useState(firstname !== undefined ? fullName : 'User Name');
-    const [userName, setUserName] = React.useState(username !== undefined ? username : '#UserTag');
+    const userFullName = (firstname !== undefined ? fullName : 'User Name');
+    const userName = (username !== undefined ? username : '#UserTag');
     
 
     // for opening menu
@@ -166,15 +166,15 @@ const HomeNavBar = () => {
         anchor="left"
       >
         {/* User's avatar, name and username */}
-        <Stack direction='column' alignItems={'center'} sx={{width:'100%'}}>
+        <Stack direction='column' alignItems={'center'} sx={{width:'100%', mt:1 }}>
            <Grid display={{xs: 'none', md: 'flex'}}>
                 <img
                     src= {Logo}
-                    style={{width:130, height:70}}
+                    style={{width:120, height:50}}
                     alt='logo'
                 />
             </Grid> 
-            <Divider variant='middle' style={{ background: 'white', width:160, height:1, marginTop:'-5px' }}/>
+            <Divider variant='middle' style={{ background: 'white', width:160, height:1, marginTop:8 }}/>
         </Stack>
        
         

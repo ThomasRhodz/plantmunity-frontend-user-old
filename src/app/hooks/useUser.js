@@ -21,9 +21,9 @@ export default function useUser() {
     useEffect(()=>{
 
       getUser()
-      console.log(data);
+      //console.log(data);
       const userDetail = data ? data.user : [];
-      const user = userDetail ? {
+      const userData = userDetail ? {
         first_name: userDetail.first_name,
         middle_name: userDetail.middle_name,
         last_name: userDetail.last_name,
@@ -37,11 +37,11 @@ export default function useUser() {
         sex: userDetail.sex
       } : {};
 
-      console.log(user)
+      //console.log(userData)
       
-      dispatch(setPersonalDetails(user))
+      dispatch(setPersonalDetails(userData))
 
-    },[count]); 
+    },[count, dispatch, getUser, data]); 
 
     const setUser = () => {
       setCount(1)

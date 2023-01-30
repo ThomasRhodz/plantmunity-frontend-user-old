@@ -46,13 +46,13 @@ const LoginForm = () => {
         loginUser(data)
         .unwrap()
         .then((res) => {
-            console.log(res.message);
+            //console.log(res.message);
             dispatch(setCredentials(res));
              
         })
         .catch((err) => {
-            //setWarning(err)
-            console.log(err)
+            setWarning(err.data.message)
+            //console.log(err)
         }); 
     }
 

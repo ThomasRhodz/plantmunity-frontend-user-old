@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
 
-import logo from '../../images/Plantmunity.png'
+import logo from '../../images/PlantmunityAlt.png'
 import {navigate} from 'gatsby';
 
 
@@ -66,7 +66,7 @@ const LandingNavbar = ({activePage, color}) => {
 
             {/** Logo component  for desktop view*/}
             <Box sx={{display: { xs: 'none', md: 'flex' }, flexGrow:1}}>
-               <img src={logo} alt="Logo" width="150px" height="80px"/>
+               <img src={logo} alt="Logo" width="90px" height="30px"/>
             </Box>
            
             {/** Menu icon for tablet and mobile view  */}
@@ -112,7 +112,7 @@ const LandingNavbar = ({activePage, color}) => {
             
             {/** Landing Logo for tablet or mobile devices */}
             <Box  sx={{display: { xs: 'flex', md: 'none' }}}>
-               <img src={logo} alt="Logo" width="120px" height="60px"/>
+               <img src={logo} alt="Logo" width="90px" height="30px"/>
             </Box>
              
             {/** Box component for menu in desktop view*/}
@@ -121,7 +121,7 @@ const LandingNavbar = ({activePage, color}) => {
                 <Button
                   key={id}
                   onClick={()=>{navigate(location)}}
-                  sx={activeColor? { color: '#BFCBA5', display: 'block', fontFamily: '-apple-systems',  fontSize: 20, fontWeight: 'bold', paddingLeft: 3, paddingRight: 3  } : { color: 'white', display: 'block', fontFamily: '-apple-systems',   fontSize: 20, fontWeight: 'bold', paddingLeft: 3, paddingRight: 3  }}
+                  sx={activeColor? { color: '#BFCBA5', display: 'block', fontFamily: 'raleway',  fontSize: 20, fontWeight: 'bold', paddingLeft: 3, paddingRight: 3  } : { color: 'white', display: 'block', fontFamily: 'raleway',   fontSize: 20, fontWeight: 'bold', paddingLeft: 3, paddingRight: 3  }}
                 >
                   {pageName}
                 </Button>
@@ -130,7 +130,7 @@ const LandingNavbar = ({activePage, color}) => {
               <Button
                 onClick={()=>{navigate('/login')}}
                 variant="contained"
-                sx={ activePage === 5 ? {display: 'none'} : {width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: '-apple-systems', fontSize: 20, fontWeight: 'bold' }}
+                sx={ activePage === 5 ? {display: 'none'} : {width:150, height:45, borderRadius:5, backgroundColor:'#7C8470', color: 'white', display: 'block', fontFamily: 'Arvo', fontSize: 20, fontWeight: 'bold' }}
               >
                   Log In
               </Button>

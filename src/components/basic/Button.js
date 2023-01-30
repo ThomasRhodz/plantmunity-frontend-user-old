@@ -36,7 +36,7 @@ const Button = ({
           color: textColor,
           fontSize: textSize,
           textTransform: "none",
-          fontFamily: "apple-system",
+          fontFamily: "Arvo",
         }}
         size={btnSize}
         variant={variants}

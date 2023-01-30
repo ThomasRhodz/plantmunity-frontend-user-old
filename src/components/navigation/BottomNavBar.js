@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {navigate} from 'gatsby';
 
  //Icons
 import ExploreIcon from '@mui/icons-material/Explore';
