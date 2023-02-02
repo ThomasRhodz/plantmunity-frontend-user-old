@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import {Box, Grid, Stack} from '@mui/material';
-
+import { useSelector } from 'react-redux';
 import {navigate} from 'gatsby';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
@@ -20,7 +20,7 @@ import useAuth from '../../app/hooks/useAuth';
  import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
- import Logo from '../../images/Plantmunity.png';
+ import Logo from '../../images/PlantmunityAlt2.png';
 //MUI Styling
 import '../../css/pageStyles.css';
 import { SearchField } from '../basic/StyledComponents';
@@ -33,6 +33,8 @@ const drawerWidth = 230;
     const {logout} = useAuth()
     const theme = useTheme();
     const desktop = useMediaQuery(theme.breakpoints.down(1000));
+    const firstname = useSelector((state) => state.user.first_name);
+    const image = useSelector((state) => state.user.image) ;
 
     const menu = [
         {
@@ -104,20 +106,20 @@ const drawerWidth = 230;
             position="fixed"
             sx={{ 
                 width: {xs: '100%', sm: '100%', md:`calc(100% - ${drawerWidth}px)`}, 
-                height:65, ml: `${drawerWidth}px`, 
+                height:60, ml: `${drawerWidth}px`, 
                 backgroundColor:{xs: '#5C6D63', sm: '#5C6D63', md:'#F3F4F8'}
             }}
             elevation={0}
         >
             <Container maxWidth="xl">
                 <Toolbar disableGutters >
-                    <Grid container direction="row" alignItems="center" style={{ width: '100%'}} >
-                        <Grid item sx={{flexGrow:1, display: { xs: 'flex', sm: 'flex', md: 'none' }}}>
+                    <Grid container direction="row" alignItems="center" sx={{ width: '100%'}} >
+                        <Grid item sx={{flexGrow:1, pt:1, display: { xs: 'flex', sm: 'flex', md: 'none' }}}>
                             <Stack direction='column' alignItems={'center'} >
                                 <Grid >
                                     <img
                                         src= {Logo}
-                                        style={{width:130, height:60}}
+                                        style={{width:90, height:30}}
                                         alt='logo'
                                     />
                                 </Grid> 
@@ -179,7 +181,7 @@ const drawerWidth = 230;
                                 <Box >
                                     <Tooltip title="Open settings">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
-                                            <Avatar sx={{   width:35, height:35}} alt="Remy Sharp" src="https://scontent.fdvo2-2.fna.fbcdn.net/v/t39.30808-6/316676504_3212779305641197_1050176977558317665_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=174925&_nc_ohc=1QHMPCZzvX8AX-NK3_a&tn=rNDVmRy3DV9Pe2vC&_nc_ht=scontent.fdvo2-2.fna&oh=00_AfB1h6f_ojh6lIzBpoXhftRaVAmBFqG2C4xTPQ6IDTulIg&oe=63C849F5" />
+                                            <Avatar sx={{   width:35, height:35}} alt={firstname} src={image}/>
                                         </IconButton>
                                     </Tooltip> 
                                 </Box>

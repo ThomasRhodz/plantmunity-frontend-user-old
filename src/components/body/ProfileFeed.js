@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, Avatar, Typography} from '@mui/material/'
+import {Grid, Avatar, Typography, Stack} from '@mui/material/'
 import { useSelector } from 'react-redux';
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
@@ -11,8 +11,7 @@ import Btn from '../basic/Button';
 import CreatePost from '../parts/CreatePost';
 import PostCard from '../card/timelineCards/PostCard';
 import {BsImages, BsFillFilePostFill, BsInfoSquare} from 'react-icons/bs';
-import EditUserForm from '../forms/EditUserForm';
-
+import UserAccount from '../parts/account/UserAccount';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
@@ -32,6 +31,7 @@ const useStyles = makeStyles((theme) =>
 const ProfileFeed = () => {
 
   const image = useSelector((state) => state.user.image) ;
+  const coverPhoto = useSelector((state) => state.user.profile_cover) ;
   const firstname = useSelector((state) => state.user.first_name);
   const middlename = useSelector((state) => state.user.middle_name);
   const lastname = useSelector((state) => state.user.last_name);
@@ -108,52 +108,45 @@ const ProfileFeed = () => {
 
   return (
     <React.Fragment>
-        <Grid container direction='column' alignItems='center' sx={{backgroundColor:'white', width:{xs:370, sm:800, md:800}, minHeight:1000, boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
+        <Grid container direction='column' alignItems='center' sx={{backgroundColor:'white', width:{xs:370, sm:550, md:800}, minHeight:1000, boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
 
           {/* Profile cover */}
           <Grid item sx={{ width:'100%', height:{xs:250, sm:300, md:300}}}>
             <img
-              src='https://i.pinimg.com/originals/9d/bd/aa/9dbdaa44c34cfdaaa226e3921b5f9510.jpg'
+              src={coverPhoto}
               alt='cover_photo'
               className={classes.logInImage}
             />
           </Grid>
 
-          {/*following & follower counter and button */}
-          <Grid item sx={{width:'100%', marginTop:'-110px'}}>
+         
 
-            <Grid container direction='column' alignItems='center'>
-              <Grid item>
-                <Grid container direction='row' alignItems='center' sx={{width:'100%', height:'100%'}}>
-                  <Grid item sx={{width:{xs:100, sm:140, md:140}, height:100, backgroundColor:'transparent'}}>
-                    <Btn btnWidth={'100%'} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
-                    <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?21:25} />
-                  </Grid>
+          <Grid item sx={{width:'100%', marginTop:'-100px', pr:{xs: 3, sm:1, md:10}, pl:{xs: 3, sm:1, md:10}}}>
+             <Stack direction='row' alignItems='center' sx={{ width:'100%' }}>
+                <Stack direction='column' alignItems='center'>
+                  <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                  <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?16:25} />
+                </Stack>
+                <div style={{ flexGrow:1 }}/>
+                <Stack direction='column' alignItems='center'>
+                  <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                  <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?16:25} />
+                </Stack>
+             </Stack>
+          </Grid>
 
-                  {/* Space between the two counters */}
-                  <Grid sx={{width:{xs:140, sm:340, md:340}}} />
-
-                  <Grid item sx={{width:{xs:100, sm:140, md:140}, height:100, backgroundColor:'transparent'}}>
-                    <Btn btnWidth={'100%'} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
-                    <Btn btnWidth={'100%'} size='large' color='transparent' text={'Following'} textColor='white' textSize={matches?21:25} />
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Grid>
-
-          </Grid> {/* end of counter */}
 
           {/* profile picture */}
-          <Grid item sx={{width:'100%', marginTop:{xs: '-40px', sm:'-80px', md:'-80px'}}}>
+          <Grid item sx={{width:'100%', marginTop:{xs: '-30px', sm:'-90px', md:'-90px'}}}>
             <Grid container direction='column' alignItems='center' sx={{width:'100%', height:'100%'}}>
               <Grid item sx={{width:{xs: 100, sm:180, md:180}, height:{xs: 100, sm:180, md:180}}}>
                 <Avatar sx={{  border:' 5px solid white', width: {xs: 98, sm:178, md:178}, height: {xs: 98, sm:178, md:178} }}  alt='Tanjiro' src={image}/>
-              </Grid>
+              </Grid> 
             </Grid>
           </Grid> {/* end of profile picture */}
 
           {/* start of profile name and username */}
-          <Grid item sx={{width:'100%'}}>
+          <Grid item sx={{width:'100%', mt:2}}>
             <Grid container direction='column' alignItems='center' sx={{width:'100%', height:'100%'}}>
               <Grid item >
                 <Typography variant={matches?'h6':'h4'} fontFamily='Arvo' >
@@ -206,7 +199,7 @@ const ProfileFeed = () => {
           </Grid>
 
           <Grid item sx={value===1?{display:'flex', backgroundColor: '#f6f7f6', width:'100%'} : {display:'none'}}>
-            <EditUserForm/>
+            <UserAccount/>
           </Grid>
           
 

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  id: null,
   first_name: null,
   middle_name: null,
   last_name: null,
@@ -11,7 +12,8 @@ const initialState = {
   email: null,
   image: null,
   bio_note:null,
-  sex: null
+  sex: null,
+  profile_cover: null
 };
 
 export const userSlice = createSlice({
@@ -19,7 +21,8 @@ export const userSlice = createSlice({
   initialState,
   
   reducers: {
-    setPersonalDetails: (state, { payload: { first_name, middle_name, last_name, username, user_type, address, contact, email, image, bio_note, sex } }) => {
+    setPersonalDetails: (state, { payload: {id, first_name, middle_name, last_name, username, user_type, address, contact, email, image, bio_note, sex, profile_cover } }) => {
+        state.id = id;
         state.first_name = first_name;
         state.middle_name = middle_name;
         state.last_name = last_name;
@@ -31,8 +34,10 @@ export const userSlice = createSlice({
         state.image = image;
         state.bio_note = bio_note;
         state.sex = sex;
+        state.profile_cover = profile_cover;
     },
     resetPersonalDetails: (state) => {
+        state.id = null;
         state.first_name = null;
         state.middle_name = null;
         state.last_name = null;
@@ -44,6 +49,7 @@ export const userSlice = createSlice({
         state.image = null;
         state.bio_note = null;
         state.sex = null;
+        state.profile_cover = null;
     },
   },
 });

@@ -24,6 +24,7 @@ export default function useUser() {
       //console.log(data);
       const userDetail = data ? data.user : [];
       const userData = userDetail ? {
+        id: userDetail.id,
         first_name: userDetail.first_name,
         middle_name: userDetail.middle_name,
         last_name: userDetail.last_name,
@@ -34,10 +35,11 @@ export default function useUser() {
         email: userDetail.email,
         image: userDetail.profile_picture,
         bio_note: userDetail.bio_note,
-        sex: userDetail.sex
+        sex: userDetail.sex,
+        profile_cover: userDetail.profile_cover
       } : {};
 
-      //console.log(userData)
+      console.log(userData)
       
       dispatch(setPersonalDetails(userData))
 

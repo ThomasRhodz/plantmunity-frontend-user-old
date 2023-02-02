@@ -38,6 +38,58 @@ export const userApi = createApi ({
             transformResponse: (response) => response,
         }),
 
+        updateContact: builder.mutation({
+          query(body) {
+            const {id, data} = body;
+            return {
+              url: `/user/contact-update/${id}`,
+              method: 'PATCH',
+              body: data
+            };
+          },
+          invalidatesTags: ['User'],
+          transformResponse: (response) => response,
+        }),
+
+        updateDetail: builder.mutation({
+          query(body) {
+            const {id, data} = body;
+            return {
+              url: `/user/detail-update/${id}`,
+              method: 'PATCH',
+              body: data
+            };
+          },
+          invalidatesTags: ['User'],
+          transformResponse: (response) => response,
+        }),
+
+        updateProfile: builder.mutation({
+          query(body) {
+            const {id, data} = body;
+            return {
+              url: `/user/profile-upload/${id}`,
+              method: 'PATCH',
+              body: data
+            };
+          },
+          invalidatesTags: ['User'],
+          transformResponse: (response) => response,
+        }),
+
+        updateCover: builder.mutation({
+          query(body) {
+            const {id, data} = body;
+            return {
+              url: `/user/cover-photo-upload/${id}`,
+              method: 'PATCH',
+              body: data
+            };
+          },
+          invalidatesTags: ['User'],
+          transformResponse: (response) => response,
+        }),
+
     })
 })
 
@@ -45,4 +97,8 @@ export const {
   useAddUserMutation,
   useGetUserQuery,
   useLazyGetUserQuery, 
+  useUpdateContactMutation,
+  useUpdateDetailMutation,
+  useUpdateProfileMutation,
+  useUpdateCoverMutation,
 } = userApi;

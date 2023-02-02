@@ -10,7 +10,7 @@ import {FaUser, FaStore } from 'react-icons/fa';
 import ExploreIcon from '@mui/icons-material/Explore';
 import StoreIcon from '@mui/icons-material/Store';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import Logo from '../../images/PlantmunityAlt.png';
+import Logo from '../../images/PlantmunityAlt2.png';
 
 //For notification
 import { ToastContainer, toast } from 'react-toastify';

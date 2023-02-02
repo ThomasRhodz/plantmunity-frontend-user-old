@@ -1,7 +1,7 @@
 import  React, {useState} from 'react';
 
 //MUI Components
-import Avatar from '@mui/material/Avatar';
+import {Avatar, TextField} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Dialog from '@mui/material/Dialog';
@@ -12,6 +12,7 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Button from '../basic/Button';
 import IconButton from '@mui/material/IconButton';
+import { TextArea } from '../basic/StyledComponents';
 import TextareaAutosize from '@mui/base/TextareaAutosize';
 
 //For Styling
@@ -37,14 +38,6 @@ const Input = styled('input')({
 //Internal Styling
 const useStyles = makeStyles((theme) => 
 ({
-    postCaption:{
-        fontSize:'15px',
-        border: 'none',
-        outline: 'none',
-        height: '200px',
-        resize: 'none',
-        backgroundColor:'#f6f7f6'
-    },
     uploadHolder:{
         width: '100%',
         height: 300,
@@ -92,7 +85,8 @@ const CreatePost = () => {
         .then((payload) =>{
             console.log(payload.message)
             handleClose()
-            setImageUpload('')
+            setImageUpload(DefaultImage)
+            setCaption('')
             setImage(false)
         })
         .catch((err) => {
@@ -103,7 +97,7 @@ const CreatePost = () => {
 
     //Initialization for image
     const [imageUpload, setImageUpload] = useState(DefaultImage);
-
+    const [caption, setCaption] = useState('');
     //State for opening the dialog and image (after clicking upload button)
     const [open, setOpen] = React.useState(false);
     const [images, setImage] = React.useState(false);
@@ -173,15 +167,18 @@ const CreatePost = () => {
                     <Grid container direction='column' alignItems='center' justify='center' sx={{display:'flex', padding:3, width:{xs:'100%', sm:450, md:550}}}>
                         {/* Text Area for writing a caption*/}
                         <Grid item sx={{ padding:1, backgroundColor:'#f6f7f6', borderRadius:2, width:'100%' }}>
-                            <TextareaAutosize
-                                style={{ width: '100%', padding:2 }}
-                                maxRows={10}
-                                aria-label="maximum height"
-                                placeholder="What's your plantly story?"
-                                className={classes.postCaption}
-                                {...register('caption', {required: 'Required'})}
-                                
-                            />
+                        <TextArea
+                            {...register("caption")}
+                            required
+                            value={caption}
+                            multiline
+                            placeholder="What's your plantly story?"
+                            minRows={1}
+                            maxRows={6}
+                            onChange={(event) => {
+                            setCaption(event.target.value);
+                            }}
+                        />
                         </Grid>
                         <div style={{height:10}} />
 
@@ -190,7 +187,7 @@ const CreatePost = () => {
                             
                                 <Grid container className={classes.uploadHolder}> 
                                     <Grid item sx={{ width:'100%' }}>
-                                        <img src={DefaultImage} alt='uploaded_image'  className={classes.image} />
+                                        <img src={imageUpload} alt='uploaded_image'  className={classes.image} />
                                     </Grid>
                                 </Grid>  
                            
@@ -223,7 +220,8 @@ const CreatePost = () => {
                             text={'Discard'} 
                             clickHandler={()=>{
                                 handleClose()
-                                setImageUpload('')
+                                setImageUpload(DefaultImage)
+                                setCaption('')
                                 setImage(false)
                             }} 
                             color='transparent'/>

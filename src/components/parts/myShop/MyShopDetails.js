@@ -1,18 +1,63 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Button, Grid, Rating, Stack, Typography } from '@mui/material'
-
+import { Button, Dialog, Grid, Rating, Stack, Typography } from '@mui/material'
+import { useGetMyShopQuery } from '../../../app/services/shopApi';
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
+import {FaStore} from 'react-icons/fa';
+import EditShopForm from '../../forms/EditingForms/EditShopForm';
 
 const MyShopDetails = () => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(600));
-    //const mobile = useMediaQuery(theme.breakpoints.down(700));
+    
+    const {data} = useGetMyShopQuery(undefined, {refetchOnMountOrArgChange: true});
+
+    console.log(data)
+
+    const [shopName, setShopName] = useState('');
+    const [shopID, setShopID] = useState('');
+    const [shopLogo, setShopLogo] = useState('');
+    const [bio, setBio] = useState('');
+    const [tags, setTags] = useState('');
+    const [email, setEmail] = useState('');
+    const [contact, setContact] = useState('');
+    const [telephone, setTelephone] = useState('');
+    const [address, setAddress] = useState('');
+    const [open, setOpen] = useState('');
+    const [close, setClose] = useState('');
+
+    const myShop = data? data.shop : [];
+
+    useEffect (()=>{
+       
+        console.log(myShop)
+        setShopLogo(myShop ? myShop.shop_logo : '');
+        setShopName(myShop ? myShop.shop_name : '')
+        setTags(myShop ? myShop.tags : '')
+        setBio(myShop ? myShop.bio_note : '')
+        setTelephone(myShop ? myShop.telephone : '')
+        setEmail(myShop ? myShop.email : '')
+        setContact(myShop ? myShop.mobile : '')
+        setAddress(myShop ? myShop.address : '')
+        setShopID(myShop ? myShop.id : '')
+        setOpen(myShop ? myShop.time_open : '')
+        setClose(myShop ? myShop.time_close : '')
+    }, [data])
+
+    const [openEditForm, setOpenEditForm] = useState(false);
+
+    const openEdit = () => {
+        setOpenEditForm(true)
+    };
+
+    const closeEdit = () => {
+        setOpenEditForm(false)
+    }
   return (
     <Grid
       container
@@ -23,16 +68,14 @@ const MyShopDetails = () => {
         height: "100%",
       }}
     >
-      <Grid item sx={{ width: { md: tablet ? 300 : "25%" }, height: 200 }}>
+      <Grid item sx={{ width: { md: tablet ? 300 : "25%" }, height: 200, display: shopLogo===null ? 'none' :'display' }}>
         <Stack
           direction="column"
           alignItems="center"
           sx={{ width: "100%", height: "100%" }}
         >
           <img
-            src={
-              "https://images-platform.99static.com//5bJtEaPw4JVjNVJlprXQPzm5pLk=/137x135:1362x1361/fit-in/500x500/99designs-contests-attachments/129/129927/attachment_129927926"
-            }
+            src={shopLogo}
             alt="shop_logo"
             style={{
               width: 200,
@@ -43,6 +86,25 @@ const MyShopDetails = () => {
           />
         </Stack>
       </Grid>
+
+      <Grid 
+        item 
+          sx={{
+            ml:{xs:0, sm:0, md:5},
+            mr: {xs:0, sm:0, md:5},
+            width:200,
+            height:200, borderRadius:'50%', overflow:'hidden',
+            border:'4px solid #5C6D63',
+            display: shopLogo===null ? 'display' :'none'
+        }}
+      >
+        <Stack direction='row' alignItems={'center'} sx={{ height:'100%' }}>
+            <Stack direction='column' alignItems={'center'} sx={{ width:'100%' }}>
+                <FaStore style={{ fontSize:100, color:'#5C6D63'}} />
+            </Stack>
+        </Stack> 
+      </Grid>
+
       <Grid
         item
         sx={{
@@ -60,7 +122,7 @@ const MyShopDetails = () => {
             align={tablet ? "center" : "left"}
             sx={{ fontFamily: "Arvo" }}
           >
-            Palimtintin Hand Garden
+            {shopName}
           </Typography>
           <Stack direction="row" alignItems="center">
             <Typography
@@ -92,11 +154,11 @@ const MyShopDetails = () => {
                     mr: tablet ? 0 : 2,
                   }}
                 >
-                  {"J.Rodis.477524@umindanao.edu.ph"}
+                  {email}
                 </Typography>
               </Stack>
 
-              <Stack direction="row" sx={{ mt: tablet ? "5px" : 0 }}>
+              <Stack direction="row" sx={{ mt: tablet ? "5px" : 0, display: contact === null ? 'none':'flex' }}>
                 <SmartphoneRoundedIcon sx={{ fontSize: 18 }} />
                 <Typography
                   variant="caption"
@@ -106,11 +168,11 @@ const MyShopDetails = () => {
                     mr: tablet ? 0 : 2,
                   }}
                 >
-                  {"+6394 6680 1637"}
+                  {contact}
                 </Typography>
               </Stack>
 
-              <Stack direction="row" sx={{ mt: tablet ? "5px" : 0 }}>
+              <Stack direction="row" sx={{ mt: tablet ? "5px" : 0, display: telephone === null ? 'none':'flex' }}>
                 <LocalPhoneRoundedIcon sx={{ fontSize: 18 }} />
                 <Typography
                   variant="caption"
@@ -120,7 +182,7 @@ const MyShopDetails = () => {
                     mr: tablet ? 0 : 2,
                   }}
                 >
-                  {"082 77536"}
+                  {telephone}
                 </Typography>
               </Stack>
             </Stack>
@@ -136,9 +198,7 @@ const MyShopDetails = () => {
                   maxWidth: tablet ? 250 : 500,
                 }}
               >
-                {
-                  "Purok 5, Kalambuan Village, Talomo, Davao City, Davao del Sur"
-                }
+                {address}
               </Typography>
             </Stack>
           </Stack>
@@ -164,6 +224,7 @@ const MyShopDetails = () => {
           </Button>
 
           <Button
+            onClick={()=>openEdit()}
             variant="contained"
             size="regular"
             sx={compStyle["shop-botton"]}
@@ -180,6 +241,30 @@ const MyShopDetails = () => {
           </Button>
         </Stack>
       </Grid>
+
+      <Dialog
+        maxWidth={false}
+        fullScreen={mobile}
+        scroll="body"
+        open={openEditForm}
+        onClose={closeEdit}
+      >
+        <EditShopForm
+          id={shopID}
+          name={shopName}
+          logo={shopLogo}
+          email={email}
+          address={address}
+          contact={contact}
+          telephone={telephone}
+          tOpen={open}
+          tClose={close}
+          bio={bio}
+          tags={tags}
+          handleClose={() => closeEdit()}
+          // toast={(stringMessage)=>toast(stringMessage)}
+        />
+      </Dialog>
     </Grid>
   );
 }

@@ -22,3 +22,25 @@ export const SearchField = styled(TextField)(() => ({
     },
 },
 }));
+
+export const TextArea = styled(TextField)(() => ({
+  backgroundColor:'transparent',
+  width:'100%',
+  '& label.Mui-focused': {
+    color: 'transparent',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'transparent',
+  },  
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'transparent',
+    },
+    '&:hover fieldset': {
+      borderColor: 'transparent',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'transparent',
+    },
+},
+}));

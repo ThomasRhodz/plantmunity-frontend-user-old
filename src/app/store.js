@@ -16,6 +16,7 @@ import {
 import { userApi } from './services/userAPi';
 import { authApi } from './services/authApi';
 import { postApi } from './services/postApi';
+import { shopApi } from './services/shopApi';
 
 //Redux
 import authReducer from './persist/authentication/authSlice';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
     [userApi.reducerPath]: userApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [postApi.reducerPath]: postApi.reducer,
+    [shopApi.reducerPath]: shopApi.reducer,
   });
 
   const persistConfig = {
@@ -35,7 +37,7 @@ const rootReducer = combineReducers({
     version: 1,
     storage,
     //stateReconciler: autoMergeLevel2,
-    blacklist: [userApi.reducerPath, authApi.reducerPath, postApi.reducerPath],
+    blacklist: [userApi.reducerPath, authApi.reducerPath, postApi.reducerPath, shopApi.reducerPath],
   };
   
   const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -48,7 +50,7 @@ export const store = configureStore({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(postApi.middleware, userApi.middleware, authApi.middleware),
+      }).concat(postApi.middleware, userApi.middleware, authApi.middleware, shopApi.middleware),
   });
   
   setupListeners(store.dispatch);

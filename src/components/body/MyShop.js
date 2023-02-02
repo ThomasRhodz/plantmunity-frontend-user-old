@@ -2,7 +2,9 @@ import React from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Tab, Tabs, Toolbar, Typography } from '@mui/material'
+import { useGetMyShopQuery } from '../../app/services/shopApi';
 
+import CreateShop from '../parts/myShop/CreateShop';
 import ProductList from '../parts/myShop/ProductList';
 import MyShopDetails from '../parts/myShop/MyShopDetails';
 
@@ -12,6 +14,12 @@ const MyShop = () => {
     const mobile = useMediaQuery(theme.breakpoints.down(700));
     const [value, setValue] = React.useState(0);
 
+    const {data} = useGetMyShopQuery(undefined, {refetchOnMountOrArgChange: true});
+
+    console.log(data)
+    const myShop = data? data.shop : [];
+    const createShop = myShop === null ? true :false
+    
     const handleChange = (event, newValue) => {
       setValue(newValue)
     };
@@ -31,17 +39,27 @@ const MyShop = () => {
                 item
                 sx={{ 
                     width:'100%',
+                    height: '80vh',
+                    display: createShop ? 'flex' : 'none'
+                 }}
+            >
+                <CreateShop/>
+            </Grid>
+
+            <Grid 
+                item
+                sx={{ 
+                    width:'100%',
                     height: {sm:'100%', md: tablet ? '100%' :300},
                     bgcolor: 'white',
                     borderRadius: 5,
                     p:2,
-                    boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)'
+                    boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)',
+                    display: createShop ? 'none' : 'flex'
                  }}
             >
-                <MyShopDetails/>
+                <MyShopDetails />
             </Grid>
-
-        
 
             <Grid
                 item
@@ -52,7 +70,8 @@ const MyShop = () => {
                     bgcolor: 'white',
                     borderRadius: 5,
                     p:2,
-                    boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)'
+                    boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)',
+                    display: createShop ? 'none' : 'flex'
                 }}
             >
                 <Stack

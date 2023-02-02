@@ -11,7 +11,7 @@ import {navigate} from 'gatsby';
 
 
  //Icons
- import Logo from '../../images/PlantmunityAlt.png';
+ import Logo from '../../images/PlantmunityAlt2.png';
 //MUI Styling
 import '../../css/pageStyles.css';
 const drawerWidth = 230;
@@ -23,7 +23,7 @@ const drawerWidth = 230;
             position="fixed"
             sx={{ 
                 width: '100%', 
-                height:65, ml: `${drawerWidth}px`, 
+                height:60, ml: `${drawerWidth}px`, 
                 backgroundColor: '#5C6D63',
             }}
             elevation={0}
