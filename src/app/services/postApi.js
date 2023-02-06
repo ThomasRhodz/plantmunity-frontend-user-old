@@ -19,7 +19,7 @@ export const postApi = createApi({
         return headers
       },
     }),
-    tagTypes: ['Post'],
+    tagTypes: ['Posts', 'MyPosts', 'Comments','ExplorePosts'],
     endpoints(build) {
         return {
             addPost: build.mutation({
@@ -30,10 +30,73 @@ export const postApi = createApi({
                     body,
                     };
                 },
+                invalidatesTags:['Posts', 'MyPosts'],
                 transformResponse: (response) => response,
             }),
+
+            getMyPosts: build.query({
+              query(body) {
+                  return {
+                  url: 'user/post/user-feed',
+                  method: 'GET',
+                  body,
+                  };
+              },
+              providesTags:['MyPosts'],
+              transformResponse: (response) => response,
+          }),
+
+          getTimelinePosts: build.query({
+            query(body) {
+                return {
+                url: 'user/post/user-timeline',
+                method: 'GET',
+                body,
+                };
+            },
+            providesTags:['Posts'],
+            transformResponse: (response) => response,
+          }),
+
+          getExplorePost: build.query({
+            query(body) {
+                return {
+                url: 'user/post/discover-feed',
+                method: 'GET',
+                body,
+                };
+            },
+            providesTags:['ExplorePosts'],
+            transformResponse: (response) => response,
+          }),
+
+          addComment: build.mutation({
+            query(body) {
+                const {id, data} = body
+                return {
+                url: `post/${id}/add-comment`,
+                method: 'POST',
+                body:data,
+                };
+            },
+            invalidatesTags:['Comments'],
+            transformResponse: (response) => response,
+        }),
+
+        getComments: build.query({
+            query(id) {
+                return {
+                url: `post/${id}/comments`,
+                method: 'GET'
+                };
+            },
+            invalidatesTags:['Comments'],
+            transformResponse: (response) => response,
+        }),
+
+            
         };
     },
   });
   
-  export const { useAddPostMutation } = postApi;
+  export const { useAddPostMutation, useGetMyPostsQuery, useGetTimelinePostsQuery, useGetExplorePostQuery, useAddCommentMutation, useGetCommentsQuery } = postApi;

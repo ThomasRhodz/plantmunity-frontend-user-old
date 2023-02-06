@@ -14,7 +14,7 @@ import {BsImages, BsFillFilePostFill, BsInfoSquare} from 'react-icons/bs';
 import UserAccount from '../parts/account/UserAccount';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
+import { useGetMyPostsQuery } from '../../app/services/postApi';
 
 const useStyles = makeStyles((theme) =>
   ({
@@ -36,53 +36,18 @@ const ProfileFeed = () => {
   const middlename = useSelector((state) => state.user.middle_name);
   const lastname = useSelector((state) => state.user.last_name);
   const username = useSelector((state) => state.user.username);
+  const fullname =(firstname + ' ' + (middlename === null ? ' ' : middlename === '' ? ' ' : middlename) + ' ' + lastname)
+  const {data, isFetching} = useGetMyPostsQuery(undefined, {refetchOnMountOrArgChange: true})
 
-  const samplePosts = [
-    {
-      postID: '1',
-      user: 'Rorona Virus' ,
-      userProfilePic: 'https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd',
-      imageLink: 'https://www.worldatlas.com/r/w1200/upload/89/99/3b/shutterstock-1263201358.jpg',
-      likes: '10',
-      comments: '20',
-      shares: '3',
-      liked: true,
-      timePosted: 'Mar. 21, 2021',
-      caption: 'Let there be plants! AHAHAHAHA :)'
-      
-    },
-    {
-      postID: '2',
-      user: 'Rorona Virus' ,
-      userProfilePic: 'https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd',
-      imageLink: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6rnG1YYjGO9PtZmGFeqd4hfRkesZh7BTVRw&usqp=CAU',
-      likes: '15',
-      comments: '02',
-      shares: '5',
-      liked: true,
-      timePosted: 'Mar. 22, 2021',
-      caption: 'our intuitive powers increase when you are with plants because your mind is silenced and you become more aware in the present moment.'
-      
-    },
-    {
-      postID: '3',
-      user: 'Rorona Virus' , 
-      userProfilePic: 'https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd',
-      imageLink: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/aloe-vera-plant-1522874831.jpg',
-      likes: '34',
-      comments: '10',
-      shares: '13',
-      liked: false,
-      timePosted: 'Mar. 23, 2021',
-      caption: 'By plucking her petals, you do not gather the beauty of the flower. :)'
-      
-    }
-  ];
-
-  const renderPosts = samplePosts.map(post => {
+  console.log(data)
+  
+  const myPosts = data ? data[0] : [];
+  const PostArray = (Object.values(myPosts)).reverse()
+  
+  const renderPosts = PostArray.map(post => {
     return(
         <Grid item key={post.postID}>
-          <PostCard user={post.user} imageLink={post.imageLink} likes={post.likes} comments={post.comments} shares={post.shares} liked={post.liked} timePosted={post.timePosted}  caption={post.caption}  userProfilePic={post.userProfilePic} />
+          <PostCard user={fullname} imageLink={post.post_image} likes={0} comments={0} shares={0} timePosted={post.created_at}  caption={post.caption}  userProfilePic={image} />
         </Grid>
     )
   })
@@ -191,7 +156,7 @@ const ProfileFeed = () => {
           <Grid item sx={value===0?{display:'flex', backgroundColor: '#f6f7f6', width:'100%'} : {display:'none'}}>
             <Grid container direction='column' alignItems={'center'}>
               <div style={{height:10}} />
-              <CreatePost />
+              <CreatePost profile={image}/>
               <div style={{height:10}} />
               {renderPosts}
               <div style={{height:50}} />

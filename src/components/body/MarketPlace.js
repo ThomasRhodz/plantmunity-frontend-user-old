@@ -22,6 +22,7 @@ import { useTheme } from "@mui/material/styles";
 
 const MarketPlace = () => {
   const theme = useTheme();
+  const tablet = useMediaQuery(theme.breakpoints.down(1450));
   const mobile = useMediaQuery(theme.breakpoints.down(750));
   const mobile2 = useMediaQuery(theme.breakpoints.down(500));
   //const tablet = useMediaQuery(theme.breakpoints.down(1450));
@@ -253,10 +254,33 @@ const MarketPlace = () => {
                 {
                     sampleProducts.map(({product_name, id, product_image, product_price})=>{
                       return(
-                        <ProductsCard productName={product_name} id={id} productImage={product_image} productPrice={product_price}/>
+                        
+                        <Grid
+                          key={id}
+                          item
+                          sx={{
+                            width: {
+                              xs: "47%",
+                              sm: mobile ? "31%" : "32%",
+                              md: tablet ? "31%" : "32%",
+                            },
+                            height: { xs: 200, sm: 250, md: 250 },
+                            mr: { xs: 1, sm: 1, md: 2 },
+                            mb: { xs: 1, sm: 1, md: 2 },
+                            bgcolor: "blue",
+                            borderRadius: 3,
+                            overflow: "hidden",
+                            boxShadow: "2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)",
+                          }}
+                        >
+                            <ProductsCard productName={product_name} id={id} productImage={product_image} productPrice={product_price}/>
+                        </Grid>
+                        
                       )  
                     })
                 }
+
+      
                 
             </Grid>
             <Toolbar/>

@@ -160,7 +160,7 @@ const EditShopForm = ({ handleClose, id, name, logo, email, contact, telephone, 
       sx={{ width: mobile ? '100%' : 550 }}
     >
         <Typography variant="h6" align='center' sx={compStyle["dialog-title"]}>
-            Create My Shop
+            Edit My Shop
         </Typography>
 
         <Box sx={{ width: "100%" }}>

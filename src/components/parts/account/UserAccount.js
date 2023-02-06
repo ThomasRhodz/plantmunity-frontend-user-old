@@ -3,7 +3,7 @@ import {Avatar, Box, Button, Dialog, Divider, Stack, TextField, Toolbar, Typogra
 import DangerZone from './DangerZone';
 import {useDispatch, useSelector } from 'react-redux'
 import { setPersonalDetails } from '../../../app/persist/account/userSlice';
-import { useGetUserQuery } from '../../../app/services/userApi';
+import { useGetUserQuery } from '../../../app/services/accountApi';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import EditIcon from '@mui/icons-material/Edit';

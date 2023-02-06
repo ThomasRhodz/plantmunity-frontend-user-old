@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { useLazyGetUserQuery } from '../../app/services/userAPi';
+import { useLazyGetUserQuery } from '../../app/services/accountApi';
 import { setPersonalDetails } from '../../app/persist/account/userSlice';
 import { useEffect, useState } from 'react';
 

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Box, Grid, Stack, Typography, IconButton, Tooltip, Dialog, Slide } from "@mui/material";
+import { Box, Stack, Typography, IconButton, Tooltip, Dialog, Slide } from "@mui/material";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -24,31 +24,13 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
   };
 
   const theme = useTheme();
-  const tablet = useMediaQuery(theme.breakpoints.down(1450));
   const mobile = useMediaQuery(theme.breakpoints.down(750));
   console.log(productImage)
   return (
-    <Grid
-      key={id}
-      item
-      sx={{
-        width: {
-          xs: "47%",
-          sm: mobile ? "31%" : "32%",
-          md: tablet ? "31%" : "32%",
-        },
-        height: { xs: 200, sm: 250, md: 250 },
-        mr: { xs: 1, sm: 1, md: 2 },
-        mb: { xs: 1, sm: 1, md: 2 },
-        bgcolor: "blue",
-        borderRadius: 3,
-        overflow: "hidden",
-        boxShadow: "2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)",
-      }}
-    >
+    
       <Stack
         direction="column"
-        alingItems="center"
+        alignItems="center"
         sx={{ width: "100%", overflow: "hidden" }}
         className="grid-item"
       >
@@ -98,11 +80,10 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
             </IconButton>
           </Tooltip>
         </Stack>
-      </Stack>
 
       <Dialog
         fullScreen={mobile ? true : false}
-        maxWidth={mobile ? true : false}
+        maxWidth={false}
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
@@ -116,7 +97,9 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
           inShop = {false}
         />
       </Dialog>
-    </Grid>
+      </Stack>
+
+    
   );
 };
 

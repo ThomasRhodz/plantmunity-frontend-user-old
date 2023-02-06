@@ -1,7 +1,7 @@
 import { Box, Button, Divider, Stack, Typography, Tooltip, IconButton, Grid, DialogContent } from '@mui/material'
 import React, {useState} from 'react'
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import { useUpdateCoverMutation } from '../../../app/services/userApi';
+import { useUpdateCoverMutation } from '../../../app/services/accountApi';
 import { useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';

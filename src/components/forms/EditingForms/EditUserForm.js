@@ -4,7 +4,7 @@ import {useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { useSelector } from 'react-redux';
-import { useUpdateDetailMutation } from '../../../app/services/userApi';
+import { useUpdateDetailMutation } from '../../../app/services/accountApi';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 

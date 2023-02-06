@@ -1,9 +1,13 @@
 
 //MUI Components
-import * as React from 'react';
+import React, {useState} from 'react';
 import propType from 'prop-types';
-import {Card, CardContent, CardMedia, CardActions, Tooltip, Grid, Typography, Avatar, IconButton} from '@mui/material/';
+import {Card, CardContent, CardMedia, CardActions, Dialog, Tooltip, Grid, Typography, Avatar, IconButton} from '@mui/material/';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+
+import ViewPostCard from './ViewPostCard';
 //Icons
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -11,76 +15,116 @@ import {FaRegComments} from 'react-icons/fa';
 import {AiOutlineSend} from 'react-icons/ai';
 
 
-const PostCard = ({user,imageLink,likes,comments,shares,liked,timePosted, caption, userProfilePic}) => {
+const PostCard = ({pid, user, username, imageLink, likes, comments, shares, liked, timePosted, caption, userProfilePic}) => {
+    const theme = useTheme();
+    const tablet = useMediaQuery(theme.breakpoints.down(1200));
+    const mobile = useMediaQuery(theme.breakpoints.down(600));
+
+    const [view, setView] = useState(false)
+
+    const openView = () => {
+        setView(true)
+    }
+
+    const closeView = () => {
+        setView(false)
+    }
+
+    const time_stamp = new Date(timePosted)
     
-  return (
-      // start of the card
-    <Card sx={{ maxWidth:{ xs: '350px', sm: '500px' , md: '600px' }, marginTop: '10px'}}>
-        {/* Card Content (upper): user details */}
-        <CardContent>
-            {/* Grid container: allows the separated user details to be allign in horizontal direction*/}
-            <Grid container direction='row' alignItems='center'>
-
-                {/* User Icon*/}
-                <Grid item>
-                    <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
-                        <Avatar size='small' alt={user} src={userProfilePic} />
-                    </IconButton>
-                </Grid>
-
-                <div style={{width:10}} /> 
-
-                {/* User Name and time since posted*/}
-                <Grid item>
-                    <Typography variant="subtitle1"  fontFamily='apple-system'>
-                        {user} | {timePosted}
-                    </Typography>
-                </Grid>
-            </Grid>{/* End of Grid container */}
-        </CardContent> {/* End of upper card content */}
+    function getMonthName(monthNumber) {
+        const date = new Date();
+        date.setMonth(monthNumber - 1);
         
-        {/* Card Media: Image of the post*/}
-        <CardMedia
-            sx={{width:{xs:'370px', sm:'537px', md: '600px'}, height:{xs:'350px', sm:'400px', md: '400px'}}}
-            component="img"
-            image={imageLink}
-            alt="post"
-        />
+        return date.toLocaleString('en-US', { month: 'long' });
+    }
+    const date = ((getMonthName(time_stamp.getMonth()+1))+" "+ time_stamp.getDate() + ", "+time_stamp.getFullYear())
+  return (
+    <React.Fragment>
+        <Card sx={{ maxWidth:{ xs: '350px', sm: '500px' , md: '600px' }, marginTop: '10px'}}>
+            {/* Card Content (upper): user details */}
+            <CardContent>
+                {/* Grid container: allows the separated user details to be allign in horizontal direction*/}
+                <Grid container direction='row' alignItems='center'>
 
-        {/*Card Action: contains 3 icon button, whcih are the like, commengts and share button.*/}
-        <CardActions>
+                    {/* User Icon*/}
+                    <Grid item>
+                        <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
+                            <Avatar size='small' alt={user} src={userProfilePic} />
+                        </IconButton>
+                    </Grid>
 
-            {/* The following are the 3 buttons, tooltip allows desktop user to see the title of the icon when hovered to the icon*/}
-            <Tooltip title="Like">
-                <IconButton color="inherit" aria-label="open drawer" size='medium' >
-                    {liked ? <FavoriteIcon fontSize='medium' style={{color: 'red'}}/> : <FavoriteBorderIcon fontSize='medium' style={{color: 'black'}}/>}
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Comment">
-                <IconButton color="inherit" aria-label="open drawer" size='medium' style={{marginLeft: '-3px'}}>
-                    <FaRegComments />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title="Share To">
-                <IconButton color="inherit" aria-label="open drawer" size='medium' style={{marginLeft: '-3px'}}>
-                    <AiOutlineSend />
-                </IconButton>
-            </Tooltip>
-        </CardActions>{/* End of card action*/}
+                    <div style={{width:10}} /> 
 
-        {/* Card Content (lower): displays the post details*/}
-        <CardContent sx={{marginTop: '-20px'}}>
-            <Typography variant="body2" color="text.secondary" fontFamily='apple-system'>
-                {likes} Likes | {comments} comments | {shares} shares
-            </Typography>
-            <Typography gutterBottom variant="subtitle1" component="div" fontFamily='apple-system'>
-                {user}
-            </Typography>
-            <Typography variant="body2" color="text.secondary" fontFamily='apple-system'>
-                {caption}
-            </Typography>
-        </CardContent>{/* end of lower card content*/}
-    </Card> //End of card
+                    {/* User Name and time since posted*/}
+                    <Grid item>
+                        <Typography variant="body2"  fontFamily='Arvo'>
+                            {'@'+username} | {date}
+                        </Typography>
+                    </Grid>
+                </Grid>{/* End of Grid container */}
+            </CardContent> {/* End of upper card content */}
+            
+            {/* Card Media: Image of the post*/}
+            <CardMedia
+                sx={{width:{xs:'370px', sm:'537px', md: '600px'}, height:{xs:'350px', sm:'400px', md: '420px'}}}
+                component="img"
+                image={imageLink}
+                alt="post"
+            />
+
+            {/*Card Action: contains 3 icon button, whcih are the like, commengts and share button.*/}
+            <CardActions>
+
+                {/* The following are the 3 buttons, tooltip allows desktop user to see the title of the icon when hovered to the icon*/}
+                <Tooltip title="Like">
+                    <IconButton color="inherit" aria-label="open drawer" size='medium' >
+                        {liked ? <FavoriteIcon fontSize='medium' style={{color: 'red'}}/> : <FavoriteBorderIcon fontSize='medium' style={{color: 'black'}}/>}
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Comment">
+                    <IconButton onClick={()=>openView()} color="inherit" aria-label="open drawer" size='medium' style={{marginLeft: '-3px'}}>
+                        <FaRegComments />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Share To">
+                    <IconButton color="inherit" aria-label="open drawer" size='medium' style={{marginLeft: '-3px'}}>
+                        <AiOutlineSend />
+                    </IconButton>
+                </Tooltip>
+            </CardActions>{/* End of card action*/}
+
+            {/* Card Content (lower): displays the post details*/}
+            <CardContent sx={{marginTop: '-20px'}}>
+                <Typography variant="body2" color="text.secondary" fontFamily='Raleway'>
+                    {likes} Likes | {comments} comments | {shares} shares
+                </Typography>
+                <Typography gutterBottom variant="subtitle1" component="div" fontFamily='Arvo'>
+                    {user}
+                </Typography>
+                <Typography variant="body2" color="text.secondary" fontFamily='Raleway'>
+                    {caption}
+                </Typography>
+            </CardContent>{/* end of lower card content*/}
+        </Card> 
+        <Dialog
+            maxWidth={false}
+            fullScreen={mobile}
+            scroll="body"
+            open={view}
+            onClose={closeView}
+        >
+            <ViewPostCard
+                caption={caption}
+                username={username}
+                name={user}
+                image={imageLink}
+                profile={userProfilePic}
+                id={pid}
+                date={date}
+            />
+        </Dialog>
+</React.Fragment>
     
   );
 };

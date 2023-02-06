@@ -1,26 +1,29 @@
-import { Box, Grid, IconButton, Stack, Tooltip, Typography } from '@mui/material'
-import React from 'react'
+import { Box, Dialog, IconButton, Stack, Tooltip, Typography, Slide } from '@mui/material'
+import React, {useState} from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import "../../../css/style.css";
 import ArrowForwardIosRoundedIcon from '@mui/icons-material/ArrowForwardIosRounded';
+import ViewMyProductCard from '../../dialogs/ViewMyProductDialog';
 
-const MyProductCard = ({id, productName, productImage}) => {
-const theme = useTheme();
-  const mobile = useMediaQuery(theme.breakpoints.down(600));
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="right" ref={ref} {...props} />;
+});
+
+const MyProductCard = ({id, productName, productImage, productDescription}) => {
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down(750));
+
+  const [product, setProduct] = useState(false);
+
+    const openProductDialog = () => {
+      setProduct(true);
+    }
+
+    const closeProductDialog = () => {
+      setProduct(false);
+    }
   return (
-    <Grid
-    key={id}
-      item
-      sx={{
-        mt: 2,
-        width: mobile? '100%' : "47%",
-        height: mobile? 200:300,
-        ml: { xs: 0, sm: 2, md: 2 },
-        borderRadius: 5,
-        overflow: "hidden",
-      }}
-    >
       <Stack
         direction="column"
         alignItems="center"
@@ -54,13 +57,28 @@ const theme = useTheme();
             {productName}
           </Typography>
           <Tooltip title="view details">
-            <IconButton sx={{ color: "white" }}>
+            <IconButton onClick={()=>openProductDialog()} sx={{ color: "white" }}>
               <ArrowForwardIosRoundedIcon sx={{  fontSize:{xs:18, sm:20, md:25} }} />
             </IconButton>
           </Tooltip>
         </Stack>
+
+        <Dialog
+          fullScreen={mobile? true:false}
+          maxWidth={false}
+          open={product}
+          onClose={closeProductDialog}
+          TransitionComponent={Transition}
+        >
+          <ViewMyProductCard
+            productId={id}
+            productName={productName}
+            productImage={productImage}
+            productDescription={productDescription}
+            handleClose={()=>closeProductDialog()}
+          />
+        </Dialog>
       </Stack>
-    </Grid>
   );
 }
 

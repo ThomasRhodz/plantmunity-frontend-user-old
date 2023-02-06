@@ -92,7 +92,7 @@ const DiscoverCard = ({image, altText}) => {
       <Dialog
         open={open}
         onClose={handleClose}
-        maxWidth={1000}
+        maxWidth={false}
         scroll={'body'}
       >
         <Grid container direction='row' sx={{ width:{sm:800, md:1000}, height:620, backgroundColor:'red' }} >
@@ -120,14 +120,14 @@ const DiscoverCard = ({image, altText}) => {
                         <div style={{ width: 20 }} />
                         <Stack direction='column' sx={{ flexGrow:1 }}>
                             <Stack direction='row'>
-                                <Typography variant={'subtitle1'}  style={{fontFamily:'apple-system', fontWeight:'bold'}}>
+                                <Typography variant={'body2'}  style={{fontFamily:'Arvo', fontWeight:'bold'}}>
                                     John Eliezar Rodis | 
                                 </Typography>
-                                <Button size='small' style={{fontFamily:'apple-system', fontWeight:'bold', textTransform: 'none', fontSize:14}} >
+                                <Button size='small' style={{fontFamily:'Arvo', fontWeight:'bold', textTransform: 'none', fontSize:14}} >
                                     Follow
                                 </Button>
                             </Stack>
-                            <Typography variant={'caption'}  style={{fontFamily:'apple-system', marginTop: '-5px'}}>
+                            <Typography variant={'caption'}  style={{fontFamily:'Arvo', marginTop: '-5px'}}>
                                 @ThomasRhodz
                             </Typography>
                         </Stack>
@@ -150,7 +150,7 @@ const DiscoverCard = ({image, altText}) => {
                         <div style={{ width: 20 }} />
                         <Stack direction='column'>
                             
-                            <Typography variant={'subtitle1'} align='justify'  sx={{fontFamily:'apple-system',  maxWidth: {sm:300, md:400}}}>
+                            <Typography variant={'body2'} align='justify'  sx={{fontFamily:'raleway',  maxWidth: {sm:300, md:400}}}>
                                 <b> John Eliezar Rodis </b> - Our intuitive powers increase when you are with plants because your mind is silenced and you become more aware in the present moment.
                             </Typography>
                         </Stack>
@@ -161,7 +161,7 @@ const DiscoverCard = ({image, altText}) => {
                             <Stack direction='row'>
                                 <RiListCheck2 style={{fontSize:25}}/>
                                 <Box sx={{ paddingLeft:2, marginTop:'-5px'}}>
-                                    <Typography  style={{fontFamily:'apple-system', fontWeight: 'bold', fontSize:18}}>
+                                    <Typography  style={{fontFamily:'Arvo', fontWeight: 'bold', fontSize:18}}>
                                         Comments 
                                     </Typography>
                                 </Box>
@@ -193,10 +193,10 @@ const DiscoverCard = ({image, altText}) => {
                         </Tooltip>
                     </Stack>
                     <Stack direction='column' sx={{ paddingLeft:2 }}>
-                         <Typography variant='subtitle1' style={{fontFamily:'apple-system'}}>
+                         <Typography variant='body2' style={{fontFamily:'Arvo'}}>
                             Liked by Roxlee and  934 others 
                         </Typography>
-                        <Typography  variant='caption' style={{fontFamily:'apple-system'}}>
+                        <Typography  variant='caption' style={{fontFamily:'Arvo'}}>
                             Posted on Jun 19, 2022
                         </Typography>
                     </Stack>

@@ -16,7 +16,7 @@ const MyShop = () => {
 
     const {data} = useGetMyShopQuery(undefined, {refetchOnMountOrArgChange: true});
 
-    console.log(data)
+    //console.log(data)
     const myShop = data? data.shop : [];
     const createShop = myShop === null ? true :false
     
@@ -50,10 +50,11 @@ const MyShop = () => {
                 item
                 sx={{ 
                     width:'100%',
-                    height: {sm:'100%', md: tablet ? '100%' :300},
+                    height: {sm:'100%', md: tablet ? '100%' :350},
                     bgcolor: 'white',
                     borderRadius: 5,
                     p:2,
+                    pb:5,
                     boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)',
                     display: createShop ? 'none' : 'flex'
                  }}

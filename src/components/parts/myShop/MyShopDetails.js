@@ -3,12 +3,18 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { Button, Dialog, Grid, Rating, Stack, Typography } from '@mui/material'
 import { useGetMyShopQuery } from '../../../app/services/shopApi';
+import { useDispatch } from 'react-redux';
+import { setShopDetails } from '../../../app/persist/account/shopSlice';
+
 import LocalPhoneRoundedIcon from '@mui/icons-material/LocalPhoneRounded';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import SmartphoneRoundedIcon from '@mui/icons-material/SmartphoneRounded';
 import LocationOnRoundedIcon from '@mui/icons-material/LocationOnRounded';
 import {FaStore} from 'react-icons/fa';
+
 import EditShopForm from '../../forms/EditingForms/EditShopForm';
+import CreateProductForm from '../../forms/CreateForms/CreateProductForm';
+
 
 const MyShopDetails = () => {
     const theme = useTheme();
@@ -17,7 +23,7 @@ const MyShopDetails = () => {
     
     const {data} = useGetMyShopQuery(undefined, {refetchOnMountOrArgChange: true});
 
-    console.log(data)
+    //console.log(data)
 
     const [shopName, setShopName] = useState('');
     const [shopID, setShopID] = useState('');
@@ -31,23 +37,71 @@ const MyShopDetails = () => {
     const [open, setOpen] = useState('');
     const [close, setClose] = useState('');
 
-    const myShop = data? data.shop : [];
+    const handleTime = (businessHour) => {
+      var time = ''+businessHour
+
+      time = time.split(':'); // convert to array
+
+      // fetch
+      var hours = Number(time[0]);
+      var minutes = Number(time[1]);
+
+      // calculate
+      var timeValue;
+
+      if (hours > 0 && hours <= 12) {
+        timeValue= "" + hours;
+      } else if (hours > 12) {
+        timeValue= "" + (hours - 12);
+      } else if (hours === 0) {
+        timeValue= "12";
+      }
+      
+      timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+      timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+      return timeValue;
+    }
+
+    const dispatch = useDispatch();
+
+    
 
     useEffect (()=>{
-       
-        console.log(myShop)
-        setShopLogo(myShop ? myShop.shop_logo : '');
-        setShopName(myShop ? myShop.shop_name : '')
-        setTags(myShop ? myShop.tags : '')
-        setBio(myShop ? myShop.bio_note : '')
-        setTelephone(myShop ? myShop.telephone : '')
-        setEmail(myShop ? myShop.email : '')
-        setContact(myShop ? myShop.mobile : '')
-        setAddress(myShop ? myShop.address : '')
-        setShopID(myShop ? myShop.id : '')
-        setOpen(myShop ? myShop.time_open : '')
-        setClose(myShop ? myShop.time_close : '')
-    }, [data])
+      const myShop = data? data.shop : [];
+      //console.log(myShop)
+      setShopLogo(myShop ? myShop.shop_logo : '');
+      setShopName(myShop ? myShop.shop_name : '')
+      setTags(myShop ? myShop.tags : '')
+      setBio(myShop ? myShop.bio_note : '')
+      setTelephone(myShop ? myShop.telephone : '')
+      setEmail(myShop ? myShop.email : '')
+      setContact(myShop ? myShop.mobile : '')
+      setAddress(myShop ? myShop.address : '')
+      setShopID(myShop ? myShop.id : '')
+      setOpen(myShop ? myShop.time_open : '')
+      setClose(myShop ? myShop.time_close : '')
+
+      const myShopData = myShop ? {
+        id: myShop.id,
+        shop_name: myShop.shop_name,
+        shop_logo: myShop.shop_logo,
+        time_open: myShop.time_open,
+        time_close: myShop.time_close,
+        bio_note: myShop.bio_note,
+        address: myShop.address,
+        contact: myShop.mobile,
+        email: myShop.email,
+        telephone: myShop.telephone,
+        tags: myShop.tags,
+      } : {};
+
+      //console.log(myShopData)
+        
+      dispatch(setShopDetails(myShopData))
+
+
+    }, [data, dispatch])
 
     const [openEditForm, setOpenEditForm] = useState(false);
 
@@ -58,6 +112,17 @@ const MyShopDetails = () => {
     const closeEdit = () => {
         setOpenEditForm(false)
     }
+
+    const [openProductForm, setOpenProductForm] = useState(false);
+
+    const openProduct = () => {
+      setOpenProductForm(true)
+    };
+
+    const closeProduct = () => {
+      setOpenProductForm(false)
+    }
+
   return (
     <Grid
       container
@@ -108,8 +173,7 @@ const MyShopDetails = () => {
       <Grid
         item
         sx={{
-          width: { md: tablet ? 500 : "45%" },
-          height: { sm: "100", md: tablet ? 200 : 150 },
+          width: { md: tablet ? 500 : "45%" }
         }}
       >
         <Stack
@@ -120,10 +184,11 @@ const MyShopDetails = () => {
           <Typography
             variant={mobile ? "h5" : "h4"}
             align={tablet ? "center" : "left"}
-            sx={{ fontFamily: "Arvo" }}
+            sx={{ fontFamily: "Arvo", width:{xs:'100%', sm:500, md:450} }}
           >
             {shopName}
           </Typography>
+
           <Stack direction="row" alignItems="center">
             <Typography
               variant={mobile ? "body2" : "body1"}
@@ -133,6 +198,22 @@ const MyShopDetails = () => {
             </Typography>
             <Rating size="small" defaultValue={2} readOnly />
           </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ marginTop:'1px' }}>
+            <Typography
+              variant={mobile ? "caption" : "body2"}
+              sx={{ fontFamily: "Arvo", ml: "3px" }}
+            >
+              {handleTime(open)}
+            </Typography>
+            <Typography
+              variant={mobile ? "caption" : "body2"}
+              sx={{ fontFamily: "Arvo" }}
+            >
+              {'- ' + handleTime(close)}
+            </Typography>
+          </Stack>
+
 
           <Stack
             direction={"column"}
@@ -202,20 +283,32 @@ const MyShopDetails = () => {
               </Typography>
             </Stack>
           </Stack>
-        </Stack>
+
+          <Stack direction="row" alignItems="center" sx={{ mt:2, maxWidth:{xs:'90%', sm:500, md:450} }}>
+              <Typography
+                align='justify'
+                variant={'caption'}
+                sx={{ fontFamily: "raleway", ml: "3px" }}
+              >
+                {bio}
+              </Typography>
+            </Stack>
+          </Stack>
+        
       </Grid>
       <Grid
         item
         sx={{
           mb: { xs: 1, sm: 2, md: tablet ? 2 : 0 },
           pr: { xs: 0, sm: 0, md: tablet ? 0 : 5 },
-          mt: { xs: 2, sm: 3, md: tablet ? 2 : 0 },
+          marginTop: { xs: 3, sm: 3, md: tablet ? 2 : '-30px'},
           width: { xs: "80%", sm: "60%", md: tablet ? 300 : "30%" },
           height: { xs: "100%", sm: 150, md: 135 },
         }}
       >
         <Stack direction="column">
           <Button
+            onClick={()=>openProduct()}
             variant="contained"
             size="regular"
             sx={compStyle["shop-botton"]}
@@ -265,6 +358,20 @@ const MyShopDetails = () => {
           // toast={(stringMessage)=>toast(stringMessage)}
         />
       </Dialog>
+
+      <Dialog
+        maxWidth={false}
+        fullScreen={mobile}
+        scroll="body"
+        open={openProductForm}
+        onClose={closeProduct}
+      >
+        <CreateProductForm
+          ID={shopID}
+          handleClose={() => closeProduct()}
+          // toast={(stringMessage)=>toast(stringMessage)}
+        />
+      </Dialog>
     </Grid>
   );
 }
@@ -277,7 +384,7 @@ const compStyle ={
   'shop-botton':{ 
       mt:1,
       width:'100%',
-      height:40,
+      height:50,
       textTransform:'none',
       fontFamily:'Arvo',
       borderRadius:25,
@@ -292,7 +399,7 @@ const compStyle ={
   'close-shop-botton':{
       mt:1, 
       width:'100%',
-      height:40,
+      height:50,
       textTransform:'none',
       fontFamily:'Arvo',
       borderRadius:25,

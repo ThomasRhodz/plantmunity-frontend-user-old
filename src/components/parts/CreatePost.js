@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) =>
 }));
 
 //The actual component
-const CreatePost = () => {
+const CreatePost = ({profile}) => {
     const classes = useStyles();
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down(600));
@@ -147,7 +147,7 @@ const CreatePost = () => {
                         {/* Account Avatar or user Icon*/}
                         <Grid item sx={{width:{xs:'16%', sm:'11%', md:'11%'}}}>
                             <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
-                                <Avatar size='small' alt='Tanjiro' src='https://preview.redd.it/k809t2b7zca51.jpg?width=640&crop=smart&auto=webp&s=90c9b0cb15c510b5fb0643954cbb27fd51ff7ecd'/>
+                                <Avatar size='small' alt='Tanjiro' src={profile}/>
                             </IconButton>
                         </Grid>
 

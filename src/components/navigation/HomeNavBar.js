@@ -104,7 +104,6 @@ const HomeNavBar = () => {
     // for opening menu
     const handleBottomNavChange = (target) => {
       setSelectedMenu(target);
-      console.log(target)
     };
 
  

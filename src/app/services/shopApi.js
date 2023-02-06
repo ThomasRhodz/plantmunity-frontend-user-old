@@ -19,7 +19,7 @@ export const shopApi = createApi({
         return headers
       },
     }),
-    tagTypes: ['Shop'],
+    tagTypes: ['Shop', 'Products', 'ProductVariants'],
     endpoints(build) {
         return {
 
@@ -59,8 +59,94 @@ export const shopApi = createApi({
                 invalidatesTags: ['Shop'],
                 transformResponse: (response) => response,
             }),
+
+            addProduct: build.mutation({
+              query(body) {
+                  const {id, data} = body;
+                  return {
+                  url: `user/my-shop/${id}/add-product`,
+                  method: 'POST',
+                  body:data,
+                  };
+              },
+              invalidatesTags: ['Products'],
+              transformResponse: (response) => response,
+            }),
+
+            getProducts: build.query({
+              query(id) {
+                  return {
+                  url: `user/my-shop/${id}/products`,
+                  method: 'GET',
+                  };
+              },
+              providesTags: ['Products'],
+              transformResponse: (response) => response,
+            }),
+
+            updateProduct: build.mutation({
+                query(body) {
+                    const {id, data} = body;
+                    return {
+                      url: `user/my-shop/update/product/${id}`,
+                      method: 'PATCH',
+                      body:data,
+                    };
+                },
+                invalidatesTags: ['Products'],
+                transformResponse: (response) => response,
+            }),
+
+            addProductVariant: build.mutation({
+              query(body) {
+                  const {id, data} = body;
+                  return {
+                  url: `user/my-shop/product/${id}/add-variant`,
+                  method: 'POST',
+                  body:data,
+                  };
+              },
+              invalidatesTags: ['Products, ProductVariants'],
+              transformResponse: (response) => response,
+            }),
+
+            getProductVariants: build.query({
+              query(id) {
+                  return {
+                  url: `user/my-shop/product/${id}/variant-list`,
+                  method: 'GET',
+                  };
+              },
+              providesTags: ['ProductVariants'],
+              transformResponse: (response) => response,
+            }),
+
+            updateProductVariant: build.mutation({
+              query(body) {
+                  const {pid, id, data} = body;
+                  return { 
+                  url: `user/my-shop/product/${pid}/variant/${id}/edit-variant`,
+                  method: 'PATCH',
+                  body: data,
+                  };
+              },
+              invalidatesTags: ['ProductVariants'],
+              transformResponse: (response) => response,
+            }),
         };
     },
   });
   
-  export const { useCreateShopMutation, useGetMyShopQuery, useUpdateShopMutation } = shopApi;
+  export const { 
+    useCreateShopMutation,
+    useGetMyShopQuery,
+    useUpdateShopMutation,
+
+    useAddProductMutation,
+    useGetProductsQuery,
+    useUpdateProductMutation,
+    
+    useAddProductVariantMutation,
+    useGetProductVariantsQuery, 
+    useUpdateProductVariantMutation
+  } = shopApi;
