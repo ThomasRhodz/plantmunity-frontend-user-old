@@ -15,7 +15,7 @@ import UserAccount from '../parts/account/UserAccount';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useGetMyPostsQuery } from '../../app/services/postApi';
-
+import DefaultCover from '../../images/Background.png'
 const useStyles = makeStyles((theme) =>
   ({
     logInImage: {
@@ -47,7 +47,7 @@ const ProfileFeed = () => {
   const renderPosts = PostArray.map(post => {
     return(
         <Grid item key={post.postID}>
-          <PostCard user={fullname} imageLink={post.post_image} likes={0} comments={0} shares={0} timePosted={post.created_at}  caption={post.caption}  userProfilePic={image} />
+          <PostCard pid={post.id} user={fullname} username={username} imageLink={post.post_image} likes={post.likes_count} comments={post.comments_count} timePosted={post.created_at}  caption={post.caption}  userProfilePic={image} />
         </Grid>
     )
   })
@@ -78,7 +78,7 @@ const ProfileFeed = () => {
           {/* Profile cover */}
           <Grid item sx={{ width:'100%', height:{xs:250, sm:300, md:300}}}>
             <img
-              src={coverPhoto}
+              src={coverPhoto === null ? DefaultCover : coverPhoto}
               alt='cover_photo'
               className={classes.logInImage}
             />

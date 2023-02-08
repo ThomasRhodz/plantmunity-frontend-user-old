@@ -15,7 +15,7 @@ import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import ShopProductList from '../parts/marketplace/ShopProductList';
 
 //Icons
-import Logo from '../../images/PlantmunityAlt.png';
+import Logo from '../../images/PlantmunityAlt2.png';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
 const ViewShop = ({handleClose}) => {
     const theme = useTheme();
@@ -34,7 +34,7 @@ const ViewShop = ({handleClose}) => {
         sx={{ width:'100% ', bgcolor:'#F3F4F8'}}
     >
         <Grid item sx={{ width:'100%', height:65, bgcolor:"#5C6D63" }}>
-            <Stack direction='row' alignItems='center'>
+            <Stack direction='row' alignItems='center' sx={{ height:65, p:2,pl:1 }}>
                 <Tooltip title={'Go back'}>
                     <IconButton onClick={() => handleClose()}>
                         <ArrowBackIosNewRoundedIcon sx={{ color: "white" }} />
@@ -48,7 +48,7 @@ const ViewShop = ({handleClose}) => {
                 <Box >
                     <img
                         src= {Logo}
-                        style={{width:130, height:60}}
+                        style={{width:90, height:30}}
                         alt='logo'
                     />
                 </Box>

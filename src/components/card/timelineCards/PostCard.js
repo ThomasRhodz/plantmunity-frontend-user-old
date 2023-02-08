@@ -1,21 +1,76 @@
 
 //MUI Components
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import propType from 'prop-types';
 import {Card, CardContent, CardMedia, CardActions, Dialog, Tooltip, Grid, Typography, Avatar, IconButton} from '@mui/material/';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-
 import ViewPostCard from './ViewPostCard';
+
 //Icons
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {FaRegComments} from 'react-icons/fa';
 import {AiOutlineSend} from 'react-icons/ai';
+import { useSelector } from 'react-redux';
+import { navigate, Link } from 'gatsby';
 
+//Like API
+import { useAddLikeMutation,useUpdateUnlikeMutation, useLazyGetIsLikedQuery } from '../../../app/services/postApi';
 
-const PostCard = ({pid, user, username, imageLink, likes, comments, shares, liked, timePosted, caption, userProfilePic}) => {
+const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares, timePosted, caption, userProfilePic}) => {
+    
+    const [isLiked, result] = useLazyGetIsLikedQuery()
+    const [likedClick, setLikedClick] = useState(0)
+    const [likeCount, setLikeCount] = useState(likes)
+
+    useEffect(() => {
+        isLiked(pid)
+    }, [likedClick]);
+    
+    const postLiked = result?.data?.isLiked
+    const likeID = result?.data?.id
+
+    const [addLike] = useAddLikeMutation();
+    const [unlike] = useUpdateUnlikeMutation();
+
+    const handleLikeButton = () => {
+        if(postLiked === 1){
+            unlike(likeID)
+            setLikedClick(1)
+            setLikeCount(likeCount-1)
+        }else{
+            addLike(pid)
+            setLikedClick(2)
+            setLikeCount(likeCount+1)
+        }
+    }
+
+    const userID = useSelector(state => state.user.id)
+
+    const linksState = {
+        'uid': uid
+    }
+    
+    const handleAvatarClick = () => {
+        if (uid === userID) {
+           return(
+            <IconButton onClick={()=>navigate('/profile')} sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
+                <Avatar size='small' alt={user} src={userProfilePic} />
+            </IconButton>
+           )
+        }
+        else{
+            return(
+                <Link id="label" style={{textDecoration:'none', color:'white'}} to="/viewProfile" state={linksState}>
+                    <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
+                        <Avatar size='small' alt={user} src={userProfilePic} />
+                    </IconButton>
+                </Link>   
+            )
+        }
+    }
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(600));
@@ -49,9 +104,7 @@ const PostCard = ({pid, user, username, imageLink, likes, comments, shares, like
 
                     {/* User Icon*/}
                     <Grid item>
-                        <IconButton sx={{ p: 0, border: "1px solid #58a776", }} size='small'>
-                            <Avatar size='small' alt={user} src={userProfilePic} />
-                        </IconButton>
+                        {handleAvatarClick()}
                     </Grid>
 
                     <div style={{width:10}} /> 
@@ -77,9 +130,10 @@ const PostCard = ({pid, user, username, imageLink, likes, comments, shares, like
             <CardActions>
 
                 {/* The following are the 3 buttons, tooltip allows desktop user to see the title of the icon when hovered to the icon*/}
+                {/*  */}
                 <Tooltip title="Like">
-                    <IconButton color="inherit" aria-label="open drawer" size='medium' >
-                        {liked ? <FavoriteIcon fontSize='medium' style={{color: 'red'}}/> : <FavoriteBorderIcon fontSize='medium' style={{color: 'black'}}/>}
+                    <IconButton onClick={()=>handleLikeButton()}  color="inherit" aria-label="open drawer" size='medium' >
+                        {postLiked === 1 ? <FavoriteIcon fontSize='medium' style={{color: 'red'}}/> : <FavoriteBorderIcon fontSize='medium' style={{color: 'black'}}/>}
                     </IconButton>
                 </Tooltip>
                 <Tooltip title="Comment">
@@ -97,7 +151,7 @@ const PostCard = ({pid, user, username, imageLink, likes, comments, shares, like
             {/* Card Content (lower): displays the post details*/}
             <CardContent sx={{marginTop: '-20px'}}>
                 <Typography variant="body2" color="text.secondary" fontFamily='Raleway'>
-                    {likes} Likes | {comments} comments | {shares} shares
+                    {likeCount + (likeCount <= 1 ? " Like | " : " Likes | ") +comments+(comments <= 1 ? " Comment" : " Comments") }
                 </Typography>
                 <Typography gutterBottom variant="subtitle1" component="div" fontFamily='Arvo'>
                     {user}
@@ -115,6 +169,7 @@ const PostCard = ({pid, user, username, imageLink, likes, comments, shares, like
             onClose={closeView}
         >
             <ViewPostCard
+                likes={likeCount}
                 caption={caption}
                 username={username}
                 name={user}

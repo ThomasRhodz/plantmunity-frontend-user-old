@@ -165,7 +165,11 @@ const EditUserForm = ({firstName, lastName, middleName, sex, userName, bio, hand
                 label='Sex'
                 size='regular'
                 value={user_sex}
-                onChange={(event) => setSex(event.target.value)}
+                onChange={(event) => {
+                    setSex(event.target.value)
+                    setIsEnabled(false);
+                  }
+                }
             >
                 <MenuItem value={'Male'}>
                     Male
@@ -199,6 +203,7 @@ const EditUserForm = ({firstName, lastName, middleName, sex, userName, bio, hand
 
           <TextField
             {...register("bio_note")}
+            required
             value={user_bio}
             label="Bio"
             multiline

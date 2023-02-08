@@ -14,7 +14,7 @@ export const accountApi = createApi ({
             return headers;
         },
     }),
-    tagTypes: ['User'],
+    tagTypes: ['User', 'OtherAccount'],
     endpoints: (builder) => ({
         addUser: builder.mutation({
             query(body) {
@@ -90,6 +90,20 @@ export const accountApi = createApi ({
           transformResponse: (response) => response,
         }),
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+       
+        getUserData: builder.query({
+          query(id) {
+            return {
+              url: `view/user-profile/${id}`,
+              method: 'GET',
+            };
+          },
+          providesTags: ['OtherAccount'],
+          transformResponse: (response) => response,
+        }),
+
+
     })
 })
 
@@ -101,4 +115,6 @@ export const {
   useUpdateDetailMutation,
   useUpdateProfileMutation,
   useUpdateCoverMutation,
+
+  useGetUserDataQuery,
 } = accountApi;

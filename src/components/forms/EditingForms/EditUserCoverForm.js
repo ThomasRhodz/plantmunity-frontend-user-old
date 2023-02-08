@@ -5,6 +5,7 @@ import { useUpdateCoverMutation } from '../../../app/services/accountApi';
 import { useSelector } from 'react-redux';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import DefaultCover from '../../../images/Background.png'
 
 const EditUserCoverForm = ({handleClose, image, toast}) => {
 
@@ -93,7 +94,7 @@ const EditUserCoverForm = ({handleClose, image, toast}) => {
                     border:'4px solid #5C6D63'
                 }}
             >
-                <img src={imageUpload} alt='uploaded_image' style={{width: '100%', height:150, objectFit:'cover',}}/>
+                <img src={imageUpload === null ? DefaultCover : imageUpload} alt='uploaded_image' style={{width: '100%', height:150, objectFit:'cover',}}/>
             </Grid>
 
             {/* For Uploading Image*/}

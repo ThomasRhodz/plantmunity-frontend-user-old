@@ -24,7 +24,7 @@ const Timeline = () => {
       const fullname =(post.user.first_name + ' ' + (post.user.middle_name === null ? ' ' : post.user.middle_name === '' ? ' ' : post.user.middle_name) + ' ' + post.user.last_name)
       return(
           <Grid item key={post.id}>
-            <PostCard pid={post.id} user={fullname} username={post.user.username} imageLink={post.post_image} likes={0} comments={0} liked={0} timePosted={post.created_at}  caption={post.caption}  userProfilePic={post.user.profile_picture} />
+            <PostCard pid={post.id} uid={post.user.id} user={fullname} username={post.user.username} imageLink={post.post_image} likes={post.likes_count} comments={post.comments_count} timePosted={post.created_at}  caption={post.caption}  userProfilePic={post.user.profile_picture} />
           </Grid>
       )
     })

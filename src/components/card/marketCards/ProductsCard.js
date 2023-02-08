@@ -34,7 +34,7 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
         sx={{ width: "100%", overflow: "hidden" }}
         className="grid-item"
       >
-        <Box sx={{ width: "100%", height: { xs: 200, sm: 250, md: 250 } }} onClick={() => handleClickOpen()}>
+        <Box sx={{ width: "100%", height: { xs: 200, sm: 200, md: 250 } }} onClick={() => handleClickOpen()}>
           <img
             src={productImage}
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
@@ -47,8 +47,8 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
           alignItems="center"
           sx={{
             width: "100%",
-            height: 55,
-            mt: "-55px",
+            height: 35,
+            mt: "-35px",
             p: 2,
             bgcolor: "rgb(92, 109, 99, 0.6)",
             zIndex: 2,
@@ -61,12 +61,12 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
             >
               {productName}
             </Typography>
-            <Typography
+            {/* <Typography
               variant="caption"
               sx={{ fontFamily: "Arvo", color: "white", ml: "1px" }}
             >
               {"Php " + productPrice}
-            </Typography>
+            </Typography> */}
           </Stack>
 
           <Tooltip title="view product">
