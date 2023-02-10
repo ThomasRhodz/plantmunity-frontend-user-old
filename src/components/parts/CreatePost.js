@@ -141,7 +141,7 @@ const CreatePost = ({profile}) => {
     return (
         <React.Fragment>
             {/* For displaying an card with a button for creating a post*/}
-            <Card sx={{ width: { xs:350, sm:500, md:600}}}>
+            <Card sx={{ width: { xs:350, sm:500, md:650}}}>
                 <CardContent sx={{width:'100%'}}>
                     <Grid container direction='row' alignItems='center' justify='center' sx={{width:'100%'}}>
                         {/* Account Avatar or user Icon*/}

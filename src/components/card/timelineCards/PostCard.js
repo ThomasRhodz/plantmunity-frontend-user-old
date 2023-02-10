@@ -96,7 +96,7 @@ const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares,
     const date = ((getMonthName(time_stamp.getMonth()+1))+" "+ time_stamp.getDate() + ", "+time_stamp.getFullYear())
   return (
     <React.Fragment>
-        <Card sx={{ maxWidth:{ xs: '350px', sm: '500px' , md: '600px' }, marginTop: '10px'}}>
+        <Card sx={{ maxWidth:{ xs: '350px', sm: '500px' , md: '650px' }, marginTop: '10px'}}>
             {/* Card Content (upper): user details */}
             <CardContent>
                 {/* Grid container: allows the separated user details to be allign in horizontal direction*/}
@@ -120,7 +120,7 @@ const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares,
             
             {/* Card Media: Image of the post*/}
             <CardMedia
-                sx={{width:{xs:'370px', sm:'537px', md: '600px'}, height:{xs:'350px', sm:'400px', md: '420px'}}}
+                sx={{width:{xs:'370px', sm:'537px', md: '650px'}, height:{xs:'350px', sm:'400px', md: '470px'}}}
                 component="img"
                 image={imageLink}
                 alt="post"

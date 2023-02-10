@@ -174,11 +174,11 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes}
                     <Divider style={{backgroundColor:'#F8F7F3'}}/>
 
                     <Grid sx={{ width:'100%', height:mobile? '100%':340, padding:2, overflowY:'auto', bgcolor:'white'}}>
-                        <Stack direction='row'>
-                            <Avatar alt="Remy Sharp" src={profile} sx={{ color:'white', display: mobile ? 'none': 'flex' }} />
+                        <Stack direction='row' sx={{ display: mobile ? 'none': 'flex' }}>
+                            <Avatar alt="Remy Sharp" src={profile} sx={{ color:'white'}} />
                             <div style={{ width: 20, display: mobile ? 'none': 'flex' }} />
-                            <Stack direction='column'>
-                                
+                            
+                            <Stack direction='column' >
                                 <Typography variant={'body2'} align='justify'  sx={{fontFamily:'raleway'}}>
                                     <b> {name} </b> - {caption}
                                 </Typography>
@@ -203,7 +203,7 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes}
 
                     <Divider sx={{display: mobile ? 'none': 'flex'}}/>
 
-                    <Stack direction='row' sx={{ pl:2, pt:1, marginTop: mobile ? '-20px':'0px' }}>
+                    <Stack direction='row' sx={{ pl: mobile ? 0 :2, pt:mobile ? 0 :1, marginTop: mobile ? '-20px':'0px' }}>
                         <Tooltip title="Like">
                             <IconButton onClick={()=>handleLikeButton()} color="inherit" aria-label="open drawer" size='medium' >
                                 {postLiked === 1 ? <FavoriteIcon fontSize='large' style={{color: 'red', }}/> : <FavoriteBorderIcon fontSize='large' style={{color: 'black'}}/>}
@@ -227,6 +227,11 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes}
                         <Typography  variant='caption' style={{fontFamily:'Arvo'}}>
                             {"Posted on " + date}
                         </Typography>
+                        <Stack direction='column' sx={{display: mobile ? 'flex': 'none', mt:1}}>
+                            <Typography variant={'body2'} align='justify'  sx={{fontFamily:'raleway', pr:5}}>
+                                <b> {name} </b> - {caption}
+                            </Typography>
+                        </Stack>
                     </Stack>
                 
 

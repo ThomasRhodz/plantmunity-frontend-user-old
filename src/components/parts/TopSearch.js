@@ -36,7 +36,7 @@ const renderTopSearch = topSearch.map(({id, plant, number_of_search}) => {
 });
 const TopSearch = () => {
   return (
-    <Grid container direction='column' sx={{ width: 350, borderRadius:1, backgroundColor: 'white' }}>
+    <Grid container direction='column' sx={{ width: '100%', borderRadius:1, backgroundColor: 'white' }}>
         <Grid item sx={{ padding:2 }}>
             <Stack direction='row'>
                 <Typography variant='h6' sx={{ flexGrow: 1, fontFamily:'apple-systems', fontWeight:'bold' }}>

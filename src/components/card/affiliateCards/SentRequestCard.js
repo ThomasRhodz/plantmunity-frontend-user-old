@@ -6,7 +6,7 @@ import { useGetIsFollowingYouQuery } from '../../../app/services/associateApi';
 import { RiUserUnfollowLine } from 'react-icons/ri';
 import { useUpdateUnfollowMutation } from '../../../app/services/associateApi';
 
-const FollowingCard = ({ associateID, userID, userName, user, userProfilePic, bio}) => {
+const SentRequestCard = ({ associateID, userID, userName, user, userProfilePic, bio}) => {
   const theme = useTheme();
   const tablet = useMediaQuery(theme.breakpoints.down(1200));
   const mobile = useMediaQuery(theme.breakpoints.down(700));
@@ -129,7 +129,7 @@ const FollowingCard = ({ associateID, userID, userName, user, userProfilePic, bi
             <Button
               onClick={() => handleFollowButton()}
               startIcon={
-                <RiUserUnfollowLine style={{ fontSize: mobile ? 15 : 17 }} />
+                <RiUserUnfollowLine style={{ fontSize: mobile ? 13 : 17 }} />
               }
               variant="contained"
               sx={{
@@ -137,7 +137,7 @@ const FollowingCard = ({ associateID, userID, userName, user, userProfilePic, bi
                 fontFamily: "Arvo",
                 textTransform: "none",
                 height: mobile ? 30 : tablet ? 45 : 50,
-                width: mobile ? "40%" : "100%",
+                width: mobile ? "45%" : "100%",
                 border: "1px solid #5C6D63",
                 bgcolor: "white",
                 color: "#5C6D63",
@@ -148,7 +148,7 @@ const FollowingCard = ({ associateID, userID, userName, user, userProfilePic, bi
                 },
               }}
             >
-              {"Unfollow"}
+              {"Cancel Request"}
             </Button>
           </Stack>
         </Grid>
@@ -158,4 +158,4 @@ const FollowingCard = ({ associateID, userID, userName, user, userProfilePic, bi
   );
 }
 
-export default FollowingCard
+export default SentRequestCard

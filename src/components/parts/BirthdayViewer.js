@@ -5,7 +5,7 @@ import {FaBirthdayCake} from 'react-icons/fa';
 
 const BirthdayViewer = () => {
   return (
-    <Grid container direction='column' sx={{ padding:2, width: 350, borderRadius:1, backgroundColor: 'white' }}>
+    <Grid container direction='column' sx={{ padding:2, width: '100%', borderRadius:1, backgroundColor: 'white' }}>
         <Grid item>
             <Stack direction='row'>
                 <Typography variant='h6' sx={{ flexGrow: 1, fontFamily:'apple-systems', fontWeight:'bold' }}>

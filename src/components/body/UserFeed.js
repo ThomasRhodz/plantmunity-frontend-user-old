@@ -1,9 +1,10 @@
 import { Box, Button,Dialog, Grid, IconButton, Stack, Typography, Tab, Tabs, Avatar, Toolbar, Slide } from '@mui/material'
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 import {BsShop, BsFillFilePostFill, BsCalendarWeek} from 'react-icons/bs';
+import { RiUserShared2Line, RiUserUnfollowLine } from 'react-icons/ri';
 import {RiPlantLine} from 'react-icons/ri';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
@@ -14,12 +15,60 @@ import ShopDetails from '../parts/viewUser/ShopDetails';
 import ShopProducts from '../parts/viewUser/ShopProducts';
 import ViewShop from '../dialogs/ViewShop';
 
+import { useLazyGetIsFollowedQuery, useAddAssociateMutation, useUpdateUnfollowMutation } from '../../app/services/associateApi';
+
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="right" ref={ref} {...props} />;
   });
 
   
 const UserFeed = ({id}) => {
+    const theme = useTheme();
+    const tablet = useMediaQuery(theme.breakpoints.down(1200));
+    const mobile = useMediaQuery(theme.breakpoints.down(700));
+
+    const [getIsFollowed, result] = useLazyGetIsFollowedQuery();
+    const [associateClick, setAssociateCliCk] = useState(0);
+
+    useEffect(() => {
+        getIsFollowed(id)
+    }, [associateClick]);
+
+    console.log(result?.data)
+
+    const followed = result?.data?.isFollowed
+    const followedID = result?.data?.id
+    const followedStatus = result?.data?.status
+    
+    const handleButtonLabel = () =>{
+        if(followedStatus===null){
+            return 'Follow'
+        } else if (followedStatus=== 'Pending') {
+            return 'Cancel Request'
+        }else{
+           return 'Unfollow'
+        }
+    }
+
+    const [follow] = useAddAssociateMutation();
+    const [unfollow] = useUpdateUnfollowMutation();
+
+    const handleFollowButton = () => {
+        if(followed === 1){
+            unfollow(followedID)
+            setAssociateCliCk(1)
+        }else{
+            follow(id)
+            setAssociateCliCk(2)
+        }
+    }
+
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -42,12 +91,11 @@ const UserFeed = ({id}) => {
     const image = userDetail?.profile_picture
     const coverPhoto = userDetail?.profile_cover
     const bioNote = userDetail?.bio_note
+    const username = userDetail?.username
 
     const post = userDetail?.posts
     const products = userDetail?.products
     const shop = userDetail?.shop
-
-    const username = userDetail?.username
 
     const time_stamp = new Date((userDetail?.created_at))
 
@@ -57,17 +105,9 @@ const UserFeed = ({id}) => {
         
         return date.toLocaleString('en-US', { month: 'long' });
     }
+
     const date = ((getMonthName(time_stamp.getMonth()+1))+" "+ time_stamp.getDate() + ", "+time_stamp.getFullYear())
 
-    const theme = useTheme();
-    const tablet = useMediaQuery(theme.breakpoints.down(1200));
-    const mobile = useMediaQuery(theme.breakpoints.down(700));
-
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
-      setValue(newValue);
-    };
   return (
     <Stack direction="column" alignItems="center" sx={{ width: "100%" }}>
       <Grid
@@ -80,8 +120,8 @@ const UserFeed = ({id}) => {
           boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)',
         }}
       >
-        <Grid item sx={{ width: "100%", height: mobile? 200 : 300, bgcolor: "green" }}>
-            <img src={coverPhoto} alt={'Cover Photo'} style={{width: "100%", height: mobile? 200 : 300, objectFit:'cover'}} />
+        <Grid item sx={{ width: "100%", height: mobile? 200 : 300, bgcolor: "#5C6D63" }}>
+            <img src={coverPhoto} alt={'Cover_Photo'} style={{width: "100%", height: mobile? 200 : 300, objectFit:'cover'}} />
         </Grid>
 
         <Grid item sx={{ width: "100%", marginTop:mobile ? '-70px' : tablet ? '-80px' : '-100px', p:mobile ? 2 :5, pt:0}}>
@@ -96,17 +136,17 @@ const UserFeed = ({id}) => {
 
                 <IconButton 
                     sx={{ 
-                        width:mobile ? 30: 40, 
-                        height:mobile ? 30: 40, 
-                        mt:mobile ? 12 : tablet ? 13 : 14, 
+                        width:mobile ? 35: 40, 
+                        height:mobile ? 35: 40, 
+                        mt:mobile ? 10 : tablet ? 13 : 15, 
                         mr:1, 
-                        border:'1px solid green',
-                        color:'green',
+                        border:'1px solid #5C6D63',
+                        color:'#5C6D63',
                         borderRadius:5,
                         bgcolor:'white',
                         '&:hover':{
                             color:'white',
-                            bgcolor:'green',
+                            bgcolor:'#5C6D63',
                         }
                         }}>
                     <MoreHorizIcon sx={{fontSize: mobile? 17: 20}} />
@@ -114,40 +154,44 @@ const UserFeed = ({id}) => {
 
                 <IconButton 
                     sx={{ 
-                        width:mobile ? 30: 40, 
-                        height:mobile ? 30: 40, 
-                        mt:mobile ? 12 : tablet ? 13 : 14, 
+                        width:mobile ? 35: 40, 
+                        height:mobile ? 35: 40, 
+                        mt:mobile ? 10 : tablet ? 13 : 15, 
                         mr:1, 
-                        border:'1px solid green',
-                        color:'green',
+                        border:'1px solid #5C6D63',
+                        color:'#5C6D63',
                         borderRadius:5,
                         bgcolor:'white',
                         '&:hover':{
                             color:'white',
-                            bgcolor:'green',
+                            bgcolor:'#5C6D63',
                         }
                         }}>
                     <MailOutlineOutlinedIcon sx={{fontSize: mobile? 17: 20}} />
                 </IconButton>
 
-                <Button 
+                <Button
+                    onClick = { () => handleFollowButton()}
                     variant='contained' 
+                    startIcon={followedStatus === null ? <RiUserShared2Line style={{fontSize: mobile ? 15:17}} /> : <RiUserUnfollowLine style={{fontSize: mobile ? 15:17}}/>}
                     sx={{
+                        fontSize: mobile ? 12:14,
                         fontFamily:"Arvo", 
                         textTransform:'none',
-                        height:mobile? 30 : 40, 
-                        width: mobile ? 100 : 150, 
-                        mt:mobile ? 12 : tablet ? 13 : 14, 
-                        border:'1px solid green',
-                        color:'green',
+                        height:mobile? 35 : 40, 
+                        width: mobile ? 150 : 170, 
+                        mt:mobile ? 10 : tablet ? 13 : 15, 
+                        border:'1px solid #5C6D63',
+                        border: '1px solid #5C6D63',
+                        bgcolor:followedStatus === null ? '#5C6D63' : 'white',
+                        color:followedStatus === null ? 'white' : '#5C6D63',
                         borderRadius:5,
-                        bgcolor:'white',
                         '&:hover':{
-                            color:'white',
-                            bgcolor:'green',
+                            color:followedStatus === null ? '#5C6D63' : 'white',
+                            bgcolor:followedStatus === null ? 'white' : '#5C6D63',
                         }
                     }}>
-                    Follow
+                    {handleButtonLabel()}
                 </Button>
             </Stack>
 
