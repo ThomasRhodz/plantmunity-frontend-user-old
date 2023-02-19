@@ -6,12 +6,13 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+
 import {RiListCheck2} from 'react-icons/ri';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {FaRegComments} from 'react-icons/fa';
 import {AiOutlineSend} from 'react-icons/ai';
+import {MdCancel} from 'react-icons/md';
 
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -24,7 +25,7 @@ const schema = yup.object({
     content: yup.string(),
 });
 
-const ViewPostCard = ({image, name, caption, username, date, id, profile, likes}) => {
+const ViewPostCard = ({image, name, caption, username, date, id, profile, likes, handleClose}) => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(600));
@@ -139,8 +140,8 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes}
                         </Typography>
                     </Stack>
                     <div style={{ flexGrow:1 }}/>
-                    <IconButton>
-                        <MoreHorizIcon />
+                    <IconButton onClick={()=>handleClose()} sx={{p:0}}>
+                        <MdCancel style={{fontSize:30, color:'#DCD7C3'}} />
                     </IconButton>
                 </Stack>
             </Grid>
@@ -166,8 +167,8 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes}
                             </Typography>
                         </Stack>
                         <div style={{ flexGrow:1 }}/>
-                        <IconButton>
-                            <MoreHorizIcon />
+                        <IconButton onClick={()=>handleClose()} sx={{p:0}}>
+                            <MdCancel style={{fontSize:30, color:'#DCD7C3'}} />
                         </IconButton>
                     </Stack>
 

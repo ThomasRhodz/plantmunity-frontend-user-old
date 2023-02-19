@@ -74,8 +74,8 @@ const EditProductForm = ({productID, productName, productImage, productDescripti
         updateProduct(input).then(
             (payload) => 
                 {
-                    //toast("Account detail was successfully updated.")
-                    console.log('fulfilled',payload)
+                    toast("Product was successfully updated.")
+                    //console.log('fulfilled',payload)
                     handleClose();
     
                 }
@@ -83,7 +83,7 @@ const EditProductForm = ({productID, productName, productImage, productDescripti
                 (error) => 
                 {
                     console.error('rejected', error)
-                   // toast("Error has occured, try again later.")
+                    toast("Error has occured, try again later.")
                 }
             )
         

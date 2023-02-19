@@ -1,5 +1,5 @@
 import React from 'react'
-import {Grid, Avatar, Typography, Stack} from '@mui/material/'
+import {Grid, Avatar, Typography, Stack, Skeleton} from '@mui/material/'
 import { useSelector } from 'react-redux';
 import Tbs from '@mui/material/Tabs';
 import Tb from '@mui/material/Tab';
@@ -16,6 +16,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useGetMyPostsQuery } from '../../app/services/postApi';
 import DefaultCover from '../../images/Background.png'
+import UserPostSkeleton from '../skeletons/UserPostSkeleton';
+
 const useStyles = makeStyles((theme) =>
   ({
     logInImage: {
@@ -38,6 +40,7 @@ const ProfileFeed = () => {
   const username = useSelector((state) => state.user.username);
   const fullname =(firstname + ' ' + (middlename === null ? ' ' : middlename === '' ? ' ' : middlename) + ' ' + lastname)
   const {data, isFetching} = useGetMyPostsQuery(undefined, {refetchOnMountOrArgChange: true})
+  
 
   console.log(data)
   
@@ -77,11 +80,14 @@ const ProfileFeed = () => {
 
           {/* Profile cover */}
           <Grid item sx={{ width:'100%', height:{xs:250, sm:300, md:300}}}>
-            <img
-              src={coverPhoto === null ? DefaultCover : coverPhoto}
-              alt='cover_photo'
-              className={classes.logInImage}
-            />
+            {
+               coverPhoto === undefined ? <Skeleton animation="wave" variant="rectangular" width={'100%'} height={'100%'} sx={{mt:1}} /> :
+              <img
+                src={coverPhoto === null ? DefaultCover : coverPhoto}
+                alt='cover_photo'
+                className={classes.logInImage}
+              />
+            }
           </Grid>
 
          
@@ -89,12 +95,18 @@ const ProfileFeed = () => {
           <Grid item sx={{width:'100%', marginTop:'-100px', pr:{xs: 3, sm:1, md:10}, pl:{xs: 3, sm:1, md:10}}}>
              <Stack direction='row' alignItems='center' sx={{ width:'100%' }}>
                 <Stack direction='column' alignItems='center'>
-                  <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                  {
+                    isFetching ? <Skeleton animation="wave" variant="rectangular" width={100} height={40}/> :
+                    <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                  }
                   <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?16:25} />
                 </Stack>
                 <div style={{ flexGrow:1 }}/>
                 <Stack direction='column' alignItems='center'>
-                  <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                  {
+                    isFetching ? <Skeleton animation="wave" variant="rectangular" width={100} height={40}/> :
+                    <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                  }
                   <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?16:25} />
                 </Stack>
              </Stack>
@@ -114,14 +126,20 @@ const ProfileFeed = () => {
           <Grid item sx={{width:'100%', mt:2}}>
             <Grid container direction='column' alignItems='center' sx={{width:'100%', height:'100%'}}>
               <Grid item >
-                <Typography variant={matches?'h6':'h4'} fontFamily='Arvo' >
-                  {firstname + ' ' + (middlename === null ? ' ' : middlename === '' ? ' ' : middlename) + ' ' + lastname}
-                </Typography>
+                {
+                   username === undefined ? <Skeleton animation="wave" variant="rectangular" width={350} height={30} sx={{mt:1, borderRadius:5}} /> :
+                  <Typography variant={matches?'h6':'h4'} fontFamily='Arvo' >
+                    {firstname + ' ' + (middlename === null ? ' ' : middlename === '' ? ' ' : middlename) + ' ' + lastname}
+                  </Typography>
+                }
               </Grid>
               <Grid item>
-                <Typography variant={matches?'body1':'h6'}  fontFamily='raleway' >
-                  @{username}
-                </Typography>
+                {
+                  username === undefined ? <Skeleton animation="wave" variant="rectangular" width={250} height={20} sx={{mt:1, borderRadius:5}} /> :
+                  <Typography variant={matches?'body1':'h6'}  fontFamily='raleway' >
+                    @{username}
+                  </Typography>
+                }
               </Grid>
             </Grid>
           </Grid>{/* end of profile name and username */}
@@ -158,7 +176,7 @@ const ProfileFeed = () => {
               <div style={{height:10}} />
               <CreatePost profile={image}/>
               <div style={{height:10}} />
-              {renderPosts}
+              { isFetching ? <UserPostSkeleton /> : renderPosts}
               <div style={{height:50}} />
             </Grid>
           </Grid>

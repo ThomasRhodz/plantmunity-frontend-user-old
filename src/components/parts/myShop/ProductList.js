@@ -6,7 +6,7 @@ import MyProductCard from '../../card/shopCards/MyProductCard';
 import { useGetProductsQuery } from '../../../app/services/shopApi';
 import { useSelector } from 'react-redux';
 
-const ProductList = ({selectedValue}) => {
+const ProductList = ({selectedValue, toast}) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down(600));
   const ID = useSelector((state) => state.shop.id);
@@ -37,7 +37,7 @@ const ProductList = ({selectedValue}) => {
                 }}
               >
 
-                <MyProductCard key={id} id={id} productName={product_name} productImage={product_image} productDescription={product_description} />
+                <MyProductCard key={id} id={id} toast={(stringMessage)=>toast(stringMessage)} productName={product_name} productImage={product_image} productDescription={product_description} />
               </Grid>
             )
           })

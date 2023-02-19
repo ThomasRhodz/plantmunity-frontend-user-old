@@ -138,16 +138,14 @@ const EditShopForm = ({ handleClose, id, name, logo, email, contact, telephone, 
         updateShop(input).then(
             (payload) => 
                 {
-                    //toast("Account detail was successfully updated.")
-                    console.log('fulfilled',payload)
+                    toast("Shop detail was successfully updated.")
                     handleClose();
     
                 }
             ).catch(
                 (error) => 
                 {
-                    console.error('rejected', error)
-                   // toast("Error has occured, try again later.")
+                   toast("Error has occured, try again later.")
                 }
             )
         

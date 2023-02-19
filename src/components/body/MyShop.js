@@ -8,7 +8,7 @@ import CreateShop from '../parts/myShop/CreateShop';
 import ProductList from '../parts/myShop/ProductList';
 import MyShopDetails from '../parts/myShop/MyShopDetails';
 
-const MyShop = () => {
+const MyShop = ({toast}) => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(700));
@@ -43,7 +43,7 @@ const MyShop = () => {
                     display: createShop ? 'flex' : 'none'
                  }}
             >
-                <CreateShop/>
+                <CreateShop toast={(stringMessage)=>toast(stringMessage)}/>
             </Grid>
 
             <Grid 
@@ -59,7 +59,7 @@ const MyShop = () => {
                     display: createShop ? 'none' : 'flex'
                  }}
             >
-                <MyShopDetails />
+                <MyShopDetails toast={(stringMessage)=>toast(stringMessage)}/>
             </Grid>
 
             <Grid
@@ -126,7 +126,7 @@ const MyShop = () => {
                     </Tabs>
                     <Divider  variant='middle' style={{ white:'#5C6D63', height:1 }} />
 
-                    <ProductList selectedValue={value}/>  
+                    <ProductList selectedValue={value} toast={(stringMessage)=>toast(stringMessage)}/>  
                 </Stack>
                 
             </Grid>

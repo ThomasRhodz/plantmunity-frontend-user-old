@@ -8,7 +8,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="right" ref={ref} {...props} />;
   });
 
-const VariantCard = ({pid, id, attribute, price, status} ) => {
+const VariantCard = ({pid, id, attribute, price, status, toast} ) => {
 
     const theme = useTheme();
     const mobileSM = useMediaQuery(theme.breakpoints.down(600));
@@ -45,6 +45,7 @@ const VariantCard = ({pid, id, attribute, price, status} ) => {
                 variantPrice = {price}
                 variantStatus = {status}
                 handleClose = {()=> closeEdit()}
+                toast={(stringMessage)=>toast(stringMessage)}
             />
         </Dialog>
     </React.Fragment>

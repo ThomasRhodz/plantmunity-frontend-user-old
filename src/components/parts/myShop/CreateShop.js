@@ -6,7 +6,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import CreateShopForm from '../../forms/CreateForms/CreateShopForm';
 
-function CreateShop() {
+function CreateShop({toast}) {
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down(600));
 
@@ -90,6 +90,7 @@ function CreateShop() {
         onClose={closeForm}
       >
         <CreateShopForm
+          toast={(stringMessage)=>toast(stringMessage)}
           handleClose={() => closeForm()}
           // toast={(stringMessage)=>toast(stringMessage)}
         />

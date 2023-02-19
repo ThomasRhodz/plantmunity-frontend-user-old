@@ -39,18 +39,21 @@ const drawerWidth = 230;
     const menu = [
         {
             id: 1,
+            tab: 0,
             location: '/profile',
             name: 'Profile'
 
         },
         {
             id: 4,
+            tab: 0,
             location: '',
             name: 'My Shop'
 
         },
         {
             id: 5,
+            tab: 0,
             location: '',
             name: 'Affiliates'
 
@@ -58,6 +61,7 @@ const drawerWidth = 230;
 
         {
             id: 3,
+            tab: 0,
             location: 'bye',
             name: 'Logout'
 
@@ -68,6 +72,7 @@ const drawerWidth = 230;
     const page = [
         {
             id: 0,
+            tab: 0,
             location: '/myCart',
             name: 'My Cart',
             icon: <ShoppingCartRoundedIcon style={{fontSize: 28, color: '#707F77'}}/>
@@ -76,7 +81,8 @@ const drawerWidth = 230;
 
         {
             id: 1,
-            location: '/messages',
+            tab: 6,
+            location: '',
             name: 'Messages',
             icon: <EmailRoundedIcon style={{fontSize: 28, color: '#707F77'}}/>
 
@@ -168,10 +174,19 @@ const drawerWidth = 230;
 
                         <Grid item >
                             <Stack direction='row' alignItems={'center'} sx={{minWidth:{xs:50, sm:50, md: desktop? 30:200}}}>
-                                {page.map(({id, location, name, icon}) => (
+                                {page.map(({id, location, name, icon, tab}) => (
                                     <Box key={id} sx={{ display: { xs: 'none', sm: 'none', md: desktop? 'none' :'flex' } }}>
-                                        <Tooltip  title={name} role='link' sx={{mb:2}} onClick={()=>{navigate(location)}}>
-                                            <IconButton color="inherit" aria-label="open drawer" size='large' sx={{p:1, marginRight:'3px'}}>
+                                        <Tooltip  title={name} role='link' sx={{mb:2}} >
+                                            <IconButton  
+                                                onClick={()=>{
+                                                    location === '' ? handleChange(tab) :
+                                                    navigate(location)
+                                                }} 
+                                                color="inherit" 
+                                                aria-label="open drawer" 
+                                                size='large' 
+                                                sx={{p:1, marginRight:'3px'
+                                            }}>
                                                 {icon}
                                             </IconButton>
                                         </Tooltip>

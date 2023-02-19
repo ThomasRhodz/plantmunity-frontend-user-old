@@ -235,7 +235,7 @@ const ViewMyProductCard = ({productId, productName, productImage, productDescrip
                                   border:'1px solid transparent',
                                 }
                                 }}>
-                               <VariantCard pid={productId} id={id} attribute={attribute} price={price} status={status}/> 
+                               <VariantCard toast={(stringMessage)=>toast(stringMessage)} pid={productId} id={id} attribute={attribute} price={price} status={status}/> 
                             </Grid>
                         )
                         })
@@ -258,7 +258,7 @@ const ViewMyProductCard = ({productId, productName, productImage, productDescrip
         onClose={closeVariantForm}
         TransitionComponent={Transition}
       >
-        <CreateVariantForm ID={productId} handleClose={() => closeVariantForm()} />
+        <CreateVariantForm ID={productId} handleClose={() => closeVariantForm()} toast={(stringMessage)=>toast(stringMessage)}/>
       </Dialog>
 
       <Dialog
@@ -275,6 +275,7 @@ const ViewMyProductCard = ({productId, productName, productImage, productDescrip
             productImage = {productImage}
             productDescription = {productDescription}
             handleClose = {()=> handleCloseEdit()}
+            toast={(stringMessage)=>toast(stringMessage)}
                     />
       </Dialog>
     </Grid>

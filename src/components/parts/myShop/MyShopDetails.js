@@ -16,7 +16,7 @@ import EditShopForm from '../../forms/EditingForms/EditShopForm';
 import CreateProductForm from '../../forms/CreateForms/CreateProductForm';
 
 
-const MyShopDetails = () => {
+const MyShopDetails = ({toast}) => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(600));
@@ -355,7 +355,7 @@ const MyShopDetails = () => {
           bio={bio}
           tags={tags}
           handleClose={() => closeEdit()}
-          // toast={(stringMessage)=>toast(stringMessage)}
+          toast={(stringMessage)=>toast(stringMessage)}
         />
       </Dialog>
 
@@ -369,7 +369,7 @@ const MyShopDetails = () => {
         <CreateProductForm
           ID={shopID}
           handleClose={() => closeProduct()}
-          // toast={(stringMessage)=>toast(stringMessage)}
+          toast={(stringMessage)=>toast(stringMessage)}
         />
       </Dialog>
     </Grid>

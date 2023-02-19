@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material/styles';
 import ViewPostCard from './ViewPostCard';
 
 //Icons
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {FaRegComments} from 'react-icons/fa';
@@ -19,7 +20,7 @@ import { navigate, Link } from 'gatsby';
 //Like API
 import { useAddLikeMutation,useUpdateUnlikeMutation, useLazyGetIsLikedQuery } from '../../../app/services/postApi';
 
-const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares, timePosted, caption, userProfilePic}) => {
+const PostCard = ({pid, uid, user, username, imageLink, likes, comments, timePosted, caption, userProfilePic}) => {
     
     const [isLiked, result] = useLazyGetIsLikedQuery()
     const [likedClick, setLikedClick] = useState(0)
@@ -110,10 +111,16 @@ const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares,
                     <div style={{width:10}} /> 
 
                     {/* User Name and time since posted*/}
-                    <Grid item>
+                    <Grid item sx={{ flexGrow:1 }}>
                         <Typography variant="body2"  fontFamily='Arvo'>
                             {'@'+username} | {date}
                         </Typography>
+                    </Grid>
+
+                    <Grid item>
+                        <IconButton>
+                            <MoreHorizIcon/>
+                        </IconButton>
                     </Grid>
                 </Grid>{/* End of Grid container */}
             </CardContent> {/* End of upper card content */}
@@ -124,6 +131,7 @@ const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares,
                 component="img"
                 image={imageLink}
                 alt="post"
+                onClick={()=>openView()}
             />
 
             {/*Card Action: contains 3 icon button, whcih are the like, commengts and share button.*/}
@@ -177,6 +185,7 @@ const PostCard = ({pid, uid, user, username, imageLink, likes, comments, shares,
                 profile={userProfilePic}
                 id={pid}
                 date={date}
+                handleClose={()=>closeView()}
             />
         </Dialog>
 </React.Fragment>

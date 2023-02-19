@@ -106,7 +106,7 @@ export const shopApi = createApi({
                   body:data,
                   };
               },
-              invalidatesTags: ['Products, ProductVariants'],
+              invalidatesTags: ['ProductVariants'],
               transformResponse: (response) => response,
             }),
 

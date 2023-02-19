@@ -46,16 +46,14 @@ const EditVariantForm = ({PID, ID, variantAttribute, variantPrice, variantStatus
         updateProductVariant(input).then(
             (payload) => 
                 {
-                    //toast("Account detail was successfully updated.")
-                    console.log('fulfilled',payload)
+                    toast("Variant was successfully updated")
                     handleClose();
     
                 }
             ).catch(
                 (error) => 
                 {
-                    console.error('rejected', error)
-                   // toast("Error has occured, try again later.")
+                   toast("Error has occured, try again later.")
                 }
             )
         

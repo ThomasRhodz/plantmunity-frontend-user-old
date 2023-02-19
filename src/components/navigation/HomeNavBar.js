@@ -25,6 +25,7 @@ import Timeline from '../body/Timeline';
 import MyShop from '../body/MyShop';
 import MarketPlace from '../body/MarketPlace';
 import AssociateTab from '../body/AssociateTab';
+import Message from '../body/Message';
 
 // //Hooks abd API Calls
 // import useAuth from '../../app/hooks/useAuth';
@@ -182,6 +183,7 @@ const HomeNavBar = () => {
            
             <Stack direction='column' alignItems='center'>
                 <Avatar 
+                    onClick={()=>navigate('/profile')}
                     sx={{width:90, height:90, mb:1}} 
                     src={image}
                 />
@@ -241,7 +243,7 @@ const HomeNavBar = () => {
         </Grid>
 
         <Grid sx={{width:'100%', display: selectedMenu === 4 ? 'flex' : 'none',}}>
-          <MyShop />
+          <MyShop toast={(stringMessage)=>notify(stringMessage)}/>
         </Grid>
 
         <Grid sx={{width:'100%', display: selectedMenu === 3 ? 'flex' : 'none',}}>
@@ -250,6 +252,10 @@ const HomeNavBar = () => {
 
         <Grid sx={{width:'100%', display: selectedMenu === 5 ? 'flex' : 'none',}}>
           <AssociateTab />
+        </Grid>
+
+        <Grid sx={{width:'100%', display: selectedMenu === 6 ? 'flex' : 'none',}}>
+          <Message />
         </Grid>
 
       </Box>

@@ -74,16 +74,16 @@ const CreateProductForm = ({ID, handleClose, toast}) => {
         addProduct(input).then(
             (payload) => 
                 {
-                    //toast("Account detail was successfully updated.")
-                    console.log('fulfilled',payload)
+                    toast("Product created successfully")
+                    //console.log('fulfilled',payload)
                     handleClose();
     
                 }
             ).catch(
                 (error) => 
                 {
-                    console.error('rejected', error)
-                   // toast("Error has occured, try again later.")
+                    //console.error('rejected', error)
+                   toast("Error has occured, try again later.")
                 }
             )
         

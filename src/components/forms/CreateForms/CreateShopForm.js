@@ -133,16 +133,16 @@ const CreateShopForm = ({ handleClose, toast}) => {
         createShop(input).then(
             (payload) => 
                 {
-                    //toast("Account detail was successfully updated.")
-                    console.log('fulfilled',payload)
+                    toast("Shop was succefully created.")
+                    //console.log('fulfilled',payload)
                     handleClose();
     
                 }
             ).catch(
                 (error) => 
                 {
-                    console.error('rejected', error)
-                   // toast("Error has occured, try again later.")
+                   //console.error('rejected', error)
+                   toast("Error has occured, try again later.")
                 }
             )
         

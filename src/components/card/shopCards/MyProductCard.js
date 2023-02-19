@@ -10,7 +10,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
 
-const MyProductCard = ({id, productName, productImage, productDescription}) => {
+const MyProductCard = ({id, productName, productImage, productDescription, toast}) => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down(750));
 
@@ -76,6 +76,7 @@ const MyProductCard = ({id, productName, productImage, productDescription}) => {
             productImage={productImage}
             productDescription={productDescription}
             handleClose={()=>closeProductDialog()}
+            toast={(stringMessage)=>toast(stringMessage)}
           />
         </Dialog>
       </Stack>
