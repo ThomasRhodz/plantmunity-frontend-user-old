@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) =>
   }));
 
 const ProfileFeed = () => {
-
+  const accountID = useSelector((state) => state.user.id) ;
   const image = useSelector((state) => state.user.image) ;
   const coverPhoto = useSelector((state) => state.user.profile_cover) ;
   const firstname = useSelector((state) => state.user.first_name);
@@ -50,7 +50,7 @@ const ProfileFeed = () => {
   const renderPosts = PostArray.map(post => {
     return(
         <Grid item key={post.postID}>
-          <PostCard pid={post.id} user={fullname} username={username} imageLink={post.post_image} likes={post.likes_count} comments={post.comments_count} timePosted={post.created_at}  caption={post.caption}  userProfilePic={image} />
+          <PostCard pid={post.id} user={fullname} username={username} imageLink={post.post_image} likes={post.likes_count} comments={post.comments_count} timePosted={post.created_at}  caption={post.caption}  userProfilePic={image} uid={accountID} />
         </Grid>
     )
   })
@@ -76,7 +76,7 @@ const ProfileFeed = () => {
 
   return (
     <React.Fragment>
-        <Grid container direction='column' alignItems='center' sx={{backgroundColor:'white', width:{xs:370, sm:550, md:800}, minHeight:1000, boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
+        <Grid container direction='column' alignItems='center' sx={{backgroundColor:'white', width:{xs:370, sm:550, md:800}, minHeight:'100vh', boxShadow:'2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)',}}>
 
           {/* Profile cover */}
           <Grid item sx={{ width:'100%', height:{xs:250, sm:300, md:300}}}>
@@ -171,12 +171,16 @@ const ProfileFeed = () => {
               </Tbs>
           </Grid> {/* end of tab */}
 
-          <Grid item sx={value===0?{display:'flex', backgroundColor: '#f6f7f6', width:'100%'} : {display:'none'}}>
+          <Grid item sx={value===0?{display:'flex', backgroundColor: '#f6f7f6', width:'100%', maxHeight:'100%', minHeight:300} : {display:'none'}}>
             <Grid container direction='column' alignItems={'center'}>
               <div style={{height:10}} />
               <CreatePost profile={image}/>
               <div style={{height:10}} />
-              { isFetching ? <UserPostSkeleton /> : renderPosts}
+              { isFetching ? <UserPostSkeleton /> : myPosts.length === 0 ? 
+              <Typography variant='h4' sx={{ fontFamily:'Arvo', mt:10, color:'#BFCBA5' }}>
+                No post yet
+              </Typography>
+              : renderPosts}
               <div style={{height:50}} />
             </Grid>
           </Grid>
@@ -184,8 +188,7 @@ const ProfileFeed = () => {
           <Grid item sx={value===1?{display:'flex', backgroundColor: '#f6f7f6', width:'100%'} : {display:'none'}}>
             <UserAccount/>
           </Grid>
-          
-
+        
         </Grid>
     </React.Fragment>
   )

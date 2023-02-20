@@ -227,7 +227,7 @@ const UserFeed = ({id}) => {
 
             <Stack direction='row' sx={{ mt:1 }}>
                 <Button sx={{ p:0, mr:2, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>12 Followers</Button>
-                <Button sx={{ p:0, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>12 Followings</Button>
+                <Button sx={{ p:0, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>12 Following</Button>
             </Stack>
         </Grid>
                     

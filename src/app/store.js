@@ -25,6 +25,7 @@ import { shopApi } from './services/shopApi';
 import authReducer from './persist/authentication/authSlice';
 import userReducer from './persist/account/userSlice';
 import shopReducer from './persist/account/shopSlice';
+import { reportApi } from './services/reportApi';
 
 
 const rootReducer = combineReducers({
@@ -37,6 +38,7 @@ const rootReducer = combineReducers({
     [accountApi.reducerPath]: accountApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [postApi.reducerPath]: postApi.reducer,
+    [reportApi.reducerPath]: reportApi.reducer,
     [shopApi.reducerPath]: shopApi.reducer,
   });
 
@@ -45,7 +47,7 @@ const rootReducer = combineReducers({
     version: 1,
     storage,
     //stateReconciler: autoMergeLevel2,
-    blacklist: [forumApi.reducerPath, associateApi.reducerPath, messageApi.reducerPath, accountApi.reducerPath, authApi.reducerPath, postApi.reducerPath, shopApi.reducerPath],
+    blacklist: [forumApi.reducerPath, reportApi.reducerPath,associateApi.reducerPath, messageApi.reducerPath, accountApi.reducerPath, authApi.reducerPath, postApi.reducerPath, shopApi.reducerPath],
   };
   
   const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -58,7 +60,7 @@ export const store = configureStore({
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(forumApi.middleware , postApi.middleware, messageApi.middleware, associateApi.middleware, accountApi.middleware, authApi.middleware, shopApi.middleware),
+      }).concat(forumApi.middleware , reportApi.middleware , postApi.middleware, messageApi.middleware, associateApi.middleware, accountApi.middleware, authApi.middleware, shopApi.middleware),
   });
   
   setupListeners(store.dispatch);

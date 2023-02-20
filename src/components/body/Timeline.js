@@ -12,7 +12,7 @@ import UserPostSkeleton from '../skeletons/UserPostSkeleton';
 const Timeline = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.down(1400));
-    const image = useSelector((state) => state.image) ;
+    const image = useSelector((state) => state.user.image) ;
     
     const {data, isFetching} = useGetTimelinePostsQuery(undefined, {refetchOnMountOrArgChange: true})
 
@@ -44,8 +44,6 @@ const Timeline = () => {
                 <AdsTimeline/>
               </Grid>
       </Grid>
-      
-    
     
   )
 }

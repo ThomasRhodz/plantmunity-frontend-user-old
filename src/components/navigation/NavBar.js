@@ -8,7 +8,7 @@ import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import {Box, Grid, Stack} from '@mui/material';
+import {Box, Grid, Stack, Dialog} from '@mui/material';
 import { useSelector } from 'react-redux';
 import {navigate} from 'gatsby';
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -24,6 +24,7 @@ import useAuth from '../../app/hooks/useAuth';
 //MUI Styling
 import '../../css/pageStyles.css';
 import { SearchField } from '../basic/StyledComponents';
+import ViewUserSearchDialog from '../dialogs/ViewUserSearchDialog';
 
 const drawerWidth = 230;
 
@@ -32,6 +33,7 @@ const drawerWidth = 230;
 
     const {logout} = useAuth()
     const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down(600));
     const desktop = useMediaQuery(theme.breakpoints.down(1000));
     const firstname = useSelector((state) => state.user.first_name);
     const image = useSelector((state) => state.user.image) ;
@@ -107,6 +109,18 @@ const drawerWidth = 230;
         setAnchorElUser(null);
     };
 
+    const [searchTerm, setSearchTerm] = React.useState('');
+    const [searchResult, setSearchResult] = React.useState(false);
+
+    const openSearch = () => {
+        setSearchResult(true);
+    };
+
+    const closeSearch = () => {
+        setSearchResult(false);
+    };
+
+
      return (
         <AppBar 
             position="fixed"
@@ -156,7 +170,7 @@ const drawerWidth = 230;
                                     border:'1px solid #E7E9EB',
                                 }} 
                             >
-                                <IconButton>
+                                <IconButton onClick={()=>openSearch()}>
                                     <SearchRoundedIcon sx={{ color:'#5C6D63' }} />
                                 </IconButton>
 
@@ -164,12 +178,18 @@ const drawerWidth = 230;
                                     variant='outlined'
                                     inputProps={{ style: { fontFamily: 'Arvo',}}}
                                     placeholder={"Search Plantmunity"}
-                                    // value={ search } 
-                                    // onChange={handleSearchChange}
+                                    value={ searchTerm } 
+                                    onChange={(event)=> setSearchTerm(event.target.value)}
                                     size='small'
                                 />
                                 
                             </Stack>
+                        </Grid>
+
+                        <Grid item sx={{display: { xs: 'flex', sm: 'none', md: 'none'}, mr:1}}>
+                            <IconButton onClick={()=>openSearch()} sx={{ bgcolor:'#BFCBA5', width:35, height:35 }}>
+                                <SearchRoundedIcon sx={{ color:'white' }} />
+                            </IconButton>
                         </Grid>
 
                         <Grid item >
@@ -237,6 +257,19 @@ const drawerWidth = 230;
                         </Grid>      
                     </Grid>
                 </Toolbar>
+
+                <Dialog
+                    maxWidth={false}
+                    fullScreen={mobile}
+                    scroll="body"
+                    open={searchResult}
+                    onClose={closeSearch}
+                >
+                    <ViewUserSearchDialog
+                        searchTerm={searchTerm}
+                        handleClose={() => closeSearch()}
+                    />
+                </Dialog>
             </Container>
         </AppBar>
     )

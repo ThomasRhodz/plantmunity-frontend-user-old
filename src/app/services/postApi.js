@@ -24,9 +24,33 @@ export const postApi = createApi({
       addPost: build.mutation({
         query(body) {
           return {
-            url: "user/post/",
+            url: "user/post/add-post",
             method: "POST",
             body,
+          };
+        },
+        invalidatesTags: ["Posts", "MyPosts"],
+        transformResponse: (response) => response,
+      }),
+
+      updatePost: build.mutation({
+        query(body) {
+          const {id, data} = body
+          return {
+            url: `user/post/${id}/edit-post`,
+            method: "PATCH",
+            body: data,
+          };
+        },
+        invalidatesTags: ["Posts", "MyPosts"],
+        transformResponse: (response) => response,
+      }),
+
+      deletePost: build.mutation({
+        query(id) {
+          return {
+            url: `user/post/${id}/delete-post`,
+            method: "PATCH",
           };
         },
         invalidatesTags: ["Posts", "MyPosts"],
@@ -129,6 +153,8 @@ export const postApi = createApi({
 
 export const {
   useAddPostMutation,
+  useUpdatePostMutation,
+  useDeletePostMutation,
   useGetMyPostsQuery,
   useGetTimelinePostsQuery,
   useGetExplorePostQuery,
