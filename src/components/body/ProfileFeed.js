@@ -177,9 +177,12 @@ const ProfileFeed = () => {
               <CreatePost profile={image}/>
               <div style={{height:10}} />
               { isFetching ? <UserPostSkeleton /> : myPosts.length === 0 ? 
-              <Typography variant='h4' sx={{ fontFamily:'Arvo', mt:10, color:'#BFCBA5' }}>
-                No post yet
-              </Typography>
+              <Stack direction='column' alignItems='center' sx={{ mt:10 }}>
+                <BsFillFilePostFill style={{color:'#BFCBA5', fontSize:50}} />
+                <Typography variant='h4' sx={{ fontFamily:'Arvo', color:'#BFCBA5', mt:1 }}>
+                  No post yet
+                </Typography>
+              </Stack>
               : renderPosts}
               <div style={{height:50}} />
             </Grid>
