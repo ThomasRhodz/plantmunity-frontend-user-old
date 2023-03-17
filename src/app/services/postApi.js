@@ -18,7 +18,7 @@ export const postApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Posts", "MyPosts", "Comments", "ExplorePosts"],
+  tagTypes: ["Posts", "MyPosts", "Comments", "ExplorePosts", "Liked"],
   endpoints(build) {
     return {
       addPost: build.mutation({
@@ -124,6 +124,7 @@ export const postApi = createApi({
             method: 'POST',
             };
         },
+        invalidatesTags:['Liked'],
         transformResponse: (response) => response,
       }),
 
@@ -134,7 +135,17 @@ export const postApi = createApi({
             method: 'GET',
             };
         },
-       // providesTags:['Liked'],
+        providesTags:['Liked'],
+        transformResponse: (response) => response,
+      }),
+
+      getInteractions: build.query({
+        query(id) {
+            return {
+            url: `user/post/${id}/interactions`,
+            method: 'GET',
+            };
+        },
         transformResponse: (response) => response,
       }),
 
@@ -145,6 +156,7 @@ export const postApi = createApi({
             method: 'PATCH',
             };
         },
+        invalidatesTags:['Liked'],
         transformResponse: (response) => response,
       }),
     };
@@ -163,6 +175,6 @@ export const {
 
   useAddLikeMutation,
   useGetIsLikedQuery,
-  useLazyGetIsLikedQuery,
+  useGetInteractionsQuery,
   useUpdateUnlikeMutation,
 } = postApi;

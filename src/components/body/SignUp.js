@@ -33,18 +33,18 @@ const SignUp = () => {
            </Stack>
         </Grid>
 
-        <Grid item sx={{width:'100%', marginTop:'-15px'}}>
+        <Grid item sx={{width:'100%', marginTop:'-20px'}}>
             <SignUpProgress />
         </Grid>
         
         <Stack direction='row'>
-            <Typography align='center' sx={{ fontFamily:'raleway', fontSize:12,  color: '#0F3E47'}}>
+            <Typography align='center' sx={{ fontFamily:'raleway', fontSize:10,  color: '#0F3E47'}}>
                 Already have an account?
             </Typography>
             <Grid sx={{width:5}} />
 
             <Link to={'/login'} style={{ textDecoration: 'none' }}>
-            <Typography align='center' sx={{ fontFamily:'raleway', fontSize:12, fontWeight:'bold',  color: '#0F3E47'}}>
+            <Typography align='center' sx={{ fontFamily:'raleway', fontSize:10, fontWeight:'bold',  color: '#0F3E47'}}>
                 Sign in here!
             </Typography>
             </Link>

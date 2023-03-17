@@ -4,6 +4,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import "../../../css/style.css";
 import ViewProductDialog from '../../dialogs/ViewProductDialog';
 
@@ -11,7 +12,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const ProductsCard = ({ id, productName, productImage, productPrice}) => {
+const ProductsCard = ({ PID, SID, productName, productImage, productShop, productDescription  }) => {
 
   const [open, setOpen] = React.useState(false);
 
@@ -25,7 +26,7 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
 
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down(750));
-  console.log(productImage)
+
   return (
     
       <Stack
@@ -47,8 +48,8 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
           alignItems="center"
           sx={{
             width: "100%",
-            height: 35,
-            mt: "-35px",
+            height: 65,
+            mt: "-65px",
             p: 2,
             bgcolor: "rgb(92, 109, 99, 0.6)",
             zIndex: 2,
@@ -61,12 +62,18 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
             >
               {productName}
             </Typography>
-            {/* <Typography
-              variant="caption"
-              sx={{ fontFamily: "Arvo", color: "white", ml: "1px" }}
-            >
-              {"Php " + productPrice}
-            </Typography> */}
+            <Stack direction='row' alignItems={'center'}>
+
+              <StorefrontIcon sx={{color:'white', fontSize:18}} />
+
+              <Typography
+                variant="caption"
+                sx={{ fontFamily: "Raleway", color: "white", marginLeft: '3px' }}
+              >
+                {productShop}
+              </Typography>
+            </Stack>
+ 
           </Stack>
 
           <Tooltip title="view product">
@@ -90,10 +97,12 @@ const ProductsCard = ({ id, productName, productImage, productPrice}) => {
       >
         <ViewProductDialog
           handleClose={() => handleClose()}
-          productId={id}
+          shopId={SID}
+          productId={PID}
           productName={productName}
-          productPrice={productPrice}
           productImage={productImage}
+          productShop={productShop}
+          productDescription={productDescription}
           inShop = {false}
         />
       </Dialog>

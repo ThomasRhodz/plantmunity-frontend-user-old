@@ -40,7 +40,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-
+    const [passError, setPassError] = useState('');
     //For react hook form
     const {register, handleSubmit, formState:{ errors }} = useForm({
         resolver: yupResolver(schema1),
@@ -58,7 +58,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
 
     const onSubmit3 = (data) => {
         
-         
+        setPassError(errors.password?.message)
         if (data.password === data.password_confirmation){
 
             const input = {
@@ -84,7 +84,8 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
             
         }
         else{
-            console.log('Password does not match')
+            
+            setPassError('Password does not match')
             setPassword('')
             setConfirmPassword('')
         }
@@ -92,10 +93,10 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
 
 
   return (
-        <Grid sx={{width:'100%', marginTop: 4}}>
+        <Grid sx={{width:'100%', marginTop: 2}}>
             <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>
             <Stack direction='column' sx={{width:'100%', display: stepValue === 1 ? 'flex' : 'none'}}>
-                <Typography  sx={{fontFamily:'raleway', fontSize: 17}}>
+                <Typography  align='center' sx={{fontFamily:'raleway', fontSize: 15, width:'100%'}}>
                     Personal Details
                 </Typography> 
 
@@ -180,7 +181,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
 
             <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit2)}>
             <Stack direction='column' sx={{width:'100%', display: stepValue === 2 ? 'flex' : 'none'}}>
-                <Typography  sx={{fontFamily:'raleway', fontSize: 17}}>
+                <Typography  align='center' sx={{fontFamily:'raleway', fontSize: 15, width:'100%'}}>
                     Contact Details
                 </Typography> 
 
@@ -277,7 +278,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
 
             <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit3)}>
             <Stack direction='column' sx={{width:'100%', display: stepValue === 3 ? 'flex' : 'none'}}>
-                <Typography  sx={{fontFamily:'raleway', fontSize: 17}}>
+                <Typography  align='center' sx={{fontFamily:'raleway', fontSize: 15, width:'100%'}}>
                     Account Details
                 </Typography> 
 
@@ -297,8 +298,10 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                         }}
                     />
                 </Grid>
+                
 
-                { console.log(errors.password?.message)}
+                <Typography variant='caption' sx={{ color:"#eed202", fontSize:10, mb:1, display: errors.password? 'flex':'none'  }}>{errors.password?.message}</Typography>
+                <Typography variant='caption' sx={{ color:"#eed202", fontSize:10, mb:1, display:  passError === "" ? 'none': 'flex' }}>{passError}</Typography>
                 <Grid sx={{pb:2} }>
                     <TextField
                         {...register("password")}
@@ -315,7 +318,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                         required 
                     />
                 </Grid>
-                <Grid sx={{pb:2,  mb:2}}>
+                <Grid sx={{pb:2,  mb:1}}>
                     <TextField
                         {...register("password_confirmation")}
                         value={confirmPassword} 
@@ -345,7 +348,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                             textTransform:'none',
                             fontFamily:'Arvo',
                             fontSize:10,
-                            height:30,
+                            height:25,
                             width:100
                         }}
                     >
@@ -364,7 +367,7 @@ const SignUpForm = ({stepValue,stepChange, backChange }) => {
                                 fontSize: 15, 
                                 textTransform:'none', 
                                 borderRadi2s: 5, 
-                                height:30,
+                                height:25,
                                 color:'white'
                             }}
                         >

@@ -160,7 +160,7 @@ const CreatePost = ({profile}) => {
             </Card>
 
             {/* A dialog that opens for creating a post*/}
-            <Dialog open={open} onClose={handleClose} maxWidth={false} fullScreen={mobile ? true:false} >
+            <Dialog open={open} onClose={handleClose} maxWidth={false} scroll='body' fullScreen={mobile ? true:false} >
                 <DialogTitle sx={{ fontFamily:'Arvo', bgcolor:'#5C6D63', color:'white' }}>Create a Post</DialogTitle>
 
                 <form style={{width:'100%'}} onSubmit={handleSubmit(onSubmit)}>

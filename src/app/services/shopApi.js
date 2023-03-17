@@ -19,10 +19,20 @@ export const shopApi = createApi({
         return headers
       },
     }),
-    tagTypes: ['Shop', 'Products', 'ProductVariants'],
+    tagTypes: ['Shop', 'Products', 'ProductVariants', 'FollowingProducts'],
     endpoints(build) {
         return {
 
+            getUserShop: build.query({
+                query(id) {
+                    return {
+                    url: `user/user-shop/${id}/details`,
+                    method: 'GET',
+                    };
+                },
+                // providesTags: ['Shop'],
+                transformResponse: (response) => response,
+            }),
             getMyShop: build.query({
                 query(body) {
                     return {
@@ -120,17 +130,28 @@ export const shopApi = createApi({
               providesTags: ['ProductVariants'],
               transformResponse: (response) => response,
             }),
-
+            
             updateProductVariant: build.mutation({
               query(body) {
-                  const {pid, id, data} = body;
-                  return { 
+                const {pid, id, data} = body;
+                return { 
                   url: `user/my-shop/product/${pid}/variant/${id}/edit-variant`,
                   method: 'PATCH',
                   body: data,
-                  };
+                };
               },
               invalidatesTags: ['ProductVariants'],
+              transformResponse: (response) => response,
+            }),
+
+            getFollowingProducts: build.query({
+              query() {
+                  return {
+                  url: `user/following/products`,
+                  method: 'GET',
+                  };
+              },
+              providesTags: ['FollowingProducts'],
               transformResponse: (response) => response,
             }),
         };
@@ -139,8 +160,9 @@ export const shopApi = createApi({
   
   export const { 
     useCreateShopMutation,
-    useGetMyShopQuery,
     useUpdateShopMutation,
+    useGetMyShopQuery,
+    useGetUserShopQuery,
 
     useAddProductMutation,
     useGetProductsQuery,
@@ -148,5 +170,7 @@ export const shopApi = createApi({
     
     useAddProductVariantMutation,
     useGetProductVariantsQuery, 
-    useUpdateProductVariantMutation
+    useUpdateProductVariantMutation,
+
+    useGetFollowingProductsQuery
   } = shopApi;

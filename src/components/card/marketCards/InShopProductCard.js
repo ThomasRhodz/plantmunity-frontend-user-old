@@ -11,7 +11,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const InShopProductCard = ({ id, productName, productImage, productPrice}) => {
+const InShopProductCard = ({ id, productName, productImage, productDescription, productPrice}) => {
 
   const [open, setOpen] = React.useState(false);
 
@@ -111,7 +111,7 @@ const InShopProductCard = ({ id, productName, productImage, productPrice}) => {
           handleClose={() => handleClose()}
           productId={id}
           productName={productName}
-          productPrice={productPrice}
+          productDescription={productDescription}
           productImage={productImage}
           inShop={true}
         />

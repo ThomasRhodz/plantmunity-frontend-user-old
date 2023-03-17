@@ -1,77 +1,151 @@
-import React, {useEffect} from 'react';
-import { Box, Dialog, Grid, Stack, Typography, IconButton, Tooltip, Rating, TextField, Button, Slide } from "@mui/material";
+import React, { useEffect } from "react";
+import {
+  Box,
+  Dialog,
+  Grid,
+  Stack,
+  Typography,
+  IconButton,
+  Tooltip,
+  Rating,
+  TextField,
+  Button,
+  Slide,
+} from "@mui/material";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import "../../css/style.css";
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import FeedbackViewer from '../parts/marketplace/FeedbackViewer';
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import FeedbackViewer from "../parts/marketplace/FeedbackViewer";
 
-import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
-import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-import AddShoppingCartRoundedIcon from '@mui/icons-material/AddShoppingCartRounded';
-import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import StorefrontIcon from '@mui/icons-material/Storefront';
+import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import { MdChangeCircle } from "react-icons/md";
+import { GiReceiveMoney } from "react-icons/gi";
+import { GoPackage } from "react-icons/go";
+import CancelRoundedIcon from "@mui/icons-material/CancelRounded";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 
-import ViewShop from './ViewShop';
+import { useGetProductVariantsQuery } from "../../app/services/shopApi";
+import ViewShop from "./ViewShop";
+
+import CreateOrderForm from "../forms/CreateForms/CreateOrderForm";
+import CreateTradeOffer from "../forms/CreateForms/CreateTradeOffer";
+import CreateTawadForm from "../forms/CreateForms/CreateTawadForm";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="right" ref={ref} {...props} />;
 });
 
-const ViewProductDialog = ({productId, productName, productImage, handleClose, inShop, productPrice, toast}) => {
-    const theme = useTheme();
-    const desktop = useMediaQuery(theme.breakpoints.down(1000));
-    const mobile = useMediaQuery(theme.breakpoints.down(750));
+const ViewProductDialog = ({
+  productId,
+  shopId,
+  productShop,
+  productName,
+  productImage,
+  handleClose,
+  inShop,
+  productDescription,
+  toast,
+}) => {
+  const theme = useTheme();
+  const desktop = useMediaQuery(theme.breakpoints.down(1000));
+  const mobile = useMediaQuery(theme.breakpoints.down(750));
 
-    const [attribute, setAttribute] = React.useState('');
-    const [quantity, setQuantity] = React.useState(0);
-    const [amountPayable, setAmountPayable] = React.useState(0);
-    const [open, setOpen] = React.useState(false);
+  const { data } = useGetProductVariantsQuery(productId, {
+    refetchOnMountOrArgChange: true,
+  });
+  const variants = data ? data.variants : [];
+  const variantArray = Object.values(variants);
 
-    const handleClickOpen = () => {
-      setOpen(true);
-    };
-  
-    const handleClickClose = () => {
-      setOpen(false);
-    };
+  const [price, setPrice] = React.useState("");
+  const [attribute, setAttribute] = React.useState("");
+  const [quantity, setQuantity] = React.useState(0);
+  const [amountPayable, setAmountPayable] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
 
-    const handleChangeAttribute = (event) => {
-        setAttribute(event.target.value);
-    };
 
-    const calculateAmmountPayable = () => {
-        if (attribute !== ''){
+  const buttonEnabler  = () => {
+    if (amountPayable > 0 && quantity >= 1 && attribute !== ""){
+      return false
+    }
+    else{
+      return true
+    }
+  }
 
-            const subTotal = attribute * quantity
-            const VAT = subTotal * 0.12
-            setAmountPayable(VAT + subTotal)
-        }else{
-            setAmountPayable(0)
-        }
-    };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
 
-    useEffect(() => {
-        calculateAmmountPayable()
-    }, [quantity,attribute]);
+  const handleClickClose = () => {
+    setOpen(false);
+  };
 
-    const handleAddQuantity = () => {
-        setQuantity(quantity+1);
-    };
-    const handleMinusQuantity = () => {
-        if (quantity <= 0){
-             setQuantity(0);
-        }else{
-            setQuantity(quantity-1);
-        }
-       
-    };
+  const [openPO, setOpenPO] = React.useState(false);
+
+  const handleOpenPO = () => {
+    setOpenPO(true);
+  };
+
+  const handleClosePO = () => {
+    setOpenPO(false);
+  };
+
+  const [openTO, setOpenTO] = React.useState(false);
+
+  const handleOpenTO = () => {
+    setOpenTO(true);
+  };
+
+  const handleCloseTO = () => {
+    setOpenTO(false);
+  };
+
+  const [openTawad, setTawad] = React.useState(false);
+
+  const handleOpenTawad = () => {
+    setTawad(true);
+  };
+
+  const handleCloseTawad = () => {
+    setTawad(false);
+  };
+
+  const handleChangeAttribute = (event) => {
+    setPrice(event.target.value);
+  };
+
+  const calculateAmmountPayable = () => {
+    if (price !== "") {
+      const subTotal = price * quantity;
+      const VAT = subTotal * 0.12;
+      setAmountPayable((VAT + subTotal).toFixed(2));
+    } else {
+      setAmountPayable(0);
+    }
+  };
+
+  useEffect(() => {
+    calculateAmmountPayable();
+  }, [quantity, price]);
+
+  const handleAddQuantity = () => {
+    setQuantity(quantity + 1);
+  };
+  const handleMinusQuantity = () => {
+    if (quantity <= 0) {
+      setQuantity(0);
+    } else {
+      setQuantity(quantity - 1);
+    }
+  };
   return (
     // main container - vertical direction header -> body (horizontal )
     <Grid
@@ -90,16 +164,12 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
           md: desktop ? "100%" : 500,
         },
         bgcolor: mobile ? "#F3F4F8" : "white",
-        overflow: mobile ? "scroll" : "hidden",
+        overflowY: mobile ? "scroll" : "hidden",
       }}
     >
       {/* Header of the card hold the close botton and got to shop botton */}
       <Grid item sx={{ width: "100%", height: 50, zIndex: 2 }}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          sx={{ width: "100%", p: 1 }}
-        >
+        <Stack direction="row" alignItems="center" sx={{ width: "100%", p: 1 }}>
           {/* close icon for mobile screens */}
           <Box
             sx={{
@@ -111,37 +181,59 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
             }}
           >
             <Tooltip title={"close"}>
-              <IconButton onClick={() => handleClose()} sx={{ bgcolor: "white" }}>
+              <IconButton
+                onClick={() => handleClose()}
+                sx={{ bgcolor: "white" }}
+              >
                 <ArrowBackIosNewRoundedIcon sx={{ color: "black" }} />
               </IconButton>
             </Tooltip>
           </Box>
 
-          <Box sx={{flexGrow: 1, display: { xs: "flex", sm:mobile? 'flex': "none", md: "none" }}}/>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "flex", sm: mobile ? "flex" : "none", md: "none" },
+            }}
+          />
 
-            {/* Icon for going to the store of the viewed products */}
-          <Box sx={{ display: inShop ? 'none' : 'flex' }}>
+          {/* Icon for going to the store of the viewed products */}
+          <Box sx={{ display: inShop ? "none" : "flex" }}>
             <Tooltip title={"Go to Store"}>
-              <IconButton onClick={() => handleClickOpen()} sx={{ bgcolor:'white', '&:hover':{bgcolor:'#BFCBA5', color:'white'} }} >
+              <IconButton
+                onClick={() => handleClickOpen()}
+                sx={{
+                  bgcolor: "white",
+                  "&:hover": { bgcolor: "#BFCBA5", color: "white" },
+                }}
+              >
                 <StorefrontIcon />
               </IconButton>
             </Tooltip>
           </Box>
-          
-          <Box sx={{flexGrow: 1,display: { xs: "none", sm: mobile ? "none" : "flex", md: "flex" },}}/>
-          
+
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", sm: mobile ? "none" : "flex", md: "flex" },
+            }}
+          />
+
           {/* Icon for closing the dialog in desktop screen */}
-          <Box sx={{display: {xs: "none",sm: mobile ? "none" : "flex",md: "flex",} }} >
+          <Box
+            sx={{
+              display: { xs: "none", sm: mobile ? "none" : "flex", md: "flex" },
+            }}
+          >
             <Tooltip title={"close"}>
               <IconButton onClick={() => handleClose()}>
                 <CancelRoundedIcon sx={{ color: "#BFCBA5" }} />
               </IconButton>
             </Tooltip>
           </Box>
-
-        </Stack> 
-      </Grid> {/* End of header container */}
-
+        </Stack>
+      </Grid>{" "}
+      {/* End of header container */}
       {/* body */}
       <Grid item sx={{ width: "100%", mt: "-50px", height: "100%" }}>
         {/* creating new grid container for body to set the direction to row */}
@@ -152,7 +244,10 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
           sx={{ width: "100%" }}
         >
           {/* Image container */}
-          <Grid item sx={{ width: mobile ? "100%" : "45%", height: mobile ? 300 : 500 }}>
+          <Grid
+            item
+            sx={{ width: mobile ? "100%" : "45%", height: mobile ? 300 : 500 }}
+          >
             <img
               alt={productName}
               src={productImage}
@@ -163,7 +258,7 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
               }}
             />
           </Grid>
-          
+
           {/* detail container */}
           <Grid
             item
@@ -182,28 +277,33 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
               alignItems={mobile ? "center" : "left"}
               sx={{ height: mobile ? "100%" : 500, p: 3 }}
             >
-              <Typography variant="h4" sx={{ fontFamily: "Arvo" }}>
+              <Typography
+                variant="h4"
+                align={mobile ? "center" : "left"}
+                sx={{ fontFamily: "Arvo" }}
+              >
                 {productName}
               </Typography>
 
               <Typography
                 variant="body2"
-                align={mobile ? "center" :'left'}
+                align={mobile ? "center" : "left"}
                 sx={{ fontFamily: "Raleway", width: "100%" }}
               >
-                {"Palatintin Hand Graden"}
+                {productShop}
               </Typography>
 
               <Stack direction="row" alignItems="center">
-                
-                <Typography variant="caption" sx={{ fontFamily: "Arvo", mr: "5px" }}>
+                <Typography
+                  variant="caption"
+                  sx={{ fontFamily: "Arvo", mr: "5px" }}
+                >
                   {"91 sold"}
                 </Typography>
                 <Typography variant="caption" sx={{ fontFamily: "Arvo" }}>
                   {"|"}
                 </Typography>
                 <Rating value={2} sx={{ ml: "5px", fontSize: 15 }} />
-
               </Stack>
 
               <Typography variant="body1" sx={{ fontFamily: "Arvo", mt: 2 }}>
@@ -215,23 +315,24 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
                 align="justify"
                 sx={{ fontFamily: "Raleway", width: "100%", pr: 1 }}
               >
-                {
-                  " Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-                }
+                {productDescription}
               </Typography>
 
-              <Typography variant="body1" sx={{ fontFamily: "Arvo", mt: 3, mb: 1 }}>
+              <Typography
+                variant="body1"
+                sx={{ fontFamily: "Arvo", mt: 3, mb: 1 }}
+              >
                 {"Purchase Details"}
               </Typography>
 
               <Stack
                 direction={mobile ? "column" : "row"}
                 alignItems={"center"}
-                sx={{ mt: 1, width:'100%' }}
+                sx={{ mt: 1, width: "100%" }}
               >
-                <Stack direction="column" sx={{ width:'100%' }}>
+                <Stack direction="column" sx={{ width: "100%" }}>
                   <FormControl
-                    style={{ width: mobile ? '100%' : desktop ? 150 : 190 }}
+                    style={{ width: mobile ? "100%" : desktop ? 150 : 190 }}
                     size="small"
                   >
                     <InputLabel
@@ -243,17 +344,29 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
-                      value={attribute}
+                      value={price}
                       label="Size | No. of leaves"
                       onChange={handleChangeAttribute}
                     >
-                      <MenuItem value={250}>3 leaves</MenuItem>
-                      <MenuItem value={350}>4 leaves</MenuItem>
-                      <MenuItem value={500}>5 leaves</MenuItem>
+                      {variantArray.map(({ id, attribute, price }) => {
+                        return (
+                          <MenuItem
+                            key={id}
+                            onClick={() => setAttribute(attribute)}
+                            value={price}
+                          >
+                            {attribute + " - " + price}{" "}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </FormControl>
 
-                  <Stack direction="row" alignItems={mobile ? "center" :"center"} sx={{ mt: 2 }}>
+                  <Stack
+                    direction="row"
+                    alignItems={mobile ? "center" : "center"}
+                    sx={{ mt: 2 }}
+                  >
                     <Box
                       sx={{
                         bgcolor: "#BFCBA5",
@@ -296,9 +409,15 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
                       </IconButton>
                     </Box>
 
-                    <Box sx={{ display:mobile?'flex':'none', flexGrow:1 }}/>
+                    <Box
+                      sx={{ display: mobile ? "flex" : "none", flexGrow: 1 }}
+                    />
 
-                    <Stack direction="column" align="right" sx={{ display:mobile?'flex':'none' }}>
+                    <Stack
+                      direction="column"
+                      align="right"
+                      sx={{ display: mobile ? "flex" : "none" }}
+                    >
                       <Typography
                         variant={desktop ? "h6" : "h4"}
                         sx={{
@@ -313,19 +432,23 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
                         variant={desktop ? "caption" : "body1"}
                         sx={{ fontFamily: "Arvo" }}
                       >
-                        {"12% VAT included"}
+                        {"Total amount payable"}
                       </Typography>
                     </Stack>
                   </Stack>
                 </Stack>
 
                 <div style={{ flexGrow: 1 }} />
-                <Stack direction="column" align="right" sx={{ display:mobile?'none':'flex', }}>
+                <Stack
+                  direction="column"
+                  align="right"
+                  sx={{ display: mobile ? "none" : "flex" }}
+                >
                   <Typography
-                    variant={desktop ? "h5" : "h4"}
+                    variant={desktop ? "h5" : "h5"}
                     sx={{
                       fontFamily: "Arvo",
-                      mt: 2,
+                      mt: 4,
                       fontWeight: "bold",
                       color: "#5C6D63",
                     }}
@@ -333,15 +456,17 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
                     {"Php " + amountPayable}
                   </Typography>
                   <Typography
-                    variant={desktop ? "body2" : "body1"}
-                    sx={{ fontFamily: "Arvo", minWidth:150}}
+                    variant={desktop ? "caption" : "body2"}
+                    sx={{ fontFamily: "Arvo", minWidth: 150 }}
                   >
-                    {"12% VAT included"}
+                    {"Total amount payable"}
                   </Typography>
                 </Stack>
               </Stack>
               <Button
-                startIcon={<AddShoppingCartRoundedIcon />}
+                disabled={buttonEnabler()}
+                onClick={() => handleOpenPO()}
+                startIcon={<GoPackage />}
                 variant="contained"
                 sx={{
                   mt: mobile ? 3 : 5,
@@ -349,22 +474,82 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
                   height: 40,
                   color: "white",
                   fontFamily: "Arvo",
+                  fontSize: mobile ? 12 : 14,
                   textTransform: "none",
                   bgcolor: "#58a776",
+                  "&:hover": {
+                    color: "white",
+                    bgcolor: "#5C6D63",
+                  },
                 }}
               >
-                Add to cart
+                Place Order
               </Button>
+
+              <Stack
+                direction="row"
+                alignItems="center"
+                sx={{ width: "100%", mt: 1 }}
+              >
+                <Button
+                  disabled={buttonEnabler()}
+                  onClick={() => handleOpenTawad()}
+                  startIcon={<GiReceiveMoney />}
+                  variant="contained"
+                  sx={{
+                    width: "100%",
+                    height: 40,
+                    color: "#58a776",
+                    border: "1px solid #58a776",
+                    bgcolor: "white",
+                    fontFamily: "Arvo",
+                    textTransform: "none",
+                    fontSize: mobile ? 10 : 14,
+                    "&:hover": {
+                      border: "1px solid #5C6D63",
+                      color: "white",
+                      bgcolor: "#5C6D63",
+                    },
+                  }}
+                >
+                  Ask for Tawad
+                </Button>
+
+                <Button
+                  disabled={buttonEnabler()}
+                  onClick={() => handleOpenTO()}
+                  startIcon={<MdChangeCircle />}
+                  variant="contained"
+                  sx={{
+                    ml: 1,
+                    width: "100%",
+                    height: 40,
+                    color: "#58a776",
+                    border: "1px solid #58a776",
+                    bgcolor: "white",
+                    fontFamily: "Arvo",
+                    fontSize: mobile ? 10 : 14,
+                    textTransform: "none",
+                    "&:hover": {
+                      color: "white",
+                      border: "1px solid #5C6D63",
+                      bgcolor: "#5C6D63",
+                    },
+                  }}
+                >
+                  Offer Trade
+                </Button>
+              </Stack>
 
               {/* calling the component for displaying feedbacks of products */}
               <FeedbackViewer id={productId} />
             </Stack>
-          </Grid>{/* end of detail container */}
-
-        </Grid>{/* end of container that makes the image and detail into row */}
-        
-      </Grid> {/* end of body container */}
-
+          </Grid>
+          {/* end of detail container */}
+        </Grid>
+        {/* end of container that makes the image and detail into row */}
+      </Grid>{" "}
+      {/* end of body container */}
       <Dialog
         fullScreen
         maxWidth={mobile ? true : false}
@@ -372,11 +557,69 @@ const ViewProductDialog = ({productId, productName, productImage, handleClose, i
         onClose={handleClickClose}
         TransitionComponent={Transition}
       >
-        <ViewShop handleClose={()=>handleClickClose()} />
+        <ViewShop handleClose={() => handleClickClose()} shopId={shopId} />
+      </Dialog>
+      <Dialog
+        fullScreen={mobile ? true : false}
+        maxWidth={mobile ? true : false}
+        open={openPO}
+        scroll="body"
+        onClose={handleClosePO}
+        TransitionComponent={Transition}
+      >
+        <CreateOrderForm
+          Total={amountPayable}
+          SID={shopId}
+          PID={productId}
+          productName={productName}
+          productQuantity={quantity}
+          productPrice={price}
+          productAttribute={attribute}
+          handleClose={() => handleClosePO()}
+        />
+      </Dialog>
+      <Dialog
+        fullScreen={mobile ? true : false}
+        maxWidth={mobile ? true : false}
+        open={openTO}
+        scroll="body"
+        onClose={handleCloseTO}
+        TransitionComponent={Transition}
+      >
+        <CreateTradeOffer
+          Total={amountPayable}
+          SID={shopId}
+          PID={productId}
+          productName={productName}
+          productQuantity={quantity}
+          productPrice={price}
+          productAttribute={attribute}
+          productImage={productImage}
+          handleClose={() => handleCloseTO()}
+        />
+      </Dialog>
+      <Dialog
+        fullScreen={mobile ? true : false}
+        maxWidth={mobile ? true : false}
+        open={openTawad}
+        scroll="body"
+        onClose={handleCloseTawad}
+        TransitionComponent={Transition}
+      >
+        <CreateTawadForm
+          Total={amountPayable}
+          SID={shopId}
+          PID={productId}
+          productName={productName}
+          productQuantity={quantity}
+          productPrice={price}
+          productAttribute={attribute}
+          handleClose={() => handleCloseTawad()}
+        />
       </Dialog>
     </Grid>
     // end of main container
   );
-}
+};
 
-export default ViewProductDialog
+export default ViewProductDialog;

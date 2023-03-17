@@ -113,6 +113,17 @@ export const associateApi = createApi({
         transformResponse: (response) => response,
       }),
 
+      getAssociateCount: build.query({
+        query(id) {
+          return {
+            url: `associate/${id}/count`,
+            method: "GET",
+          };
+        },
+        providesTags: ["Followings", "Followers"],
+        transformResponse: (response) => response,
+      }),
+
       getFollowRequests: build.query({
         query() {
           return {
@@ -149,5 +160,7 @@ export const {
   useGetFollowRequestsQuery,
   useGetSentRequestsQuery,
   useGetFollowersQuery,
+  useGetAssociateCountQuery,
   useGetFollowingQuery,
+ 
 } = associateApi;

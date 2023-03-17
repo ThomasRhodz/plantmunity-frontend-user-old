@@ -6,7 +6,6 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-
 import {RiListCheck2} from 'react-icons/ri';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -19,39 +18,41 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import {useForm } from 'react-hook-form';
 import { useAddCommentMutation } from '../../../app/services/postApi';
 import { useGetCommentsQuery } from '../../../app/services/postApi';
-import { useAddLikeMutation, useUpdateUnlikeMutation, useLazyGetIsLikedQuery } from '../../../app/services/postApi';
+import { useAddLikeMutation, useUpdateUnlikeMutation, useGetIsLikedQuery } from '../../../app/services/postApi';
 
 const schema = yup.object({
-    content: yup.string(),
+    content: yup.string().required(),
 });
 
-const ViewPostCard = ({image, name, caption, username, date, id, profile, likes, handleClose}) => {
+const ViewPostCard = ({image, isLiked, name, caption, username, date, id, profile, likes, handlePostLike, handleLikes, handleComments, handleClose}) => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(600));
 
-    const [isLiked, result] = useLazyGetIsLikedQuery()
-    const [likedClick, setLikedClick] = useState(0)
+    const {data: liked} = useGetIsLikedQuery(id, {refetchOnMountOrArgChange: true});
     const [likeCount, setLikeCount] = useState(likes)
+    const [postLiked, setPostLiked] = useState(isLiked)
+    const likeID = liked?.id;
 
-    useEffect(() => {
-        isLiked(id)
-    }, [likedClick]);
-    
-    const postLiked = result?.data?.isLiked
-    const likeID = result?.data?.id
+    useEffect(()=>{
+        setPostLiked(liked?.isLiked)
+    }, [liked]);
 
     const [addLike] = useAddLikeMutation();
     const [unlike] = useUpdateUnlikeMutation();
 
     const handleLikeButton = () => {
         if(postLiked === 1){
+            setPostLiked(0)
+            handlePostLike(0)
             unlike(likeID)
-            setLikedClick(1)
+            handleLikes(likeCount-1)
             setLikeCount(likeCount-1)
         }else{
+            setPostLiked(1)
+            handlePostLike(1)
+            handleLikes(1)
             addLike(id)
-            setLikedClick(2)
             setLikeCount(likeCount+1)
         }
     }
@@ -59,8 +60,6 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes,
     const userImage = useSelector((state) => state.user.image)
     
     const {data, isFetching} = useGetCommentsQuery(id, {refetchOnMountOrArgChange: true})
-
-    console.log(data)
 
     const [content, setContent] = useState('')
     const [isEnabled, setIsEnabled] = useState(true)
@@ -99,7 +98,7 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes,
             data: data
         }
 
-        console.log(input)
+        handleComments(1)
 
         addComment(input).then(
             (payload) => 
@@ -204,19 +203,20 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes,
 
                     <Divider sx={{display: mobile ? 'none': 'flex'}}/>
 
+                    <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
                     <Stack direction='row' sx={{ pl: mobile ? 0 :2, pt:mobile ? 0 :1, marginTop: mobile ? '-20px':'0px' }}>
                         <Tooltip title="Like">
-                            <IconButton onClick={()=>handleLikeButton()} color="inherit" aria-label="open drawer" size='medium' >
+                            <IconButton  type='button' onClick={()=>handleLikeButton()} color="inherit" aria-label="open drawer" size='medium' >
                                 {postLiked === 1 ? <FavoriteIcon fontSize='large' style={{color: 'red', }}/> : <FavoriteBorderIcon fontSize='large' style={{color: 'black'}}/>}
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Comment">
-                            <IconButton color="inherit" aria-label="open drawer" style={{ fontSize:30}}>
+                            <IconButton  type='submit' color="inherit" aria-label="open drawer" style={{ fontSize:30}}>
                                 <FaRegComments />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Share To">
-                            <IconButton color="inherit" aria-label="open drawer" size='large' style={{ fontSize:30}}>
+                            <IconButton type='button' color="inherit" aria-label="open drawer" size='large' style={{ fontSize:30}}>
                                 <AiOutlineSend />
                             </IconButton>
                         </Tooltip>
@@ -234,11 +234,9 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes,
                             </Typography>
                         </Stack>
                     </Stack>
-                
 
                     <Divider />
 
-                    <form style={{ width: "100%" }} onSubmit={handleSubmit(onSubmit)}>
                     <Stack direction='row' sx={{ width:"100%", bgcolor:'white',p:2 }}>
                         <Avatar alt="Remy Sharp" src={userImage} />
                         
@@ -250,7 +248,6 @@ const ViewPostCard = ({image, name, caption, username, date, id, profile, likes,
                                     setContent(event.target.value)
                                     setIsEnabled(false)
                                 }} 
-                                required
                                 multiline minRow={1} 
                                 maxRow={10} 
                                 id="filled-basic" 

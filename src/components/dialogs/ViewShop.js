@@ -12,15 +12,23 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 
+import { useGetUserShopQuery } from '../../app/services/shopApi';
 import ShopProductList from '../parts/marketplace/ShopProductList';
 
 //Icons
 import Logo from '../../images/PlantmunityAlt2.png';
 import ArrowBackIosNewRoundedIcon from '@mui/icons-material/ArrowBackIosNewRounded';
-const ViewShop = ({handleClose}) => {
+const ViewShop = ({handleClose, shopId}) => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(700));
+
+    const {data} = useGetUserShopQuery(shopId, {refetchOnMountOrArgChange: true})
+    
+    const shopData = data ? data[0] : [];
+    const products = shopData?.products
+    console.log(products)
+
 
     const [value, setValue] = React.useState(0);
 
@@ -62,9 +70,7 @@ const ViewShop = ({handleClose}) => {
                     <Stack direction='column' alignItems={'center'} sx={{ width:'100%', pt:1 }}>
                        
                        <img
-                            src={
-                            "https://images-platform.99static.com//5bJtEaPw4JVjNVJlprXQPzm5pLk=/137x135:1362x1361/fit-in/500x500/99designs-contests-attachments/129/129927/attachment_129927926"
-                            }
+                            src={shopData?.shop_logo }
                             alt="shop_logo"
                             style={{
                             width: 180,
@@ -75,7 +81,7 @@ const ViewShop = ({handleClose}) => {
                         />
         
                         <Typography variant={ tablet ? 'h6' : 'h5'} align={'center'} sx={{ fontFamily:'Arvo', mt:2 }}>
-                            Palimtintin Hand Garden
+                            {shopData?.shop_name}
                         </Typography>
                         <Stack direction='row' alignItems='center' >
                             
@@ -96,21 +102,21 @@ const ViewShop = ({handleClose}) => {
                             <Stack direction='row' sx={{ mt:1}}>
                                 <EmailOutlinedIcon sx={{fontSize:20}}/>
                                 <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
-                                    {"J.Rodis.477524@umindanao.edu.ph"}
+                                    {shopData?.email}
                                 </Typography>
                             </Stack>
 
                             <Stack direction='row' sx={{ mt:1 }}>
                                 <SmartphoneRoundedIcon sx={{fontSize:20}}/>
                                 <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
-                                    {"+6394 6680 1437"}
+                                    {shopData?.mobile}
                                 </Typography>
                             </Stack>
 
                             <Stack direction='row' sx={{ mt:1 }}>
                                 <LocalPhoneOutlinedIcon sx={{fontSize:20}}/>
                                 <Typography  align='justify' sx={{ overflow:'hidden',maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2, mr: tablet ? 0:2}}>
-                                    {"082 77536"}
+                                    {shopData?.telephone}
                                 </Typography>
                             </Stack>
                            
@@ -118,7 +124,7 @@ const ViewShop = ({handleClose}) => {
                             <Stack direction='row' sx={{ mt: 1  }}>
                                 <LocationOnOutlinedIcon sx={{fontSize:20}}/>
                                 <Typography  align='justify' sx={{maxWidth: tablet ? 200 : 300,  fontSize: mobile ? 12 :tablet ? 12:13, fontFamily:'Arvo', ml:tablet ? '8px' : 2,mr: tablet ? 0:2, }}>
-                                    {"Purok 5, Kalambuan Village, Talomo, Davao City, Davao del Sur"}
+                                    {shopData?.address}
                                 </Typography>
                             </Stack>
                             
@@ -185,7 +191,7 @@ const ViewShop = ({handleClose}) => {
                         />
                     </Tabs>
                     <Divider  variant='fullWidth' />
-                    <ShopProductList />
+                    <ShopProductList shopProducts={products}/>
                 </Grid>
             </Grid>
         </Grid>

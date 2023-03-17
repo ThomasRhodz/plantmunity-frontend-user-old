@@ -90,12 +90,22 @@ export const accountApi = createApi ({
           transformResponse: (response) => response,
         }),
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-       
+        updatePass: builder.mutation({
+          query(body) {
+            return {
+              url: `/user/change-password`,
+              method: 'PATCH',
+              body
+            };
+          },
+          invalidatesTags: ['User'],
+          transformResponse: (response) => response,
+        }),
+
         getUserData: builder.query({
           query(id) {
             return {
-              url: `view/user-profile/${id}`,
+              url: `view/${id}/user-profile`,
               method: 'GET',
             };
           },
@@ -126,7 +136,7 @@ export const {
   useUpdateDetailMutation,
   useUpdateProfileMutation,
   useUpdateCoverMutation,
-
-  useGetUsersQuery,
+  useUpdatePassMutation,
   useGetUserDataQuery,
+  useGetUsersQuery,
 } = accountApi;

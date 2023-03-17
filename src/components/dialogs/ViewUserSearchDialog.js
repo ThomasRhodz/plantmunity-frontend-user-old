@@ -33,11 +33,11 @@ const ViewUserSearchDialog = ({ searchTerm, handleClose }) => {
   };
 
   const { data: result = [], isFetching } = useGetUsersQuery(
-    finalSearch === "" ? "none" : finalSearch,
+    finalSearch === "" ? "none" : finalSearch === " " ? "none" : finalSearch,
     {
       refetchOnMountOrArgChange: true,
     }
-  );
+  ); 
 
   const returnNoData = () => { 
     if (finalSearch !== "" && result.length === 0 && !isFetching) {

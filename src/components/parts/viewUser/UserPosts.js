@@ -3,10 +3,12 @@ import { Grid, Stack, Typography } from '@mui/material'
 import PostCard from '../../card/timelineCards/PostCard'
 
 const UserPosts = ({postData, fullname, image, username, uid}) => {
+  console.log("CHECK", postData);
+  const PostArray = (Object.values(postData)).reverse()
   return postData ? (
     <Grid container direction="column" alignItems={"center"}>
-      {postData
-        ? postData.map((post) => {
+      {PostArray
+        ? PostArray.map((post) => {
             return (
               <Grid item key={post.postID}>
                 <PostCard

@@ -12,7 +12,7 @@ import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRound
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-//   import { useAddForumMutation } from "../../../app/services/forumApi";
+import { useUpdatePassMutation } from "../../../app/services/accountApi";
 
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
@@ -41,22 +41,22 @@ const EditPasswordForm = ({ handleClose, toast }) => {
     resolver: yupResolver(schema1),
   });
 
-  //const [addForum] = useAddForumMutation();
+  const [updatePass] = useUpdatePassMutation();
 
   const onSubmit = (data) => {
     const input = data;
 
     console.log(input);
-    //   addForum(input)
-    //     .then((payload) => {
-    //       //toast("Account detail was successfully updated.")
-    //       console.log("fulfilled", payload);
-    //       handleClose();
-    //     })
-    //     .catch((error) => {
-    //       console.error("rejected", error);
-    //       // toast("Error has occured, try again later.")
-    //     });
+    updatePass(input)
+        .then((payload) => {
+          //toast("Account detail was successfully updated.")
+          console.log("fulfilled", payload);
+          handleClose();
+        })
+        .catch((error) => {
+          console.error("rejected", error);
+          // toast("Error has occured, try again later.")
+        });
   };
 
   return (

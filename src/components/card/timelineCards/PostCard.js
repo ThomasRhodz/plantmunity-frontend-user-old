@@ -40,7 +40,8 @@ import { navigate, Link } from "gatsby";
 import {
   useAddLikeMutation,
   useUpdateUnlikeMutation,
-  useLazyGetIsLikedQuery,
+  useGetIsLikedQuery,
+  useGetInteractionsQuery
 } from "../../../app/services/postApi";
 import DeletePostForm from "../../forms/DeleteForms/DeletePostForm";
 
@@ -51,35 +52,41 @@ const PostCard = ({
   user,
   username,
   imageLink,
-  likes,
-  comments,
   timePosted,
   caption,
   userProfilePic,
 }) => {
 
-  const [isLiked, result] = useLazyGetIsLikedQuery();
-  const [likedClick, setLikedClick] = useState(0);
-  const [likeCount, setLikeCount] = useState(likes);
-
-  useEffect(() => {
-    isLiked(pid);
-  }, [likedClick]);
-
-  const postLiked = result?.data?.isLiked;
-  const likeID = result?.data?.id;
-
+  const {data: liked} = useGetIsLikedQuery(pid, {refetchOnMountOrArgChange: true});
+  const {data: interactions} = useGetInteractionsQuery(pid, {refetchOnMountOrArgChange: true})
+  const [loader, setLoader] = useState(3);
+  const [likeCount, setLikeCount] = useState(0);
+  const [comments, setComments] = useState(0);
+  const [postLiked, setPostLiked] = useState(0)
+  const likeID = liked?.id;
   const [addLike] = useAddLikeMutation();
   const [unlike] = useUpdateUnlikeMutation();
 
+  useEffect(()=>{
+    setPostLiked(liked?.isLiked)
+    if(loader===3){
+      setLikeCount(interactions? interactions.likes_count: 0)
+      setComments(interactions? interactions.comments_count : 0)
+    }
+  }, [liked, interactions])
+
+  console.log(postLiked)
+
   const handleLikeButton = () => {
     if (postLiked === 1) {
+      setLoader(1)
+      setPostLiked(0)
       unlike(likeID);
-      setLikedClick(1);
       setLikeCount(likeCount - 1);
     } else {
+      setLoader(2)
+      setPostLiked(1)
       addLike(pid);
-      setLikedClick(2);
       setLikeCount(likeCount + 1);
     }
   };
@@ -117,7 +124,6 @@ const PostCard = ({
     }
   };
   const theme = useTheme();
-  const tablet = useMediaQuery(theme.breakpoints.down(1200));
   const mobile = useMediaQuery(theme.breakpoints.down(600));
 
   const [view, setView] = useState(false);
@@ -205,9 +211,16 @@ const PostCard = ({
 
             {/* User Name and time since posted*/}
             <Grid item sx={{ flexGrow: 1 }}>
-              <Typography variant="body2" fontFamily="Arvo">
-                {"@" + username} | {date}
-              </Typography>
+              <Stack direction='column'>
+
+                <Typography variant="body2" fontFamily="Arvo">
+                  {"@" + username} 
+                </Typography>
+                <Typography variant="caption" fontFamily="Arvo" sx={{ color:'gray' , marginLeft:'3px'}}>
+                {date}
+                </Typography>
+              </Stack>
+
             </Grid>
 
             <Grid item>
@@ -377,6 +390,7 @@ const PostCard = ({
         onClose={closeView}
       >
         <ViewPostCard
+          isLiked={postLiked}
           likes={likeCount}
           caption={caption}
           username={username}
@@ -385,6 +399,9 @@ const PostCard = ({
           profile={userProfilePic}
           id={pid}
           date={date}
+          handlePostLike={(bool)=>setPostLiked(bool)}
+          handleLikes={(count)=>setLikeCount(count)}
+          handleComments={(count)=>setComments(comments + count)}
           handleClose={() => closeView()}
         />
       </Dialog>

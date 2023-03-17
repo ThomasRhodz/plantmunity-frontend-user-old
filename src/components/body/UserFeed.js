@@ -15,7 +15,7 @@ import ShopDetails from '../parts/viewUser/ShopDetails';
 import ShopProducts from '../parts/viewUser/ShopProducts';
 import ViewShop from '../dialogs/ViewShop';
 
-import { useLazyGetIsFollowedQuery, useAddAssociateMutation, useUpdateUnfollowMutation } from '../../app/services/associateApi';
+import { useLazyGetIsFollowedQuery, useAddAssociateMutation, useUpdateUnfollowMutation, useGetAssociateCountQuery } from '../../app/services/associateApi';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="right" ref={ref} {...props} />;
@@ -80,8 +80,8 @@ const UserFeed = ({id}) => {
     };
 
     const {data, isFetching} = useGetUserDataQuery(id, {refetchOnMountOrArgChange: true})
+    const {data: associates} = useGetAssociateCountQuery(id, {refetchOnMountOrArgChange: true})
 
-    console.log(data)
 
     const userDetail = data? data[0] : []
 
@@ -226,8 +226,8 @@ const UserFeed = ({id}) => {
             </Stack>
 
             <Stack direction='row' sx={{ mt:1 }}>
-                <Button sx={{ p:0, mr:2, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>12 Followers</Button>
-                <Button sx={{ p:0, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>12 Following</Button>
+                <Button sx={{ p:0, mr:2, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>{(associates? associates.follower_count : 0) + " Followers"}</Button>
+                <Button sx={{ p:0, fontFamily:'Arvo', textTransform:'none', fontWeight:'bold', fontSize:mobile ? 14 : 16 }}>{(associates? associates.following_count : 0) + " Following"}</Button>
             </Stack>
         </Grid>
                     

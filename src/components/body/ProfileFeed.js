@@ -15,6 +15,7 @@ import UserAccount from '../parts/account/UserAccount';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { useGetMyPostsQuery } from '../../app/services/postApi';
+import { useGetAssociateCountQuery } from '../../app/services/associateApi';
 import DefaultCover from '../../images/Background.png'
 import UserPostSkeleton from '../skeletons/UserPostSkeleton';
 
@@ -39,10 +40,12 @@ const ProfileFeed = () => {
   const lastname = useSelector((state) => state.user.last_name);
   const username = useSelector((state) => state.user.username);
   const fullname =(firstname + ' ' + (middlename === null ? ' ' : middlename === '' ? ' ' : middlename) + ' ' + lastname)
+ 
   const {data, isFetching} = useGetMyPostsQuery(undefined, {refetchOnMountOrArgChange: true})
+  const {data: associates} = useGetAssociateCountQuery(accountID, {refetchOnMountOrArgChange: true})
   
 
-  console.log(data)
+  console.log(associates)
   
   const myPosts = data ? data[0] : [];
   const PostArray = (Object.values(myPosts)).reverse()
@@ -97,7 +100,7 @@ const ProfileFeed = () => {
                 <Stack direction='column' alignItems='center'>
                   {
                     isFetching ? <Skeleton animation="wave" variant="rectangular" width={100} height={40}/> :
-                    <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                    <Btn btnWidth={100} color='#58a776' text={associates? associates.follower_count : 0} textColor='white' textSize={matches?18:22}/>
                   }
                   <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?16:25} />
                 </Stack>
@@ -105,7 +108,7 @@ const ProfileFeed = () => {
                 <Stack direction='column' alignItems='center'>
                   {
                     isFetching ? <Skeleton animation="wave" variant="rectangular" width={100} height={40}/> :
-                    <Btn btnWidth={100} color='#58a776' text={10} textColor='white' textSize={matches?18:22}/>
+                    <Btn btnWidth={100} color='#58a776' text={associates? associates.following_count : 0} textColor='white' textSize={matches?18:22}/>
                   }
                   <Btn btnWidth={'100%'} size='large' color='transparent' text={'Followers'} textColor='white' textSize={matches?16:25} />
                 </Stack>

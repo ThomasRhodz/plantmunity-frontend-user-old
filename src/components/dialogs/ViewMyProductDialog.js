@@ -30,7 +30,6 @@ const ViewMyProductCard = ({productId, productName, productImage, productDescrip
     const shop = useSelector((state)=> state.shop.shop_name)
 
     const {data} = useGetProductVariantsQuery(productId, {refetchOnMountOrArgChange: true})
-    console.log(data)
 
     const variants = data? data.variants :[];
     const variantArray = Object.values(variants);
@@ -156,7 +155,7 @@ const ViewMyProductCard = ({productId, productName, productImage, productDescrip
               sx={{ height: mobile ? "100%" : 500, p: 3 }}
             >
                 
-                <Typography variant="h4" sx={{ fontFamily: "Arvo", mr:2 }}>
+                <Typography variant="h4" align='center' sx={{ fontFamily: "Arvo", mr:2 }}>
                     {productName}
                 </Typography>
                 

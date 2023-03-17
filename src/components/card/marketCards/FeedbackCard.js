@@ -4,7 +4,7 @@ import React from 'react'
 const FeedbackCard = ({id, firstName, lastName, middleName, content, date, image}) => {
     const fullname = (middleName === '' ? firstName+' '+lastName : middleName === null ? firstName+' '+lastName : firstName + ' ' + middleName + ' ' + lastName)
   return (
-    <Stack key={id} direction='row' sx={{ width:'100%', bgcolor:'white', p:1, mt:2, boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)', borderRadius:2 }}>
+      <React.Fragment>
         <Avatar
             alt={fullname}
             src={image}
@@ -17,7 +17,8 @@ const FeedbackCard = ({id, firstName, lastName, middleName, content, date, image
               {content}
             </Typography>
         </Stack>
-    </Stack>
+      </React.Fragment>
+   
 
   )
 }

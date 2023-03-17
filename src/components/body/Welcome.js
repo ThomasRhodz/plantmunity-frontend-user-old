@@ -14,9 +14,7 @@ const Welcome = () => {
         setLoading(true)
         setTimeout(() => {
             setUser();
-          
             if(isSuccess){
-                setLoading(false);
                 navigate('/home')
             }
         }, 3000);

@@ -15,17 +15,22 @@ import { SearchField } from "../basic/StyledComponents";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import Background from "../../images/AboutIntroImage.jpg";
 import { BsCart, BsReceiptCutoff } from "react-icons/bs";
+import { useGetFollowingProductsQuery } from "../../app/services/shopApi";
 import ProductsCard from "../card/marketCards/ProductsCard";
 
+import { useSelector } from "react-redux";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 
 const MarketPlace = () => {
+  const accountID = useSelector((state) => state.user.id) ;
+
   const theme = useTheme();
   const tablet = useMediaQuery(theme.breakpoints.down(1450));
   const mobile = useMediaQuery(theme.breakpoints.down(750));
   const mobile2 = useMediaQuery(theme.breakpoints.down(500));
-  //const tablet = useMediaQuery(theme.breakpoints.down(1450));
+
+  const {data: followingProducts} = useGetFollowingProductsQuery(undefined, {refetchOnMountOrArgChange: true});
 
   const [search, setSearch] = React.useState("");
   const handleSearchChange = (event) => {
@@ -251,20 +256,20 @@ const MarketPlace = () => {
               alignItems={"center"}
               sx={{ width: "100%", mt: 2 }}
             >
-                {
-                    sampleProducts.map(({product_name, id, product_image, product_price})=>{
+                { followingProducts ?
+                    followingProducts.map(({SID, shop_name, PID, product_name, product_description, product_image})=>{
                       return(
                         
                         <Grid
-                          key={id}
+                          key={PID}
                           item
                           sx={{
                             width: {
-                              xs: "47%",
-                              sm: mobile ? "31%" : "32%",
-                              md: tablet ? "31%" : "32%",
+                              xs: "100%",
+                              sm: mobile ? "47%" : "48%",
+                              md: tablet ? "47%" : "32%",
                             },
-                            height: { xs: 200, sm: 250, md: 250 },
+                            height: { xs: 200, sm: 200, md: 250 },
                             mr: { xs: 1, sm: 1, md: 2 },
                             mb: { xs: 1, sm: 1, md: 2 },
                             bgcolor: "blue",
@@ -273,11 +278,12 @@ const MarketPlace = () => {
                             boxShadow: "2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)",
                           }}
                         >
-                            <ProductsCard productName={product_name} id={id} productImage={product_image} productPrice={product_price}/>
+                            <ProductsCard SID={SID} productName={product_name} PID={PID} productImage={product_image} productDescription={product_description} productShop={shop_name}/>
                         </Grid>
                         
                       )  
-                    })
+                    }) : 'No products'
+                    
                 }
 
       

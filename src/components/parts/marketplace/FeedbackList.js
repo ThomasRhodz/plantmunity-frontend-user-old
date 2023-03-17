@@ -13,7 +13,7 @@ const FeedbackList = ({productID}) => {
             content:"Thank you, the product was in good shape! Defenitely gonna buy again :)",
         },
         {
-            id:1,
+            id:2,
             first_name:"Ellena",
             middle_name:'Moira',
             last_name:'Zack',
@@ -22,7 +22,7 @@ const FeedbackList = ({productID}) => {
             content:"Thank you, the product was in good shape! Defenitely gonna buy again :)",
         },
         {
-            id:1,
+            id:3,
             first_name:"Thomas",
             middle_name:null,
             last_name:'Adrian',
@@ -45,15 +45,17 @@ const FeedbackList = ({productID}) => {
           date,
         }) => {
           return (
-            <FeedbackCard
-              id={id}
-              firstName={first_name}
-              middleName={middle_name}
-              lastName={last_name}
-              image={user_image}
-              content={content}
-              date={date}
-            />
+            <Stack key={id} direction='row' sx={{ width:'100%', bgcolor:'white', p:1, mt:2, boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)', borderRadius:2 }}>
+              <FeedbackCard
+                id={id}
+                firstName={first_name}
+                middleName={middle_name}
+                lastName={last_name}
+                image={user_image}
+                content={content}
+                date={date}
+              />
+            </Stack>
           );
         }
       )}
