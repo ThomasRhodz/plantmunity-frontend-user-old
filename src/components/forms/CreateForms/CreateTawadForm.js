@@ -15,8 +15,7 @@ import {
   
   import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
   import { useForm } from "react-hook-form";
-  import { useUpdatePassMutation } from "../../../app/services/accountApi";
-  
+  import { useAddTawadMutation } from "../../../app/services/transactionApi";
   import useMediaQuery from "@mui/material/useMediaQuery";
   import { useTheme } from "@mui/material/styles";
   
@@ -45,32 +44,32 @@ import {
       formState: { errors },
     } = useForm();
   
-    const [updatePass] = useUpdatePassMutation();
+    const [addTawad ] = useAddTawadMutation();
   
     const onSubmit = (data) => {
       const input = {
         shop_id: SID,
         product_id: PID,
-        attribute: productAttribute,
+        product_attribute: productAttribute,
         price_per_unit: productPrice,
         quantity: productQuantity,
         amount_payable: Total,
         transaction_method: method,
         location: location,
-        tawad_amount:tawad
+        transaction_tawad:tawad
       };
   
       console.log(input);
-      // updatePass(input)
-      //     .then((payload) => {
-      //       //toast("Account detail was successfully updated.")
-      //       console.log("fulfilled", payload);
-      //       handleClose();
-      //     })
-      //     .catch((error) => {
-      //       console.error("rejected", error);
-      //       // toast("Error has occured, try again later.")
-      //     });
+      addTawad(input)
+          .then((payload) => {
+            //toast("Account detail was successfully updated.")
+            console.log("fulfilled", payload);
+            handleClose();
+          })
+          .catch((error) => {
+            console.error("rejected", error);
+            // toast("Error has occured, try again later.")
+          });
     };
   
     return (

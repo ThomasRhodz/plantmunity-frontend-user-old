@@ -18,22 +18,20 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import '../../css/pageStyles.css';
 
 //Actual Components
- const BottomAppBar = ({iconID, handleChange}) => {
+ const BottomAppBar = ({iconID, popUpID, handlePopChange, handleChange}) => {
 
     // //Variables
     // Array of navigating pages
     const page = [
         {
             id: 0,
-            location: '/home',
             name: 'Home',
-            icon: <HomeRoundedIcon fontSize='large' style={iconID === 1 ?{color: 'white'}:{color: '#BFCBA5'}}/>
+            icon: <HomeRoundedIcon fontSize='large' style={iconID === 0 ?{color: 'white'}:{color: '#BFCBA5'}}/>
 
         },
 
         {
             id: 2,
-            location: '/discover',
             name: 'Discover',
             icon: <ExploreIcon fontSize='large' style={iconID === 2 ?{color: 'white'}:{color: '#BFCBA5'}}/>
 
@@ -41,25 +39,22 @@ import '../../css/pageStyles.css';
 
         {
             id: 3,
-            location: '/market',
             name: 'Marketplace',
             icon: <StorefrontIcon fontSize='large' style={iconID === 3 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
         },
 
         {
-            id: 4,
-            location: '/messages',
+            id: 6,
             name: 'Messages',
-            icon: <EmailRoundedIcon fontSize='large' style={iconID === 4 ?{color: 'white'}:{color: 'BFCBA5'}}/>
+            icon: <EmailRoundedIcon fontSize='large' style={iconID === 6 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
         },
 
         {
-            id: 5,
-            location: '/notifications',
+            id: 7,
             name: 'Notifications ',
-            icon: <NotificationsIcon fontSize='large' style={iconID === 5 ?{color: 'white'}:{color: 'BFCBA5'}}/>
+            icon: <NotificationsIcon fontSize='large' style={popUpID === 7 ?{color: 'white'}:{color: 'BFCBA5'}}/>
 
         },
     ];
@@ -71,7 +66,14 @@ import '../../css/pageStyles.css';
                     {page.map(({id, name, icon}) => (
                         <React.Fragment key={id} >
                             <Tooltip title={name} role='link' >
-                                <IconButton color="inherit" aria-label="open drawer" size='large' onClick={()=>handleChange(id)}>
+                                <IconButton 
+                                    color="inherit" 
+                                    aria-label="open drawer" 
+                                    size='large'  
+                                    onClick={()=>{
+                                        id === 7 ? handlePopChange(id) :
+                                        handleChange(id)
+                                    }} >
                                     {icon}
                                 </IconButton>
                             </Tooltip>

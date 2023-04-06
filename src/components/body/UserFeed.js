@@ -8,13 +8,13 @@ import { RiUserShared2Line, RiUserUnfollowLine } from 'react-icons/ri';
 import {RiPlantLine} from 'react-icons/ri';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import MailOutlineOutlinedIcon from '@mui/icons-material/MailOutlineOutlined';
-import { useGetUserDataQuery } from '../../app/services/accountApi';
 
 import UserPosts from '../parts/viewUser/UserPosts';
 import ShopDetails from '../parts/viewUser/ShopDetails';
 import ShopProducts from '../parts/viewUser/ShopProducts';
 import ViewShop from '../dialogs/ViewShop';
 
+import { useGetUserDataQuery } from '../../app/services/accountApi';
 import { useLazyGetIsFollowedQuery, useAddAssociateMutation, useUpdateUnfollowMutation, useGetAssociateCountQuery } from '../../app/services/associateApi';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -26,6 +26,9 @@ const UserFeed = ({id}) => {
     const theme = useTheme();
     const tablet = useMediaQuery(theme.breakpoints.down(1200));
     const mobile = useMediaQuery(theme.breakpoints.down(700));
+    
+    const {data, isFetching} = useGetUserDataQuery(id, {refetchOnMountOrArgChange: true})
+    const {data: associates} = useGetAssociateCountQuery(id, {refetchOnMountOrArgChange: true})
 
     const [getIsFollowed, result] = useLazyGetIsFollowedQuery();
     const [associateClick, setAssociateCliCk] = useState(0);
@@ -79,10 +82,6 @@ const UserFeed = ({id}) => {
       setOpen(false);
     };
 
-    const {data, isFetching} = useGetUserDataQuery(id, {refetchOnMountOrArgChange: true})
-    const {data: associates} = useGetAssociateCountQuery(id, {refetchOnMountOrArgChange: true})
-
-
     const userDetail = data? data[0] : []
 
     const firstname = userDetail?.first_name
@@ -96,6 +95,8 @@ const UserFeed = ({id}) => {
     const post = userDetail?.posts
     const products = userDetail?.products
     const shop = userDetail?.shop
+
+    console.log(post)
 
     const time_stamp = new Date((userDetail?.created_at))
 
@@ -256,18 +257,23 @@ const UserFeed = ({id}) => {
                 </Tabs>
             </Box>
         </Grid>
+        { isFetching ? 
+        
+            "Loading..." : 
+            <React.Fragment>
+                <Grid item sx={{ width:'100%', display: value===0 && !isFetching  ? 'flex' : 'none', backgroundColor: '#f6f7f6',}}>
+                    <UserPosts postData={post} fullname={fullname} username={username} image={image} uid={id} />
+                </Grid>
 
-        <Grid item sx={{ width:'100%', display: value===0 ? 'flex' : 'none', backgroundColor: '#f6f7f6',}}>
-            <UserPosts postData={post} fullname={fullname} username={username} image={image} uid={id} />
-        </Grid>
+                <Grid item sx={{ width:'100%', display: value===1 ? 'flex' : 'none' }}>
+                <ShopDetails shopData={shop}/>
+                </Grid>
 
-        <Grid item sx={{ width:'100%', display: value===1 ? 'flex' : 'none' }}>
-           <ShopDetails shopData={shop}/>
-        </Grid>
-
-        <Grid item sx={{ width:'100%', display: value===2 ? 'flex' : 'none' }}>
-           <ShopProducts productData={products}/>
-        </Grid>
+                <Grid item sx={{ width:'100%', display: value===2 ? 'flex' : 'none' }}>
+                <ShopProducts productData={products}/>
+                </Grid> 
+            </React.Fragment>
+        }
 
         <Toolbar sx={{display: tablet ? 'flex':'none'}}/>
         <Toolbar/>

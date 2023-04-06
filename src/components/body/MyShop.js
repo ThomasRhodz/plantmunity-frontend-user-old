@@ -18,6 +18,7 @@ import TradeOrderList from "../parts/myShop/TradeOrderList";
 import PreOrderList from "../parts/myShop/PreOrderList";
 import OrderList from "../parts/myShop/OrderList";
 import MyShopDetails from "../parts/myShop/MyShopDetails";
+import TawadList from "../parts/myShop/TawadList";
 
 const MyShop = ({ toast }) => {
   const theme = useTheme();
@@ -194,6 +195,23 @@ const MyShop = ({ toast }) => {
           >
 
             <PreOrderList
+              shopID={shopId}
+              toast={(stringMessage) => toast(stringMessage)}
+            />
+          </Grid>
+
+          <Grid
+            container
+            direction={mobile ? "column" : "row"}
+            sx={{
+              width: "100%",
+              height:'100%',
+              mt: 1,
+              display: value === 2 ? "flex" : "none",
+            }}
+          >
+
+            <TawadList
               shopID={shopId}
               toast={(stringMessage) => toast(stringMessage)}
             />

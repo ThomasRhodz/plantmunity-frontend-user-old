@@ -1,6 +1,6 @@
 //React Components
 import React from 'react';
-import {Avatar, Box, Drawer, Divider, Grid, Stack, Typography} from '@mui/material/';
+import {Avatar, Box, Drawer, Dialog, Divider, Grid, Stack, Typography} from '@mui/material/';
 import {CssBaseline, Toolbar, List, ListItem, ListItemButton, ListItemIcon,ListItemText } from '@mui/material/';
 import { useSelector } from 'react-redux';
 
@@ -26,6 +26,10 @@ import MyShop from '../body/MyShop';
 import MarketPlace from '../body/MarketPlace';
 import AssociateTab from '../body/AssociateTab';
 import Message from '../body/Message';
+import ViewNotification from '../dialogs/ViewNotification';
+
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // //Hooks abd API Calls
 // import useAuth from '../../app/hooks/useAuth';
@@ -73,6 +77,9 @@ const drawerWidth = 230;
 
 const HomeNavBar = () => {
 
+    const theme = useTheme();
+    const mobile = useMediaQuery(theme.breakpoints.down(600));
+
     //initializing a tost as a function that will be dynamic depending on the action done by the user.
     const notify = (message) => toast(message, {
       position: "top-right",
@@ -97,6 +104,7 @@ const HomeNavBar = () => {
 
     //States
     const [selectedMenu, setSelectedMenu] = React.useState(0)
+    const [selectedPopUp, setSelectedPopUp] = React.useState(0)
     const [menuName, setMenuName] = React.useState('Home')
     const userFullName = (firstname !== undefined ? fullName : 'User Name');
     const userName = (username !== undefined ? username : '#UserTag');
@@ -106,6 +114,15 @@ const HomeNavBar = () => {
     const handleBottomNavChange = (target) => {
       setSelectedMenu(target);
     };
+
+    const handleBottonPopChange = (target) => {
+      setSelectedPopUp(target);
+    };
+
+    const handleClose = () => {
+      setSelectedPopUp(0);
+    };
+
 
  
     // function that will help the menu item to set ther icon base on the menu title.
@@ -147,7 +164,7 @@ const HomeNavBar = () => {
       <CssBaseline />
 
       {/* Top Bar */}
-      <NavBar title={menuName} handleChange={(target)=> handleBottomNavChange(target)}/>
+      <NavBar title={menuName} handleChange={(target)=> handleBottomNavChange(target)} handlePopChange={(target)=> handleBottonPopChange(target)} />
 
       {/* Side Bar | Side Drawer */}
       <Drawer
@@ -259,8 +276,15 @@ const HomeNavBar = () => {
         </Grid>
 
       </Box>
+      <Dialog open={selectedPopUp===7} onClose={handleClose} maxWidth={false} scroll='body' fullScreen={mobile} PaperProps={mobile ? {} :{ sx: { position: "fixed", top: 10, right: 10, m: 0 } }}>
+        <ViewNotification handleClose={()=>handleClose()} />
+      </Dialog>
+
+      <Dialog open={selectedPopUp===8} onClose={handleClose} maxWidth={false} scroll='body' fullScreen={false} >
+        My Orders
+      </Dialog>
       
-      <BottomAppBar handleChange={(value)=>handleBottomNavChange(value)}/>
+      <BottomAppBar iconID={selectedMenu} popUpID={selectedPopUp} handleChange={(value)=>handleBottomNavChange(value)}  handlePopChange={(value)=>handleBottonPopChange(value)}/>
     </Box>
   );
 }

@@ -9,7 +9,7 @@ import { useUpdateUnfollowMutation } from '../../../app/services/associateApi';
 const FollowingCard = ({ associateID, userID, userName, user, userProfilePic, bio}) => {
   const theme = useTheme();
   const tablet = useMediaQuery(theme.breakpoints.down(1200));
-  const mobile = useMediaQuery(theme.breakpoints.down(700));
+  const mobile = useMediaQuery(theme.breakpoints.down(600));
     
   const {data} = useGetIsFollowingYouQuery(userID, {refetchOnMountOrArgChange: true})
   console.log(data)

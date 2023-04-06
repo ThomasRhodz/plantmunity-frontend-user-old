@@ -14,13 +14,19 @@ import {navigate} from 'gatsby';
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import useAuth from '../../app/hooks/useAuth';
+
  //Icons
  import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
  import Avatar from '@mui/material/Avatar';
- import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
  import NotificationsIcon from '@mui/icons-material/Notifications';
  import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
  import Logo from '../../images/PlantmunityAlt2.png';
+
+ import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
+ import FeedbackRoundedIcon from '@mui/icons-material/FeedbackRounded';
+ import PolicyRoundedIcon from '@mui/icons-material/PolicyRounded';
+ import { FaStore, FaShoppingBag } from 'react-icons/fa';
+ import {BsFillPeopleFill} from 'react-icons/bs'; 
 //MUI Styling
 import '../../css/pageStyles.css';
 import { SearchField } from '../basic/StyledComponents';
@@ -28,56 +34,72 @@ import ViewUserSearchDialog from '../dialogs/ViewUserSearchDialog';
 
 const drawerWidth = 230;
 
+
 //Actual Components
- const NavBar = ({title, handleChange, iconID}) => {
+ const NavBar = ({title, handleChange, iconID, popUpId, handlePopChange}) => {
 
     const {logout} = useAuth()
     const theme = useTheme();
     const mobile = useMediaQuery(theme.breakpoints.down(600));
     const desktop = useMediaQuery(theme.breakpoints.down(1000));
+    
     const firstname = useSelector((state) => state.user.first_name);
+    const middlename = useSelector((state) => state.user.middle_name);
+    const lastname = useSelector((state) => state.user.last_name);
+    const fullname = firstname + " " + (middlename === "" ? "" : middlename === null ? "" : middlename) + " " + lastname
     const image = useSelector((state) => state.user.image) ;
 
     const menu = [
         {
-            id: 1,
-            tab: 0,
-            location: '/profile',
-            name: 'Profile'
-
+            id: 4,
+            type:'component',
+            tab: 4,
+            name: 'My Shop'
         },
         {
-            id: 4,
-            tab: 0,
-            location: '',
-            name: 'My Shop'
-
+            id: 8,
+            type:'dialog',
+            tab: 8,
+            name: 'My Orders'
         },
         {
             id: 5,
-            tab: 0,
-            location: '',
+            type:'component',
+            tab: 5,
             name: 'Affiliates'
+        },
+        {
+            id: 6,
+            type:'dialog',
+            tab: 9,
+            name: 'Terms and Policy'
 
         },
-
+        {
+            id: 7,
+            type:'dialog',
+            tab: 10,
+            name: 'Give Feedbacks'
+        },
         {
             id: 3,
+            type:'dialog',
             tab: 0,
             location: 'bye',
             name: 'Logout'
 
         },
 
+
     ];
 
     const page = [
         {
             id: 0,
-            tab: 0,
-            location: '/myCart',
-            name: 'My Cart',
-            icon: <ShoppingCartRoundedIcon style={{fontSize: 28, color: '#707F77'}}/>
+            tab: 8,
+            location: '',
+            name: 'My Orders',
+            icon: <FaShoppingBag style={{fontSize: 25, color: '#707F77'}}/>
 
         },
 
@@ -92,7 +114,8 @@ const drawerWidth = 230;
 
         {
             id: 2,
-            location: '/notifications',
+            tab: 7,
+            location: '',
             name: 'Notifications ',
             icon: <NotificationsIcon  style={{fontSize: 28, color: '#707F77'}}/>
 
@@ -120,6 +143,22 @@ const drawerWidth = 230;
         setSearchResult(false);
     };
 
+    const iconChanger = (iconText) => {
+        if(iconText === "My Shop"){
+            return <FaStore  style={{ marginRight:15, marginLeft:5, fontSize:18, color:"#5c6d63" }} />
+        }
+        else if (iconText === "My Orders"){
+            return <FaShoppingBag style={{ marginRight:15, marginLeft:5, fontSize:18, color:"#5c6d63" }}/>
+        }else if (iconText === "Affiliates"){
+            return <BsFillPeopleFill style={{ marginRight:15, marginLeft:5, fontSize:18, color:"#5c6d63" }}/>
+        }else if (iconText === "Terms and Policy"){
+            return <PolicyRoundedIcon style={{ marginRight:15, marginLeft:3, fontSize:18, color:"#5c6d63" }}/>
+        }else if (iconText === "Give Feedbacks"){
+            return <FeedbackRoundedIcon style={{ marginRight:15, marginLeft:3, fontSize:18, color:"#5c6d63" }}/>
+        }else{
+            return <LogoutRoundedIcon style={{ marginRight:15, marginLeft:3, fontSize:18, color:"red" }}/>
+        }
+    }
 
      return (
         <AppBar 
@@ -192,15 +231,14 @@ const drawerWidth = 230;
                             </IconButton>
                         </Grid>
 
-                        <Grid item >
-                            <Stack direction='row' alignItems={'center'} sx={{minWidth:{xs:50, sm:50, md: desktop? 30:200}}}>
+                        <Grid item>
+                            <Stack direction='row' alignItems={'center'} sx={{minWidth:{xs:35, sm:35, md: desktop? 30:180}}}>
                                 {page.map(({id, location, name, icon, tab}) => (
                                     <Box key={id} sx={{ display: { xs: 'none', sm: 'none', md: desktop? 'none' :'flex' } }}>
                                         <Tooltip  title={name} role='link' sx={{mb:2}} >
                                             <IconButton  
                                                 onClick={()=>{
-                                                    location === '' ? handleChange(tab) :
-                                                    navigate(location)
+                                                    id === 1 ? handleChange(tab) : handlePopChange(tab) 
                                                 }} 
                                                 color="inherit" 
                                                 aria-label="open drawer" 
@@ -214,9 +252,9 @@ const drawerWidth = 230;
                                    
                                 ))} 
                                 <Box >
-                                    <Tooltip title="Open settings">
+                                    <Tooltip title="Open menu">
                                         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
-                                            <Avatar sx={{   width:35, height:35}} alt={firstname} src={image}/>
+                                            <Avatar sx={{ width:35, height:35}} alt={firstname} src={image}/>
                                         </IconButton>
                                     </Tooltip> 
                                 </Box>
@@ -239,17 +277,26 @@ const drawerWidth = 230;
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
                                 >
-                                    {menu.map(({id, location, name}) => (
+                                    <menuItem role='link' onClick={() =>navigate("/profile")} sx={{ width:200, }}>
+                                        <Stack direction='row' alignItems='center'sx={{ m:2, mt:1, p:1, pl:3, pr:3, border:'1px solid #EFEFF4', borderRadius: 3, boxShadow:'2.0px 3.0px 3.0px hsl(0deg 0% 0% / 0.38)' }}>
+                                            <Avatar src={image} sx={{ width: 35, height:35}} />
+                                            <Typography variant='body2' sx={{ ml:2, fontFamily:'Arvo', color: "5c6d63"  }}>
+                                                {fullname}
+                                            </Typography>        
+                                        </Stack>
+                                    </menuItem>
+                                    {menu.map(({id, name, tab, type}) => (
                                         <MenuItem 
                                             key={id} 
                                             role='link' 
                                             onClick={()=>{
-                                                location === 'bye' ? logout() :
-                                                location === '' ? handleChange(id) :
-                                                navigate(location)
+                                                name === 'Logout' ? logout() :
+                                                type === 'dialog' ? handlePopChange(tab) :  handleChange(tab) 
                                             }}
+                                            sx={{ mt:1 }}
                                         >
-                                            <Typography textAlign="left" sx={{ fontFamily:'Arvo', minWidth:80 }}>{name}</Typography>
+                                            {iconChanger(name)}
+                                            <Typography textAlign="left" variant='body2' sx={{ fontFamily:'Arvo', minWidth:80, color: name === "Logout" ? "red" : "#5c6d63" }}>{name}</Typography>
                                         </MenuItem>
                                     ))}
                                 </Menu>

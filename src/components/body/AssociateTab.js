@@ -26,15 +26,16 @@ const AssociateTab = () => {
       sx={{ 
         width:'100%',
         bgcolor:'white',
-        height:mobile ? '100%' : "85vh",
+        minHeight:mobile ? '80vh' : "85vh",
+        maxHeight:mobile ? '100%' : "85vh",
         borderRadius:3,
         mt:3,
         //border: '2px solid #5C6D64',
         boxShadow: "2.0px 6.0px 6.0px hsl(0deg 0% 0% / 0.38)",
-        overflow:'hidden'
+        // overflow:'hidden'
        }}
     >
-      <Grid item sx={{ width:mobile ? '100%': tablet? "18%" : "13%", 'height':'100%' , p:2, pr:0}}>
+      <Grid item sx={{ width:mobile ? '100%': tablet? "18%" : "13%", height: mobile? 65:'100%' , p:2, pr:0}}>
         <Tabs
         centered={tablet? true:false}
           value={value}
@@ -120,9 +121,9 @@ const AssociateTab = () => {
        <Divider orientation={mobile ? 'horizontal' : 'vertical'}/>
       </Grid>
 
-      <div style={{ flexGrow:1 }}/>
+      <div style={{ display: mobile ? "none" :"flex", flexGrow:1 }}/>
 
-      <Grid item sx={{ml: mobile? 0:1, width:mobile ? '100%' : tablet ? "78%" : "85%", height:'100%', p:mobile?0:2, overflowY:'auto' }}>
+      <Grid item sx={{ ml: mobile? 0:1, width:mobile ? '100%' : tablet ? "78%" : "85%", height: mobile ? 500 : '100%', p:mobile?0:2, overflowY:'auto' }}>
       {value === 0 ? <FollowingList /> : value === 1 ? <FollowerList /> : value === 2 ? <FollowRequestList /> : <SentRequestList /> }
       </Grid>
 
